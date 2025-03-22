@@ -1,0 +1,74 @@
+# macOS system files
+.DS_Store
+**/.DS_Store
+
+# Rider IDE files
+.idea/
+.idea.server/
+.idea.server.iml
+modules.xml
+projectSettingsUpdater.xml
+workspace.xml
+contentModel.xml
+
+# Visual Studio/Visual Studio Code specific
+.vs/
+*.suo
+*.user
+*.vscode/
+
+# Ignore build artifacts
+bin/
+obj/
+*.dll
+*.pdb
+*.exe
+*.cache
+*.sourcelink.json
+*.restore.info
+*.assemblyinfo.cs
+*.assemblyInput.cache
+*.csproj.FileListAbsolute.txt
+*.csproj.user
+*.log
+
+# NuGet & dependency-related files
+*.nupkg
+*.nuget
+.nuget/
+packages/
+project.lock.json
+
+# Logs and debugging files
+*.log
+debug.log
+*.tlog
+*.dotCover
+
+# Temporary & IDE-generated files
+temp/
+tmp/
+TestResults/
+*.TestResults/
+*.coverage
+*.coveragexml
+*.code-workspace
+
+# Ignore HTTP request history from Rider
+/httpRequests/
+httpRequests/
+
+# Ignore database configuration files (if applicable)
+dataSources/
+dataSources.local.xml
+
+# Ignore compiled runtime files
+*.runtimeconfig.json
+*.deps.json
+
+# Ignore .NET global tools, publish, and runtime cache
+artifacts/
+publish/
+wwwroot/
+node_modules/
+dist/
