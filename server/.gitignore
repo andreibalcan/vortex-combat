@@ -2,6 +2,9 @@
 .DS_Store
 **/.DS_Store
 
+# Environemnt files
+.env
+
 # Rider IDE files
 .idea/
 .idea.server/

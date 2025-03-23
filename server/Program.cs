@@ -1,54 +1,37 @@
+using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
+using server.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+Env.Load();
 
-builder.Services.AddCors(options =>
+var connectionString = Environment.GetEnvironmentVariable("VC_CONNECTION_STRING");
+
+if (string.IsNullOrEmpty(connectionString))
 {
-    options.AddPolicy("AllowAngularApp", policy =>
-    {
-        policy.WithOrigins("http://localhost:4200")  // Angular app URL
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
-});
+    throw new InvalidOperationException("The VC_CONNECTION_STRING environment variable is not set.");
+}
+
+Console.WriteLine($"Connection String: {connectionString}");
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(Environment.GetEnvironmentVariable("VC_CONNECTION_STRING"), new MySqlServerVersion(new Version(8, 4, 4))));
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Apply CORS policy globally
-app.UseCors("AllowAngularApp");
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast");
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
