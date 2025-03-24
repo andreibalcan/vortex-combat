@@ -16,6 +16,38 @@ namespace server.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Student>>> GetWorkouts()
+        {
+            var workouts = await _context.Workouts
+                .Include(w => w.WorkoutMasters)
+                .ThenInclude(wm => wm.Master) 
+                .Include(w => w.WorkoutStudents)
+                .ThenInclude(ws => ws.Student)
+                .ToListAsync();
+
+            var workoutDetails = workouts.Select(w => new
+            {
+                w.Id,
+                w.Description,
+                w.Date,
+                w.Duration,
+                w.Room,
+                Masters = w.WorkoutMasters.Select(wm => new
+                {
+                    wm.Master.Id,
+                    wm.Master.Name
+                }).ToList(),
+                Students = w.WorkoutStudents.Select(ws => new
+                {
+                    ws.Student.Id,
+                    ws.Student.Name
+                }).ToList()
+            }).ToList();
+
+            return Ok(workoutDetails);
+        }
+        
         /// <summary>
         /// Submits student attendance for a workout.
         /// </summary>
@@ -29,21 +61,18 @@ namespace server.Controllers
             if (workout == null)
                 return NotFound("Workout not found");
 
-            // Convert to IEnumerable first to work around MySQL limitation
             var students = await _context.Students.ToListAsync();
             var selectedStudents = students.Where(s => request.StudentIds.Contains(s.Id)).ToList();
 
             if (selectedStudents.Count != request.StudentIds.Count)
                 return BadRequest("Some students not found");
 
-            // Convert to IEnumerable first for masters (same approach as students)
             var masters = await _context.Masters.ToListAsync();
             var selectedMasters = masters.Where(m => request.MasterIds.Contains(m.Id)).ToList();
 
             if (selectedMasters.Count != request.MasterIds.Count)
                 return BadRequest("Some masters not found");
 
-            // Add Student Attendance Records
             foreach (var student in selectedStudents)
             {
                 bool alreadyExists = await _context.WorkoutStudents
@@ -59,7 +88,6 @@ namespace server.Controllers
                 }
             }
 
-            // Add Master Attendance Records
             foreach (var master in selectedMasters)
             {
                 bool alreadyExists = await _context.WorkoutMasters

@@ -1,25 +1,15 @@
-import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { PrimeNG } from 'primeng/config';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, JsonPipe],
+  imports: [RouterModule, RouterOutlet, CardModule, ButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'client';
-
-  weatherData: any;
-
-  constructor(private http: HttpClient) {}
-
-  ngOnInit() {
-    this.http.get('http://localhost:5299/weatherforecast')
-      .subscribe(data => {
-        this.weatherData = data;
-      });
-  }
 }
