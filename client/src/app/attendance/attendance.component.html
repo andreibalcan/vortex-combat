@@ -1,86 +1,88 @@
-<h1 class="pb-5">Attendance</h1>
+<div class="p-5">
+  <h1 class="pb-5">Attendance</h1>
 
-<div class="pb-5">
-  <h2 class="pb-2">Workout</h2>
-  <p-select
-    [options]="workouts"
-    [(ngModel)]="selectedWorkout"
-    optionLabel="description"
-    placeholder="Select a Workout"
+  <div class="pb-5">
+    <h2 class="pb-2">Workout</h2>
+    <p-select
+      [options]="workouts"
+      [(ngModel)]="selectedWorkout"
+      optionLabel="description"
+      placeholder="Select a Workout"
+    />
+  </div>
+
+  <div class="pb-5">
+    <h2 class="pb-2">Masters</h2>
+    <p-table
+      [value]="masters"
+      [(selection)]="selectedMasters"
+      dataKey="id"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template #header>
+        <tr>
+          <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Belt</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-student>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="student" />
+          </td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.age }}</td>
+          <td>{{ student.gender }}</td>
+          <td>{{ student.belt }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="pb-5">
+    <h2 class="pb-2">Students</h2>
+    <p-table
+      [value]="students"
+      [(selection)]="selectedStudents"
+      dataKey="id"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template #header>
+        <tr>
+          <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Weight</th>
+          <th>Height</th>
+          <th>Enroll Date</th>
+          <th>Belt</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-student>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="student" />
+          </td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.age }}</td>
+          <td>{{ student.gender }}</td>
+          <td>{{ student.weight }} kg</td>
+          <td>{{ student.height }} m</td>
+          <td>{{ student.enrollDate | date }}</td>
+          <td>{{ student.belt }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-button
+    label="Submit Attendance"
+    icon="pi pi-check"
+    iconPos="right"
+    (onClick)="submitAttendance()"
   />
 </div>
-
-<div class="pb-5">
-  <h2 class="pb-2">Masters</h2>
-  <p-table
-    [value]="masters"
-    [(selection)]="selectedMasters"
-    dataKey="id"
-    [tableStyle]="{ 'min-width': '50rem' }"
-  >
-    <ng-template #header>
-      <tr>
-        <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Gender</th>
-        <th>Belt</th>
-      </tr>
-    </ng-template>
-    <ng-template #body let-student>
-      <tr>
-        <td>
-          <p-tableCheckbox [value]="student" />
-        </td>
-        <td>{{ student.name }}</td>
-        <td>{{ student.age }}</td>
-        <td>{{ student.gender }}</td>
-        <td>{{ student.belt }}</td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
-
-<div class="pb-5">
-  <h2 class="pb-2">Students</h2>
-  <p-table
-    [value]="students"
-    [(selection)]="selectedStudents"
-    dataKey="id"
-    [tableStyle]="{ 'min-width': '50rem' }"
-  >
-    <ng-template #header>
-      <tr>
-        <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Gender</th>
-        <th>Weight</th>
-        <th>Height</th>
-        <th>Enroll Date</th>
-        <th>Belt</th>
-      </tr>
-    </ng-template>
-    <ng-template #body let-student>
-      <tr>
-        <td>
-          <p-tableCheckbox [value]="student" />
-        </td>
-        <td>{{ student.name }}</td>
-        <td>{{ student.age }}</td>
-        <td>{{ student.gender }}</td>
-        <td>{{ student.weight }} kg</td>
-        <td>{{ student.height }} m</td>
-        <td>{{ student.enrollDate }}</td>
-        <td>{{ student.belt }}</td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
-
-<p-button
-  label="Submit Attendance"
-  icon="pi pi-check"
-  iconPos="right"
-  (onClick)="submitAttendance()"
-/>

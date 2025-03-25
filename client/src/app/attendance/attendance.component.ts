@@ -4,10 +4,11 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-attendance',
-  imports: [TableModule, ButtonModule, SelectModule, FormsModule],
+  imports: [TableModule, ButtonModule, SelectModule, FormsModule, DatePipe],
   templateUrl: './attendance.component.html',
   styleUrl: './attendance.component.scss',
 })
