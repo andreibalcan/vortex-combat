@@ -23,20 +23,22 @@
         <tr>
           <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
           <th>Name</th>
+          <th>Role</th>
           <th>Age</th>
           <th>Gender</th>
           <th>Belt</th>
         </tr>
       </ng-template>
-      <ng-template #body let-student>
+      <ng-template #body let-master>
         <tr>
           <td>
-            <p-tableCheckbox [value]="student" />
+            <p-tableCheckbox [value]="master" />
           </td>
-          <td>{{ student.name }}</td>
-          <td>{{ student.age }}</td>
-          <td>{{ student.gender }}</td>
-          <td>{{ student.belt }}</td>
+          <td>{{ master.name }}</td>
+          <td> <p-badge [value]="master.role" [severity]="master.role === 'Primary' ? 'success' : 'danger'"></p-badge></td>
+          <td>{{ master.age }}</td>
+          <td>{{ master.gender }}</td>
+          <td>{{ master.belt }}</td>
         </tr>
       </ng-template>
     </p-table>
