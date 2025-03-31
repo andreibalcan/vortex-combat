@@ -5,7 +5,6 @@ using server.Models;
 
 namespace server.Controllers
 {
-    [Route("api/workouts")]
     [ApiController]
     public class WorkoutsController : ControllerBase
     {
@@ -17,6 +16,7 @@ namespace server.Controllers
         }
 
         [HttpGet]
+        [Route("api/workouts")]
         public async Task<ActionResult<IEnumerable<Student>>> GetWorkouts()
         {
             var workouts = await _context.Workouts
@@ -53,7 +53,8 @@ namespace server.Controllers
         /// </summary>
         /// <param name="request">The attendance request containing workoutId, studentIds and masterIds</param>
         /// <returns>Success message or error</returns>
-        [HttpPost("attendance")]
+        [HttpPost]
+        [Route("/nomis/workouts/register-attendance")]
         public async Task<IActionResult> SubmitAttendance([FromBody] SubmitAttendanceRequest request)
         {
             var workout = await _context.Workouts.FindAsync(request.WorkoutId);

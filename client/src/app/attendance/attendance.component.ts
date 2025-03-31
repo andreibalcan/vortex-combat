@@ -51,7 +51,7 @@ export class AttendanceComponent implements OnInit {
     };
 
     this.httpClient
-      .post('http://localhost:5299/api/workouts/attendance', attendanceList)
+      .post('http://localhost:5299/nomis/workouts/register-attendance', attendanceList)
       .subscribe();
   }
 }
