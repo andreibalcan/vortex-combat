@@ -5,13 +5,11 @@ namespace server.Models
     public class Master
     {
         public int Id { get; set; }
-        public string Role { get; set; }
-        public string Name { get; set; }
-        public string Gender { get; set; }
-        public int Age { get; set; }
-        public string Belt { get; set; }
-        
-        [JsonIgnore]
-        public List<WorkoutMaster> WorkoutMasters { get; set; } = new();
+        public bool HasTrainerCertificate { get; set; }
+
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+
+        [JsonIgnore] public List<WorkoutMaster> WorkoutMasters { get; set; } = new();
     }
 }

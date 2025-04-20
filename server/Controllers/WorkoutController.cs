@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Data;
@@ -17,13 +18,16 @@ namespace server.Controllers
 
         [HttpGet]
         [Route("api/workouts")]
+        [Authorize(Roles = "PrimaryMaster")]
         public async Task<ActionResult<IEnumerable<Student>>> GetWorkouts()
         {
             var workouts = await _context.Workouts
                 .Include(w => w.WorkoutMasters)
                 .ThenInclude(wm => wm.Master) 
+                .ThenInclude(m => m.ApplicationUser)
                 .Include(w => w.WorkoutStudents)
                 .ThenInclude(ws => ws.Student)
+                .ThenInclude(s => s.ApplicationUser)
                 .ToListAsync();
 
             var workoutDetails = workouts.Select(w => new
@@ -36,12 +40,12 @@ namespace server.Controllers
                 Masters = w.WorkoutMasters.Select(wm => new
                 {
                     wm.Master.Id,
-                    wm.Master.Name
+                    wm.Master.ApplicationUser.Name // Access Name from ApplicationUser
                 }).ToList(),
                 Students = w.WorkoutStudents.Select(ws => new
                 {
                     ws.Student.Id,
-                    ws.Student.Name
+                    ws.Student.ApplicationUser.Name // Access Name from ApplicationUser
                 }).ToList()
             }).ToList();
 
@@ -55,6 +59,7 @@ namespace server.Controllers
         /// <returns>Success message or error</returns>
         [HttpPost]
         [Route("/nomis/workouts/register-attendance")]
+        [Authorize(Roles = "PrimaryMaster")]
         public async Task<IActionResult> SubmitAttendance([FromBody] SubmitAttendanceRequest request)
         {
             var workout = await _context.Workouts.FindAsync(request.WorkoutId);

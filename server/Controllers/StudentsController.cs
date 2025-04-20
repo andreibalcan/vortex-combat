@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Data;
@@ -16,6 +17,7 @@ namespace server.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "PrimaryMaster")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
         {

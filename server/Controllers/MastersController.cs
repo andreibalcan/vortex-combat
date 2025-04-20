@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Data;
@@ -7,6 +8,7 @@ namespace server.Controllers
 {
     [Route("api/masters")]
     [ApiController]
+    [Authorize(Roles = "PrimaryMaster")]
     public class MastersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

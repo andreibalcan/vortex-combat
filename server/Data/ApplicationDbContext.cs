@@ -1,21 +1,25 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using server.Models;
 
 namespace server.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {}
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+        }
 
-        public DbSet<Master> Masters { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Master> Masters { get; set; }
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<WorkoutMaster> WorkoutMasters { get; set; }
         public DbSet<WorkoutStudent> WorkoutStudents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Many-to-Many Relationship: Workout - Masters
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<WorkoutMaster>()
                 .HasKey(wm => new { wm.WorkoutId, wm.MasterId });
 
@@ -29,7 +33,6 @@ namespace server.Data
                 .WithMany(m => m.WorkoutMasters)
                 .HasForeignKey(wm => wm.MasterId);
 
-            // Many-to-Many Relationship: Workout - Students
             modelBuilder.Entity<WorkoutStudent>()
                 .HasKey(ws => new { ws.WorkoutId, ws.StudentId });
 
@@ -42,6 +45,10 @@ namespace server.Data
                 .HasOne(ws => ws.Student)
                 .WithMany(s => s.WorkoutStudents)
                 .HasForeignKey(ws => ws.StudentId);
+
+            modelBuilder.Entity<ApplicationUser>().OwnsOne(u => u.Address);
+
+            modelBuilder.Entity<ApplicationUser>().OwnsOne(u => u.Belt);
         }
     }
 }

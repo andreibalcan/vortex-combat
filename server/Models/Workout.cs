@@ -9,8 +9,6 @@ namespace server.Models
         public DateTime Date { get; set; }
         public int Duration { get; set; }
         public string Room { get; set; }
-        
-        // Many-to-Many Relationships
         public List<WorkoutMaster> WorkoutMasters { get; set; } = new();
         public List<WorkoutStudent> WorkoutStudents { get; set; } = new();
     }
