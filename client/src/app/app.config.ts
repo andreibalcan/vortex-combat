@@ -4,24 +4,25 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { jwtInterceptor } from './interceptors/jwt.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
-    provideHttpClient(),
-    provideAnimationsAsync(),
-    providePrimeNG({
-      theme: {
-          preset: Aura,
-          options: {
-              prefix: 'p',
-              darkModeSelector: 'system',
-              cssLayer: false
-          },
-      },
-      ripple: true,
-    })
-  ]
+	providers: [
+		provideZoneChangeDetection({ eventCoalescing: true }),
+		provideRouter(routes),
+		provideHttpClient(withInterceptors([jwtInterceptor])),
+		provideAnimationsAsync(),
+		providePrimeNG({
+			theme: {
+				preset: Aura,
+				options: {
+					prefix: 'p',
+					darkModeSelector: 'system',
+					cssLayer: false,
+				},
+			},
+			ripple: true,
+		}),
+	],
 };

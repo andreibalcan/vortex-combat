@@ -1,148 +1,155 @@
 <div class="p-5">
-  <h1 class="pb-5">Attendance</h1>
+	<h1 class="pb-5">Attendance</h1>
 
-  <div class="pb-5">
-    <h2 class="pb-2">Workout</h2>
-    <p-select
-      [options]="workouts"
-      [(ngModel)]="selectedWorkout"
-      placeholder="Select a Workout"
-      [showClear]="true"
-    >
-      <ng-template #selectedItem let-selectedWorkout>
-        @if(selectedWorkout) {
-        <div class="flex items-center gap-2">
-          <div
-            class="font-semibold text-s"
-            style="display: flex; align-self: center"
-          >
-            {{ selectedWorkout?.description }}
-          </div>
-          <p-chip class="bg-primary">
-            <span class="flex items-center justify-center">
-              <i class="pi pi-calendar text-xs"></i>
-            </span>
-            <span class="text-xs">
-              {{ selectedWorkout?.date | date: "MMM d, yyyy, h:mm a" }}
-            </span>
-          </p-chip>
-          <p-chip class="bg-primary">
-            <span class="flex items-center justify-center">
-              <i class="pi pi-home text-xs"></i>
-            </span>
-            <span class="text-xs">
-              {{ selectedWorkout?.room }}
-            </span>
-          </p-chip>
-        </div>
-        }
-      </ng-template>
+	<div class="pb-5">
+		<h2 class="pb-2">Workout</h2>
+		<p-select
+			[options]="workouts"
+			[(ngModel)]="selectedWorkout"
+			placeholder="Select a Workout"
+			[showClear]="true"
+		>
+			<ng-template #selectedItem let-selectedWorkout>
+				@if(selectedWorkout) {
+				<div class="flex items-center gap-2">
+					<div
+						class="font-semibold text-s"
+						style="display: flex; align-self: center"
+					>
+						{{ selectedWorkout?.description }}
+					</div>
+					<p-chip class="bg-primary">
+						<span class="flex items-center justify-center">
+							<i class="pi pi-calendar text-xs"></i>
+						</span>
+						<span class="text-xs">
+							{{
+								selectedWorkout?.date
+									| date : "MMM d, yyyy, h:mm a"
+							}}
+						</span>
+					</p-chip>
+					<p-chip class="bg-primary">
+						<span class="flex items-center justify-center">
+							<i class="pi pi-home text-xs"></i>
+						</span>
+						<span class="text-xs">
+							{{ selectedWorkout?.room }}
+						</span>
+					</p-chip>
+				</div>
+				}
+			</ng-template>
 
-      <ng-template let-workout #item>
-        <div class="flex items-center gap-2">
-          <span class="text-s" style="display: flex; align-self: center">{{
-            workout?.description
-          }}</span>
-          <p-chip class="bg-primary">
-            <span class="flex items-center justify-center">
-              <i class="pi pi-calendar text-xs"></i>
-            </span>
-            <span class="text-xs">
-              {{ workout?.date | date: "MMM d, yyyy, h:mm a" }}
-            </span>
-          </p-chip>
-          <p-chip class="bg-primary">
-            <span class="flex items-center justify-center">
-              <i class="pi pi-home text-xs"></i>
-            </span>
-            <span class="text-xs">
-              {{ workout?.room }}
-            </span>
-          </p-chip>
-        </div>
-      </ng-template>
-    </p-select>
-  </div>
+			<ng-template let-workout #item>
+				<div class="flex items-center gap-2">
+					<span
+						class="text-s"
+						style="display: flex; align-self: center"
+						>{{ workout?.description }}</span
+					>
+					<p-chip class="bg-primary">
+						<span class="flex items-center justify-center">
+							<i class="pi pi-calendar text-xs"></i>
+						</span>
+						<span class="text-xs">
+							{{ workout?.date | date : "MMM d, yyyy, h:mm a" }}
+						</span>
+					</p-chip>
+					<p-chip class="bg-primary">
+						<span class="flex items-center justify-center">
+							<i class="pi pi-home text-xs"></i>
+						</span>
+						<span class="text-xs">
+							{{ workout?.room }}
+						</span>
+					</p-chip>
+				</div>
+			</ng-template>
+		</p-select>
+	</div>
 
-  <div class="pb-5">
-    <h2 class="pb-2">Masters</h2>
-    <p-table
-      [value]="masters"
-      [(selection)]="selectedMasters"
-      dataKey="id"
-      [tableStyle]="{ 'min-width': '50rem' }"
-    >
-      <ng-template #header>
-        <tr>
-          <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
-          <th>Name</th>
-          <th>Role</th>
-          <th>Age</th>
-          <th>Gender</th>
-          <th>Belt</th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-master>
-        <tr>
-          <td>
-            <p-tableCheckbox [value]="master" />
-          </td>
-          <td>{{ master.name }}</td>
-          <td>
-            <p-badge
-              [value]="master.role"
-              [severity]="master.role === 'Primary' ? 'info' : 'danger'"
-            ></p-badge>
-          </td>
-          <td>{{ master.age }}</td>
-          <td>{{ master.gender }}</td>
-          <td>{{ master.belt }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+	<div class="pb-5">
+		<h2 class="pb-2">Masters</h2>
+		<p-table
+			[value]="masters"
+			[(selection)]="selectedMasters"
+			dataKey="id"
+			[tableStyle]="{ 'min-width': '50rem' }"
+		>
+			<ng-template #header>
+				<tr>
+					<th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+					<th>Name</th>
+					<th>Role</th>
+					<th>Age</th>
+					<th>Gender</th>
+					<th>Belt</th>
+				</tr>
+			</ng-template>
+			<ng-template #body let-master>
+				<tr>
+					<td>
+						<p-tableCheckbox [value]="master" />
+					</td>
+					<td>{{ master.name }}</td>
+					<td>
+						<p-badge
+							[value]="master.role"
+							[severity]="
+								master.role === 'Primary' ? 'info' : 'danger'
+							"
+						></p-badge>
+					</td>
+					<td>{{ master.age }}</td>
+					<td>{{ master.gender }}</td>
+					<td>{{ master.belt }}</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
 
-  <div class="pb-5">
-    <h2 class="pb-2">Students</h2>
-    <p-table
-      [value]="students"
-      [(selection)]="selectedStudents"
-      dataKey="id"
-      [tableStyle]="{ 'min-width': '50rem' }"
-    >
-      <ng-template #header>
-        <tr>
-          <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Gender</th>
-          <th>Weight</th>
-          <th>Height</th>
-          <th>Enroll Date</th>
-          <th>Belt</th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-student>
-        <tr>
-          <td>
-            <p-tableCheckbox [value]="student" />
-          </td>
-          <td>{{ student.name }}</td>
-          <td>{{ student.age }}</td>
-          <td>{{ student.gender }}</td>
-          <td>{{ student.weight }} kg</td>
-          <td>{{ student.height }} m</td>
-          <td>{{ student.enrollDate | date }}</td>
-          <td>{{ student.belt }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+	<div class="pb-5">
+		<h2 class="pb-2">Students</h2>
+		<p-table
+			[value]="students"
+			[(selection)]="selectedStudents"
+			dataKey="id"
+			[tableStyle]="{ 'min-width': '50rem' }"
+		>
+			<ng-template #header>
+				<tr>
+					<th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Gender</th>
+					<th>Weight</th>
+					<th>Height</th>
+					<th>Enroll Date</th>
+					<th>Belt</th>
+				</tr>
+			</ng-template>
+			<ng-template #body let-student>
+				<tr>
+					<td>
+						<p-tableCheckbox [value]="student" />
+					</td>
+					<td>{{ student.name }}</td>
+					<td>{{ student.age }}</td>
+					<td>{{ student.gender }}</td>
+					<td>{{ student.weight }} kg</td>
+					<td>{{ student.height }} m</td>
+					<td>{{ student.enrollDate | date }}</td>
+					<td>{{ student.belt }}</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
 
-  <p-button
-    label="Submit Attendance"
-    icon="pi pi-check"
-    iconPos="right"
-    (onClick)="submitAttendance()"
-  />
+	<p-button
+		label="Submit Attendance"
+		icon="pi pi-check"
+		iconPos="right"
+		(onClick)="submitAttendance()"
+	/>
 </div>

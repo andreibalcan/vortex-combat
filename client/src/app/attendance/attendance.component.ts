@@ -9,50 +9,61 @@ import { BadgeModule } from 'primeng/badge';
 import { ChipModule } from 'primeng/chip';
 
 @Component({
-  selector: 'app-attendance',
-  imports: [TableModule, ButtonModule, SelectModule, BadgeModule, ChipModule, FormsModule, DatePipe],
-  templateUrl: './attendance.component.html',
-  styleUrl: './attendance.component.scss',
+	selector: 'app-attendance',
+	imports: [
+		TableModule,
+		ButtonModule,
+		SelectModule,
+		BadgeModule,
+		ChipModule,
+		FormsModule,
+		DatePipe,
+	],
+	templateUrl: './attendance.component.html',
+	styleUrl: './attendance.component.scss',
 })
 export class AttendanceComponent implements OnInit {
-  public workouts = [];
-  public selectedWorkout: any;
+	public workouts = [];
+	public selectedWorkout: any;
 
-  public students = [];
-  public selectedStudents = [];
+	public students = [];
+	public selectedStudents = [];
 
-  public masters = [];
-  public selectedMasters = [];
+	public masters = [];
+	public selectedMasters = [];
 
-  constructor(private httpClient: HttpClient) {}
+	constructor(private httpClient: HttpClient) {}
 
-  ngOnInit() {
-    this.httpClient
-      .get('http://localhost:5299/api/workouts')
-      .subscribe((workouts: any) => {
-        this.workouts = workouts;
-      });
-    this.httpClient
-      .get('http://localhost:5299/api/masters')
-      .subscribe((masters: any) => {
-        this.masters = masters;
-      });
-    this.httpClient
-      .get('http://localhost:5299/api/students')
-      .subscribe((students: any) => {
-        this.students = students;
-      });
-  }
+	ngOnInit() {
+		this.httpClient
+			.get('http://localhost:5299/api/workouts')
+			.subscribe((workouts: any) => {
+				this.workouts = workouts;
+			});
+		this.httpClient
+			.get('http://localhost:5299/api/masters')
+			.subscribe((masters: any) => {
+				this.masters = masters;
+			});
+		this.httpClient
+			.get('http://localhost:5299/api/students')
+			.subscribe((students: any) => {
+				this.students = students;
+			});
+	}
 
-  public submitAttendance(): void {
-    let attendanceList = {
-      workoutId: this.selectedWorkout.id,
-      studentIds: this.selectedStudents.map((el: any) => el.id),
-      masterIds: this.selectedMasters.map((el: any) => el.id),
-    };
+	public submitAttendance(): void {
+		let attendanceList = {
+			workoutId: this.selectedWorkout.id,
+			studentIds: this.selectedStudents.map((el: any) => el.id),
+			masterIds: this.selectedMasters.map((el: any) => el.id),
+		};
 
-    this.httpClient
-      .post('http://localhost:5299/nomis/workouts/register-attendance', attendanceList)
-      .subscribe();
-  }
+		this.httpClient
+			.post(
+				'http://localhost:5299/nomis/workouts/register-attendance',
+				attendanceList
+			)
+			.subscribe();
+	}
 }
