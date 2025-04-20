@@ -1,47 +1,36 @@
-<div class="login-container">
-	<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-		<div>
-			<label for="email">Email</label>
-			<input type="email" id="email" formControlName="email" required />
-			<div
-				*ngIf="
-					loginForm.get('email')?.touched &&
-					loginForm.get('email')?.invalid
-				"
-			>
-				<small *ngIf="loginForm.get('email')?.hasError('required')"
-					>Email is required</small
-				>
-				<small *ngIf="loginForm.get('email')?.hasError('email')"
-					>Invalid email address</small
-				>
-			</div>
-		</div>
+<div class="flex align-items-center justify-content-center min-h-screen px-3">
+  <p-card class="w-full sm:w-30rem">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-user"></i>
+        </p-inputgroup-addon>
+        <input
+			pInputText
+			formControlName="email"
+			placeholder="Email"
+		/>
+      </p-inputgroup>
 
-		<div>
-			<label for="password">Password</label>
-			<input
-				type="password"
-				id="password"
-				formControlName="password"
-				required
-			/>
-			<div
-				*ngIf="
-					loginForm.get('password')?.touched &&
-					loginForm.get('password')?.invalid
-				"
-			>
-				<small *ngIf="loginForm.get('password')?.hasError('required')"
-					>Password is required</small
-				>
-			</div>
-		</div>
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-key"></i>
+        </p-inputgroup-addon>
+        <p-password
+          class="p-password-inputgroup-fix"
+		  formControlName="password"
+          placeholder="Password"
+          [feedback]="false"
+          [toggleMask]="true"
+        />
+      </p-inputgroup>
 
-		<div *ngIf="errorMessage" class="error-message">
-			{{ errorMessage }}
-		</div>
-
-		<button type="submit" [disabled]="loginForm.invalid">Login</button>
-	</form>
+	<p-button
+	    type="submit"
+		label="Login"
+		icon="pi pi-check"
+		iconPos="right"
+	/>
+    </form>
+  </p-card>
 </div>

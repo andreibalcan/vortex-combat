@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
 import { Router } from '@angular/router';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { CardModule } from 'primeng/card';
 import {
 	FormBuilder,
 	FormGroup,
@@ -8,28 +13,33 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
 	selector: 'app-login',
 	standalone: true,
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss'],
-	imports: [CommonModule, ReactiveFormsModule],
+	imports: [
+		CommonModule,
+		ReactiveFormsModule,
+		CardModule,
+		InputGroupModule,
+		InputGroupAddonModule,
+		InputTextModule,
+		PasswordModule,
+		ButtonModule,
+	],
 })
 export class LoginComponent {
-	loginForm: FormGroup;
-	errorMessage: string = '';
+	private formBuilder = inject(FormBuilder);
 
-	constructor(
-		private authService: AuthService,
-		private router: Router,
-		private fb: FormBuilder
-	) {
-		this.loginForm = this.fb.group({
-			email: ['', [Validators.required, Validators.email]],
-			password: ['', [Validators.required]],
-		});
-	}
+	loginForm: FormGroup = this.formBuilder.group({
+		email: ['', [Validators.required, Validators.email]],
+		password: ['', Validators.required],
+	});
+
+	constructor(private authService: AuthService, private router: Router) {}
 
 	onSubmit() {
 		if (this.loginForm.invalid) {
@@ -39,7 +49,7 @@ export class LoginComponent {
 		const { email, password } = this.loginForm.value;
 		this.authService.login(email, password).subscribe({
 			next: (res) => {
-				this.authService.setToken(res.token); // Make sure your API returns { token: string }
+				this.authService.setToken(res.token);
 				this.router.navigate(['/attendance']);
 			},
 			error: (err) => {
