@@ -5,10 +5,10 @@ namespace server.DTOs;
 public class RegisterDTO
 {
     public string Name { get; set; }
-    public Address Address { get; set; }
+    public Address? Address { get; set; }
     public string PhoneNumber { get; set; }
     public string Nif { get; set; }
-    public string Gender { get; set; }
+    public Gender Gender { get; set; }
     public DateTime Birthday { get; set; }
     public Belt Belt { get; set; }
     public double Height { get; set; }

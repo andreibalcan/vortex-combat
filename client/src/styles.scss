@@ -3,4 +3,16 @@
 @import "primeicons/primeicons.css";
 body {
 	font-family: "Roboto", sans-serif;
+
+    // This code removes border-radius when p-password is inserted inside p-inputgroup with a p-inputgroup-addon icon
+    .p-inputgroup .p-password input.p-inputtext {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    // This code removes border-radius when p-datepicker is inserted inside p-inputgroup with a p-inputgroup-addon icon
+    .p-inputgroup .p-datepicker input.p-inputtext {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
 }

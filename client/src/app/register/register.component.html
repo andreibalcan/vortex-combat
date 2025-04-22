@@ -1,0 +1,298 @@
+<div class="flex align-items-center justify-content-center min-h-screen px-3">
+	<p-card class="w-full sm:w-auto sm:max-w-40rem">
+		<form
+			[formGroup]="registerForm"
+			(ngSubmit)="onSubmit()"
+			class="flex flex-column gap-3"
+		>
+			<div class="flex justify-content-center mb-2">
+				<img
+					src="assets/vc_avatar.png"
+					alt="Logo"
+					style="max-height: 5rem; width: auto"
+				/>
+			</div>
+			<div>
+				<label class="text-primary text-sm font-bold"
+					><i class="pi pi-user mr-1"></i>Personal Information</label
+				>
+				<p-divider class="my-2" />
+			</div>
+
+			<div class="flex flex-row gap-3">
+				<p-inputgroup>
+					<p-inputgroup-addon>
+						<i class="pi pi-user"></i>
+					</p-inputgroup-addon>
+					<input
+						pInputText
+						formControlName="name"
+						placeholder="Full Name"
+						required
+					/>
+				</p-inputgroup>
+
+				<p-inputgroup>
+					<p-inputgroup-addon>
+						<i class="pi pi-id-card"></i>
+					</p-inputgroup-addon>
+					<input
+						pInputText
+						formControlName="nif"
+						placeholder="NIF"
+						required
+					/>
+				</p-inputgroup>
+			</div>
+
+			<div class="flex flex-row gap-3">
+				<p-input-group>
+					<p-inputgroup-addon>
+						<i class="pi pi-venus"></i>
+					</p-inputgroup-addon>
+					<p-select
+						formControlName="gender"
+						[options]="genders"
+						optionLabel="label"
+						optionValue="value"
+						[dataKey]="'value'"
+						placeholder="Gender"
+						required
+					/>
+				</p-input-group>
+
+				<p-input-group>
+					<p-inputgroup-addon>
+						<i class="pi pi-calendar"></i>
+					</p-inputgroup-addon>
+					<p-datepicker
+						class="p-datepicker-inputgroup-fix"
+						formControlName="birthday"
+						[iconDisplay]="'input'"
+						[showIcon]="true"
+						[minDate]="minBirthdayDate"
+						[maxDate]="maxBirthdayDate"
+						inputId="icondisplay"
+						placeholder="Birthday"
+						required
+					/>
+				</p-input-group>
+			</div>
+
+			<div>
+				<label class="text-primary text-sm font-bold"
+					><i class="pi pi-sort-numeric-up mr-1"></i>Biometrics</label
+				>
+				<p-divider class="my-2" />
+			</div>
+
+			<div class="flex flex-row gap-3">
+				<p-inputgroup>
+					<p-inputgroup-addon>
+						<i class="pi pi-arrows-v"></i>
+					</p-inputgroup-addon>
+					<p-inputnumber
+						formControlName="height"
+						placeholder="Height (cm)"
+						[suffix]="' cm'"
+						required
+					/>
+				</p-inputgroup>
+
+				<p-inputgroup>
+					<p-inputgroup-addon>
+						<i class="pi pi-sliders-h"></i>
+					</p-inputgroup-addon>
+					<p-inputnumber
+						formControlName="weight"
+						placeholder="Weight (kg)"
+						[suffix]="' kg'"
+						required
+					/>
+				</p-inputgroup>
+			</div>
+
+			<div>
+				<label class="text-primary text-sm font-bold"
+					><i class="pi pi-star mr-1"></i>Belt</label
+				>
+				<p-divider class="my-2" />
+			</div>
+			<div class="flex gap-3" formGroupName="belt">
+				<p-inputgroup>
+					<p-inputgroup-addon>
+						<i class="pi pi-palette"></i>
+					</p-inputgroup-addon>
+					<p-select
+						formControlName="color"
+						[options]="belts"
+						optionLabel="label"
+						optionValue="value"
+						[dataKey]="'value'"
+						placeholder="Belt Color"
+						required
+					/>
+				</p-inputgroup>
+
+				<p-inputgroup>
+					<p-inputgroup-addon>
+						<i class="pi pi-pause"></i>
+					</p-inputgroup-addon>
+					<p-inputnumber
+						formControlName="degrees"
+						placeholder="Belt Degrees"
+						required
+					/>
+				</p-inputgroup>
+			</div>
+
+			<div>
+				<label class="text-primary text-sm font-bold"
+					><i class="pi pi-home mr-1"></i>Address</label
+				>
+				<p-divider class="my-2" />
+			</div>
+			<div formGroupName="address">
+				<div class="flex flex-row gap-3 pb-3">
+					<p-inputgroup>
+						<p-inputgroup-addon>
+							<i class="pi pi-map-marker"></i>
+						</p-inputgroup-addon>
+						<input
+							pInputText
+							formControlName="street"
+							placeholder="Street"
+						/>
+					</p-inputgroup>
+
+					<p-inputgroup>
+						<p-inputgroup-addon>
+							<i class="pi pi-hashtag"></i>
+						</p-inputgroup-addon>
+						<input
+							pInputText
+							formControlName="number"
+							placeholder="Number"
+						/>
+					</p-inputgroup>
+				</div>
+				<div class="flex flex-row gap-3 pb-3">
+					<p-inputgroup>
+						<p-inputgroup-addon>
+							<i class="pi pi-sort-alt"></i>
+						</p-inputgroup-addon>
+						<input
+							pInputText
+							formControlName="floor"
+							placeholder="Floor"
+						/>
+					</p-inputgroup>
+
+					<p-inputgroup>
+						<p-inputgroup-addon>
+							<i class="pi pi-compass"></i>
+						</p-inputgroup-addon>
+						<input
+							pInputText
+							formControlName="city"
+							placeholder="City"
+						/>
+					</p-inputgroup>
+				</div>
+				<div class="flex flex-row gap-3">
+					<p-inputgroup>
+						<p-inputgroup-addon>
+							<i class="pi pi-envelope"></i>
+						</p-inputgroup-addon>
+						<input
+							pInputText
+							formControlName="zip"
+							placeholder="Zip Code"
+						/>
+					</p-inputgroup>
+				</div>
+			</div>
+
+			<div>
+				<label class="text-primary text-sm font-bold"
+					><i class="pi pi-lock mr-1"></i>Authentication</label
+				>
+				<p-divider class="my-2" />
+			</div>
+
+			<div class="flex flex-row gap-3">
+				<p-inputgroup>
+					<p-inputgroup-addon>
+						<i class="pi pi-at"></i>
+					</p-inputgroup-addon>
+					<input
+						pInputText
+						formControlName="email"
+						placeholder="Email"
+						required
+					/>
+				</p-inputgroup>
+				<p-inputgroup>
+					<p-inputgroup-addon>
+						<i class="pi pi-phone"></i>
+					</p-inputgroup-addon>
+					<input
+						pInputText
+						formControlName="phoneNumber"
+						placeholder="Phone Number"
+						required
+					/>
+				</p-inputgroup>
+			</div>
+
+			<div class="flex flex-row gap-3">
+				<p-inputgroup>
+					<p-inputgroup-addon>
+						<i class="pi pi-key"></i>
+					</p-inputgroup-addon>
+					<p-password
+						class="p-password-inputgroup-fix custom-input"
+						formControlName="password"
+						placeholder="Password"
+						required
+						[feedback]="false"
+						[toggleMask]="true"
+					/>
+				</p-inputgroup>
+
+				<p-inputgroup>
+					<p-inputgroup-addon>
+						<i class="pi pi-key"></i>
+					</p-inputgroup-addon>
+					<p-password
+						class="p-password-inputgroup-fix custom-input"
+						formControlName="passwordConfirmation"
+						placeholder="Confirm Password"
+						required
+						[feedback]="false"
+						[toggleMask]="true"
+					/>
+				</p-inputgroup>
+			</div>
+
+			@if (registerForm.errors?.['passwordsMismatch'] &&
+			registerForm.touched) {
+			<label class="p-error text-xs text-red-500"
+				>Passwords do not match.</label
+			>
+			}
+
+			<div
+				class="flex flex-column justify-content-center align-items-center mt-3"
+			>
+				<p-button type="submit" label="Register" />
+				<a
+					routerLink="/login"
+					class="mt-3 text-sm text-blue-500 underline cursor-pointer"
+				>
+					Login
+				</a>
+			</div>
+		</form>
+	</p-card>
+</div>

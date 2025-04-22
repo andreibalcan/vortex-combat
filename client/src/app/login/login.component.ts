@@ -1,19 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { Router } from '@angular/router';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { CardModule } from 'primeng/card';
 import {
 	FormBuilder,
 	FormGroup,
 	ReactiveFormsModule,
 	Validators,
+	AbstractControl,
 } from '@angular/forms';
-import { AuthService } from '../auth.service';
-import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { AuthService } from '../auth.service';
+import { identityPasswordValidator } from '../validators/password.validator';
 
 @Component({
 	selector: 'app-login',
@@ -28,33 +31,51 @@ import { ButtonModule } from 'primeng/button';
 		InputGroupAddonModule,
 		InputTextModule,
 		PasswordModule,
+		CheckboxModule,
 		ButtonModule,
+		RouterLink,
 	],
 })
 export class LoginComponent {
-	private formBuilder = inject(FormBuilder);
+	private readonly formBuilder: FormBuilder = inject(FormBuilder);
 
-	loginForm: FormGroup = this.formBuilder.group({
-		email: ['', [Validators.required, Validators.email]],
-		password: ['', Validators.required],
-	});
+	public readonly loginForm: FormGroup;
 
-	constructor(private authService: AuthService, private router: Router) {}
+	constructor(
+		private readonly authService: AuthService,
+		private readonly router: Router
+	) {
+		this.loginForm = this.formBuilder.group({
+			email: ['', [Validators.required, Validators.email]],
+			password: ['', [Validators.required, identityPasswordValidator]],
+		});
+	}
 
-	onSubmit() {
+	get password(): AbstractControl {
+		return this.loginForm.get('password') as AbstractControl;
+	}
+
+	public onSubmit(): void {
 		if (this.loginForm.invalid) {
+			Object.values(this.loginForm.controls).forEach((control) => {
+				control.markAsDirty();
+			});
 			return;
 		}
 
 		const { email, password } = this.loginForm.value;
 		this.authService.login(email, password).subscribe({
-			next: (res) => {
-				this.authService.setToken(res.token);
-				this.router.navigate(['/attendance']);
-			},
-			error: (err) => {
-				console.error('Login failed:', err);
-			},
+			next: this.loginSuccess.bind(this),
+			error: this.loginError.bind(this),
 		});
+	}
+
+	private loginSuccess(res: any): void {
+		this.authService.setToken(res.token);
+		this.router.navigate(['/attendance']);
+	}
+
+	private loginError(err: any): void {
+		console.error('Login failed:', err);
 	}
 }

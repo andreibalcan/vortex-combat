@@ -13,12 +13,13 @@ public class AuthController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly JwtService _jwtService;
-
+    private readonly RoleManager<IdentityRole> _roleManager;
     public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-        JwtService jwtService)
+        JwtService jwtService, RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
         _jwtService = jwtService;
+        _roleManager = roleManager;
     }
 
     [HttpPost("register")]
@@ -31,7 +32,7 @@ public class AuthController : ControllerBase
             Name = model.Name,
             Address = model.Address,
             Nif = model.Nif,
-            Gender = Enum.Parse<Gender>(model.Gender, ignoreCase: true),
+            Gender = model.Gender,
             Birthday = model.Birthday,
             PhoneNumber = model.PhoneNumber,
             Belt = model.Belt,
@@ -43,6 +44,19 @@ public class AuthController : ControllerBase
 
         if (result.Succeeded)
         {
+            var roleExist = await _roleManager.RoleExistsAsync("Student");
+
+            if (!roleExist)
+            {
+                var roleResult = await _roleManager.CreateAsync(new IdentityRole("Student"));
+                if (!roleResult.Succeeded)
+                {
+                    return BadRequest("Failed to create 'Student' role");
+                }
+            }
+
+            await _userManager.AddToRoleAsync(user, "Student");
+
             return Ok(new { message = "User registered successfully" });
         }
 

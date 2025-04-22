@@ -1,36 +1,101 @@
 <div class="flex align-items-center justify-content-center min-h-screen px-3">
-  <p-card class="w-full sm:w-30rem">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
-      <p-inputgroup>
-        <p-inputgroup-addon>
-          <i class="pi pi-user"></i>
-        </p-inputgroup-addon>
-        <input
-			pInputText
-			formControlName="email"
-			placeholder="Email"
-		/>
-      </p-inputgroup>
+	<p-card class="w-full sm:w-30rem">
+		<form
+			[formGroup]="loginForm"
+			(ngSubmit)="onSubmit()"
+			class="flex flex-column gap-3"
+		>
+			<div class="flex justify-content-center mb-2">
+				<img
+					src="assets/vc_avatar.png"
+					alt="Logo"
+					style="max-height: 5rem; width: auto"
+				/>
+			</div>
 
-      <p-inputgroup>
-        <p-inputgroup-addon>
-          <i class="pi pi-key"></i>
-        </p-inputgroup-addon>
-        <p-password
-          class="p-password-inputgroup-fix"
-		  formControlName="password"
-          placeholder="Password"
-          [feedback]="false"
-          [toggleMask]="true"
-        />
-      </p-inputgroup>
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-at"></i>
+				</p-inputgroup-addon>
+				<input
+					pInputText
+					formControlName="email"
+					placeholder="Email"
+					required
+				/>
+			</p-inputgroup>
 
-	<p-button
-	    type="submit"
-		label="Login"
-		icon="pi pi-check"
-		iconPos="right"
-	/>
-    </form>
-  </p-card>
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-key"></i>
+				</p-inputgroup-addon>
+				<p-password
+					class="p-password-inputgroup-fix custom-input"
+					formControlName="password"
+					placeholder="Password"
+					[feedback]="false"
+					[toggleMask]="true"
+                    required
+				/>
+			</p-inputgroup>
+			@if (password?.touched && password?.errors) { 
+                @if (password?.errors?.['minlength']) {
+                    <label class="p-error text-xs text-red-500"
+                        >At least 6 characters required.</label
+                    >
+			    }
+                @if (password?.errors?.['uppercase']) {
+                    <label class="p-error text-xs text-red-500"
+                        >Password must include an uppercase letter.</label
+                    >
+			    }
+                @if (password?.errors?.['lowercase']) {
+                    <label class="p-error text-xs text-red-500"
+                        >Password must include a lowercase letter.</label
+                    >
+                }
+                @if (password?.errors?.['digit']) {
+                    <label class="p-error text-xs text-red-500"
+                        >Password must include a digit.</label
+                    >
+			    } @if (password?.errors?.['specialChar']) {
+                    <label class="p-error text-xs text-red-500"
+                        >Password must include a special character.</label
+                    >
+			    }
+            }
+			<div class="flex justify-content-between w-full">
+				<div class="flex items-center gap-1">
+					<p-checkbox
+						value="Remember me"
+						inputId="rememberMeCheckbox"
+						size="small"
+					/>
+					<label
+						for="rememberMeCheckbox"
+						class="ml-2 text-sm cursor-pointer anchor-label"
+						>Remember me</label
+					>
+				</div>
+				<a
+					routerLink=""
+					class="text-sm text-blue-500 underline cursor-pointer anchor-label"
+				>
+					Recover password
+				</a>
+			</div>
+
+			<div
+				class="flex flex-column justify-content-center align-items-center"
+			>
+				<p-button type="submit" label="Login" />
+				<a
+                    routerLink="/register" 
+					class="mt-3 text-sm text-blue-500 underline cursor-pointer"
+				>
+					Create account
+				</a>
+			</div>
+		</form>
+	</p-card>
 </div>

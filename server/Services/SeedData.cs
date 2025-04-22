@@ -31,6 +31,7 @@ public class SeedData
                     Street = "Main Street",
                     Number = "123",
                     Floor = "2A",
+                    City="Lisbon",
                     ZipCode = "12345"
                 },
                 Nif = "123456789",

@@ -6,7 +6,7 @@ public class ApplicationUser : IdentityUser
 {
     public string Name { get; set; }
 
-    public Address Address { get; set; }
+    public Address? Address { get; set; }
 
     public string Nif { get; set; }
 

@@ -59,6 +59,10 @@ export class AuthService {
 		return roles.includes(role);
 	}
 
+    register(form: any) {
+        return this.http.post<any>(`${this.apiUrl}/register`, { ...form });
+    }
+
 	logout() {
 		localStorage.removeItem('jwt');
 		this.router.navigate(['/login']);
