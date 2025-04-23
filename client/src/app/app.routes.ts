@@ -7,11 +7,13 @@ import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
 	{ path: '', redirectTo: '/login', pathMatch: 'full' }, // TODO: Confirm to which page to redirect based on login status
-	{ path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent},
+	{ path: 'login', title: 'Login', component: LoginComponent },
+    { path: 'register', title: 'Register', component: RegisterComponent},
 	{
 		path: 'attendance',
-		component: AttendanceComponent,
+        title: 'Register Attendance'
+,		component: AttendanceComponent,
 		canActivate: [authGuard, roleGuard(['PrimaryMaster'])],
+
 	},
 ];
