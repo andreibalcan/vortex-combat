@@ -1,13 +1,13 @@
 # Vortex Combat Server
 This file contains information about the back-end of **Vortex Combat**. This server is responsible for managing authentication, user roles, and all core logic.
 
-## 🏗 Architecture
+## 🧩 Architecture
 This server follows a standard RESTful architecture to expose resources via HTTP, and uses:
 - **Entity Framework** Core for ORM (Object-Relational Mapping).
 - **ASP.NET Core Identity** for user management.
 - **JWT (JSON Web Tokens)** for authentication.
 
-## 🧩 Requirements
+## ⚙ Requirements
 Before running this project, make sure your system is set up with the required tooling.
 
 ### .NET 9 SDK
