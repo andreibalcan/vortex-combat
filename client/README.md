@@ -1,59 +1,47 @@
-# Client
+# Vortex Combat Client
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.4.
+This file contains information about the frontend of Vortex Combat. This Angular-based application serves as the user interface for interacting with the back-end APIs, handling authentication, and all available pages.
 
-## Development server
+## 🧩 Architecture
+This front-end follows a standard SPA (Single Page Application) model using: 
+- **Angular 19.2.4** as the frontend framework.
+- **PrimeNG** as the component library for UI components.
+- **RxJs** and services for reactive state and API communication.
+- **JWT (JSON Web Tokens)** for authentication.
 
-To start a local development server, run:
+## ⚙ Requirements
+Before running this project, make sure your system is set up with the required tooling.
 
-```bash
+### Node.js and npm
+Angular requires Node.js and npm (Node Package Manager) to manage dependencies and run the development server.
+
+Recommended version: **Node.js 18+**.
+
+> Download Node.js (which includes npm) [here](https://nodejs.org/en/download).
+
+### Angular CLI
+You need the Angular CLI in order to build and serve this application.
+
+```
+npm install -g @angular/cli@19.2.10
+```
+
+## 🛠 First-Time Setup
+Follow these steps to set up the project locally:
+
+#### 1. Install project dependencies
+Navigate to the `client` folder and run:
+
+```
+npm install
+```
+
+This installs all dependencies listed in `package.json`.
+
+#### 2. Running the App
+```
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+You can then explore and test the UI interface, available at:
+> http://localhost:4200/login
