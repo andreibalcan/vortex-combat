@@ -19,11 +19,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { SelectModule } from 'primeng/select';
 
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../shared/services/auth/auth.service';
 import {
 	identityPasswordValidator,
 	passwordMatchValidator,
-} from '../validators/password.validator';
+} from '../../shared/validators/password.validator';
 
 interface SelectOption {
 	label: string;

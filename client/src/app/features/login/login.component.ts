@@ -15,8 +15,8 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { AuthService } from '../auth.service';
-import { identityPasswordValidator } from '../validators/password.validator';
+import { AuthService } from '../../shared/services/auth/auth.service';
+import { identityPasswordValidator } from '../../shared/validators/password.validator';
 
 @Component({
 	selector: 'app-login',
