@@ -3,7 +3,7 @@
 **/.DS_Store
 
 # Environemnt files
-.env
+**/.env
 
 # Rider IDE files
 .idea/

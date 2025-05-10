@@ -7,6 +7,9 @@ This server follows a standard RESTful architecture to expose resources via HTTP
 - **ASP.NET Core Identity** for user management.
 - **JWT (JSON Web Tokens)** for authentication.
 
+Clean Architecture 
+
+--INSERT IMAGE and explanation-- 
 ## ⚙ Requirements
 Before running this project, make sure your system is set up with the required tooling.
 
