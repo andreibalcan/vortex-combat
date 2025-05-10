@@ -54,6 +54,11 @@ dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
+In case you want to remove your existing migrations and start from scratch, run:
+```
+dotnet ef migrations remove
+```
+
 #### 3. Running the app
 Once your environment is set up and the database is ready, you can build and run the server:
 
