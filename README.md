@@ -30,6 +30,6 @@ The application includes:
 
 For more detailed setup, configuration, and development steps:
 
-> **[Frontend README](./client/README.md)**.
+> **[Client README](./client/README.md)**.
 
-> **[Backend README](./server/README.md)**.
+> **[Server README](./server/README.md)**.

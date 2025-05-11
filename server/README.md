@@ -7,9 +7,24 @@ This server follows a standard RESTful architecture to expose resources via HTTP
 - **ASP.NET Core Identity** for user management.
 - **JWT (JSON Web Tokens)** for authentication.
 
-Clean Architecture 
+### Clean Architecture
+This server follows the **Clean Architecture** (also known as Onion Architecture) principles, which promote separation of concerns, testability, and scalability.
 
---INSERT IMAGE and explanation-- 
+<div align="center">
+  <img src="https://miro.medium.com/v2/resize:fit:500/1*sura91gPMoCjPNvZWsAO_g.png" width="300" alt="Clean Architecture Diagram" />
+</div>
+
+The solution is organized into distinct layers:
+```bash
+server/
+├── VortexCombat.Domain         // Core business models & logic (Entities)
+├── VortexCombat.Application    // Use cases & DTOs (Application layer)
+├── VortexCombat.Infrastructure // Implementation details (EF Core, Services)
+├── VortexCombat.Presentation   // API layer (Controllers, Startup)
+├── VortexCombat.Shared         // Shared enums, constants, and contracts
+├── VortexCombat.sln            // Solution file
+```
+
 ## ⚙ Requirements
 Before running this project, make sure your system is set up with the required tooling.
 
@@ -39,7 +54,7 @@ Then fill in the required fields, which include:
 Follow these steps to set up the project locally:
 
 #### 1. Restore NuGet packages
-Make sure all required dependencies listen in the `.csproj` are downloaded.
+Make sure all required dependencies listed in the `.csproj` are downloaded.
 
 ```
 dotnet restore
@@ -52,9 +67,21 @@ You can do it via:
 #### 2. Create the initial Database Migration
 Generate the schema snapshot that EF Core will use to create tables based on our entity classes.
 
+Navigate to the Presentation Layer:
 ```
-dotnet ef migrations add InitialCreate
-dotnet ef database update
+cd VortexCombat.Presentation
+```
+
+```
+dotnet ef migrations add InitialCreate \
+  --startup-project ../VortexCombat.Presentation \
+  --project ../VortexCombat.Infrastructure
+```
+
+```
+dotnet ef database update \
+  --startup-project ../VortexCombat.Presentation \
+  --project ../VortexCombat.Infrastructure
 ```
 
 In case you want to remove your existing migrations and start from scratch, run:
@@ -63,7 +90,7 @@ dotnet ef migrations remove
 ```
 
 #### 3. Running the app
-Once your environment is set up and the database is ready, you can build and run the server:
+Once your environment is set up and the database is ready, you can build and run the server (inside the Presentation layer):
 
 ```
 dotnet build
