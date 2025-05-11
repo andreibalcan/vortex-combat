@@ -53,6 +53,9 @@ interface SelectOption {
 })
 export class RegisterComponent {
 	private readonly formBuilder: FormBuilder = inject(FormBuilder);
+	private readonly authService: AuthService = inject(AuthService);
+	private readonly router: Router = inject(Router);
+
 	public readonly genders: SelectOption[] = [
 		{ label: 'Male', value: 0 },
 		{ label: 'Female', value: 1 },
@@ -106,11 +109,6 @@ export class RegisterComponent {
 		},
 		{ validators: passwordMatchValidator }
 	);
-
-	constructor(
-		private readonly authService: AuthService,
-		private readonly router: Router
-	) {}
 
 	private markAllControlsDirty(formGroup: FormGroup): void {
 		Object.values(formGroup.controls).forEach(
