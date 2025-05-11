@@ -6,6 +6,7 @@ import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { jwtInterceptor } from './shared/interceptors/jwt.interceptor';
+import { MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
 	providers: [
@@ -24,5 +25,6 @@ export const appConfig: ApplicationConfig = {
 			},
 			ripple: true,
 		}),
+		MessageService
 	],
 };

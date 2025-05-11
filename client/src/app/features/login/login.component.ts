@@ -16,7 +16,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../../shared/services/auth/auth.service';
-import { identityPasswordValidator } from '../../shared/validators/password.validator';
+import { ToastService } from '../../core/services/toast.service';
 
 @Component({
 	selector: 'app-login',
@@ -38,21 +38,17 @@ import { identityPasswordValidator } from '../../shared/validators/password.vali
 })
 export class LoginComponent {
 	private readonly formBuilder: FormBuilder = inject(FormBuilder);
+	private readonly toastService: ToastService = inject(ToastService);
+	private readonly authService: AuthService = inject(AuthService);
+	private readonly router: Router = inject(Router);
 
 	public readonly loginForm: FormGroup;
 
-	constructor(
-		private readonly authService: AuthService,
-		private readonly router: Router
-	) {
+	constructor() {
 		this.loginForm = this.formBuilder.group({
 			email: ['', [Validators.required, Validators.email]],
-			password: ['', [Validators.required, identityPasswordValidator]],
+			password: ['', [Validators.required]],
 		});
-	}
-
-	get password(): AbstractControl {
-		return this.loginForm.get('password') as AbstractControl;
 	}
 
 	public onSubmit(): void {
@@ -73,9 +69,16 @@ export class LoginComponent {
 	private loginSuccess(res: any): void {
 		this.authService.setToken(res.token);
 		this.router.navigate(['/attendance']);
+		this.toastService.success(
+			'Authentication Successful!',
+			'You have logged in successfully.'
+		);
 	}
 
 	private loginError(err: any): void {
-		console.error('Login failed:', err);
+		this.toastService.error(
+			'Authentication failed!',
+			'Invalid credentials, please try again.'
+		);
 	}
 }
