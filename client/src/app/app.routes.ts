@@ -4,16 +4,17 @@ import { RegisterComponent } from './features/register/register.component';
 import { AttendanceComponent } from './features/attendance/attendance.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { roleGuard } from './shared/guards/role.guard';
+import { ErrorPageComponent } from './core/components/error-page/error-page.component';
 
 export const routes: Routes = [
-	{ path: '', redirectTo: '/login', pathMatch: 'full' }, // TODO: Confirm to which page to redirect based on login status
+	{ path: '', redirectTo: '/login', pathMatch: 'full' }, // TODO: Create a home page and redirect to it.
 	{ path: 'login', title: 'Login', component: LoginComponent },
-    { path: 'register', title: 'Register', component: RegisterComponent},
+	{ path: 'register', title: 'Register', component: RegisterComponent },
 	{
 		path: 'attendance',
-        title: 'Register Attendance'
-,		component: AttendanceComponent,
+		title: 'Register Attendance',
+		component: AttendanceComponent,
 		canActivate: [authGuard, roleGuard(['PrimaryMaster'])],
-
 	},
+	{ path: '**', title: 'Page not found', component: ErrorPageComponent },
 ];
