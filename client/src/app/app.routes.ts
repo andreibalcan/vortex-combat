@@ -5,16 +5,30 @@ import { AttendanceComponent } from './features/attendance/attendance.component'
 import { authGuard } from './shared/guards/auth.guard';
 import { roleGuard } from './shared/guards/role.guard';
 import { ErrorPageComponent } from './core/components/error-page/error-page.component';
+import { LayoutComponent } from './core/components/layout/layout.component';
 
 export const routes: Routes = [
-	{ path: '', redirectTo: '/login', pathMatch: 'full' }, // TODO: Create a home page and redirect to it.
+	// No layout
 	{ path: 'login', title: 'Login', component: LoginComponent },
 	{ path: 'register', title: 'Register', component: RegisterComponent },
+
+	// Layout
 	{
-		path: 'attendance',
-		title: 'Register Attendance',
-		component: AttendanceComponent,
-		canActivate: [authGuard, roleGuard(['PrimaryMaster'])],
+		path: '',
+		component: LayoutComponent,
+		children: [
+			{ path: '', redirectTo: '/login', pathMatch: 'full' }, // TODO: Create a home page and redirect to it.
+			{
+				path: 'attendance',
+				title: 'Register Attendance',
+				component: AttendanceComponent,
+				canActivate: [authGuard, roleGuard(['PrimaryMaster'])],
+			},
+			{
+				path: '**',
+				title: 'Page not found',
+				component: ErrorPageComponent,
+			},
+		],
 	},
-	{ path: '**', title: 'Page not found', component: ErrorPageComponent },
 ];

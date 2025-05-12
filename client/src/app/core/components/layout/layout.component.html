@@ -1,0 +1,16 @@
+<div class="layout-wrapper">
+	<header class="layout-header">
+		<app-header (toggleDrawer)="toggleDrawer()"></app-header>
+	</header>
+	<div class="layout-content-wrapper">
+		<aside class="layout-drawer">
+			<app-drawer
+				[visible]="drawerVisible()"
+				(visibleChange)="drawerVisible.set($event)"
+			></app-drawer>
+		</aside>
+		<main class="layout-main">
+			<router-outlet></router-outlet>
+		</main>
+	</div>
+</div>

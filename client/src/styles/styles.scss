@@ -3,16 +3,45 @@
 @import "primeicons/primeicons.css";
 body {
 	font-family: "Roboto", sans-serif;
+	margin: 0;
 
-    // This code removes border-radius when p-password is inserted inside p-inputgroup with a p-inputgroup-addon icon
-    .p-inputgroup .p-password input.p-inputtext {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-    }
+	// PrimeNG variable override
+	--p-drawer-border-color: none;
+	--p-menubar-border-color: none;
+	--p-menubar-border-radius: 0;
 
-    // This code removes border-radius when p-datepicker is inserted inside p-inputgroup with a p-inputgroup-addon icon
-    .p-inputgroup .p-datepicker input.p-inputtext {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-    }
+	// This code removes border-radius when p-password is inserted inside p-inputgroup with a p-inputgroup-addon icon
+	.p-inputgroup .p-password input.p-inputtext {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	// This code removes border-radius when p-datepicker is inserted inside p-inputgroup with a p-inputgroup-addon icon
+	.p-inputgroup .p-datepicker input.p-inputtext {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	// Drawer
+	.p-drawer {
+		position: relative !important;
+		transform: none !important;
+		transition: none !important; // TODO: Find the variable so we can replace it on top of this file instead of using important
+		height: 100% !important;
+	}
+
+	.p-drawer-content-wrapper {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.p-drawer-content {
+		flex: 1;
+		overflow-y: auto;
+	}
+
+	.p-drawer-mask {
+		display: none !important;
+	}
 }
