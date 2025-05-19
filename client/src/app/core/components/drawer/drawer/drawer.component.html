@@ -9,15 +9,32 @@
 	>
 		<ng-template #headless>
 			<div class="flex flex-col h-full">
-				 <div class="overflow-y-auto">
+				<div class="overflow-y-auto">
 					<ul class="list-none p-4 m-0">
-							<li>
-								<a pRipple routerLink="/attendence" class="flex items-center cursor-pointer p-4">
-                                    <span class="font-medium">Register Attendence</span>
-                                </a>
-							</li>
+						<li>
+							<a
+								pRipple
+								routerLink="/attendance"
+								class="flex items-center cursor-pointer p-4"
+							>
+								<span class="font-medium"
+									>Register Attendance</span
+								>
+							</a>
+						</li>
+						<li>
+							<a
+								pRipple
+								routerLink="/schedule-workout"
+								class="flex items-center cursor-pointer p-4"
+							>
+								<span class="font-medium"
+									>Schedule Workout</span
+								>
+							</a>
+						</li>
 					</ul>
-				 </div>
+				</div>
 			</div>
 		</ng-template>
 	</p-drawer>

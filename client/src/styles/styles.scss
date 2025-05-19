@@ -44,4 +44,25 @@ body {
 	.p-drawer-mask {
 		display: none !important;
 	}
+
+	// sx-calendar styles
+	.auto-height-schedule-dialog .p-dialog {
+		height: auto;
+		max-height: none;
+		overflow: visible;
+	}
+
+	.auto-height-schedule-dialog .p-dialog-content {
+		overflow: visible;
+	}
+
+	.sx__calendar {
+		border: none;
+	}
+
+	// PrimeNG dark mode toggle transition
+	html.dark-theme,
+	html.p-theme-dark {
+		transition: background-color 0.3s ease, color 0.3s ease;
+	}
 }

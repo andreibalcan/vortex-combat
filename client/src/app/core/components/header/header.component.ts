@@ -1,8 +1,9 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { AuthService } from '../../../shared/services/auth/auth.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
 	selector: 'app-header',
@@ -12,14 +13,15 @@ import { AuthService } from '../../../shared/services/auth/auth.service';
 })
 export class HeaderComponent {
 	private readonly authService: AuthService = inject(AuthService);
-
+	public readonly themeService: ThemeService = inject(ThemeService);
+	public readonly toggleDrawer = output<void>();
+	
 	public readonly items: MenuItem[] = [
 		{
 			label: 'item1',
 			icon: 'arrow',
 		},
 	];
-	@Output() toggleDrawer = new EventEmitter<void>();
 
 	public onMenuClick(): void {
 		this.toggleDrawer.emit();
@@ -27,5 +29,9 @@ export class HeaderComponent {
 
 	public onLogoutClick(): void {
 		this.authService.logout();
+	}
+
+	public toggleDarkMode(): void {
+		this.themeService.toggleTheme();
 	}
 }

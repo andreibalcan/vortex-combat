@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using VortexCombat.Application.DTOs;
 using VortexCombat.Infrastructure.Data;
 using VortexCombat.Domain.Entities;
 
@@ -19,37 +20,79 @@ namespace server.Controllers
         [HttpGet]
         [Route("api/workouts")]
         [Authorize(Roles = "PrimaryMaster")]
-        public async Task<ActionResult<IEnumerable<Student>>> GetWorkouts()
+        public async Task<ActionResult<IEnumerable<WorkoutDTO>>> GetWorkouts()
         {
             var workouts = await _context.Workouts
-                .Include(w => w.WorkoutMasters)
-                .ThenInclude(wm => wm.Master) 
-                .ThenInclude(m => m.ApplicationUser)
-                .Include(w => w.WorkoutStudents)
-                .ThenInclude(ws => ws.Student)
-                .ThenInclude(s => s.ApplicationUser)
-                .ToListAsync();
-
-            var workoutDetails = workouts.Select(w => new
+                .Select(w => new
             {
                 w.Id,
                 w.Description,
-                w.Date,
-                w.Duration,
+                w.StartDate,
+                w.EndDate,
                 w.Room,
-                Masters = w.WorkoutMasters.Select(wm => new
-                {
-                    wm.Master.Id,
-                    wm.Master.ApplicationUser.Name // Access Name from ApplicationUser
-                }).ToList(),
-                Students = w.WorkoutStudents.Select(ws => new
-                {
-                    ws.Student.Id,
-                    ws.Student.ApplicationUser.Name // Access Name from ApplicationUser
-                }).ToList()
-            }).ToList();
+            }).ToListAsync();
 
-            return Ok(workoutDetails);
+            return Ok(workouts);
+        }
+        
+        [HttpPost]
+        [Route("nomis/workouts/schedule-workout")]
+        [Authorize(Roles = "PrimaryMaster")]
+        public async Task<ActionResult<ScheduleWorkoutDTO>> CreateWorkout([FromBody] ScheduleWorkoutDTO dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var workout = new Workout
+            {
+                Description = dto.Description,
+                StartDate = dto.StartDate,
+                EndDate = dto.EndDate,
+                Room = dto.Room
+            };
+
+            _context.Workouts.Add(workout);
+            await _context.SaveChangesAsync();
+
+            var responseDto = new WorkoutDTO
+            {
+                Id = workout.Id,
+                Description = workout.Description,
+                StartDate = workout.StartDate,
+                EndDate = workout.EndDate,
+                Room = workout.Room
+            };
+
+            return CreatedAtAction(nameof(GetWorkouts), new { id = workout.Id }, responseDto);
+        }
+        
+        [HttpPut]
+        [Route("nomis/workouts/update-workout/{id}")]
+        [Authorize(Roles = "PrimaryMaster")]
+        public async Task<IActionResult> UpdateWorkout(int id, [FromBody] ScheduleWorkoutDTO dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var workout = await _context.Workouts.FindAsync(id);
+            if (workout == null)
+                return NotFound("Workout not found");
+
+            workout.Description = dto.Description;
+            workout.Room = dto.Room;
+            workout.StartDate = dto.StartDate;
+            workout.EndDate = dto.EndDate;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                workout.Id,
+                workout.Description,
+                workout.StartDate,
+                workout.EndDate,
+                workout.Room
+            });
         }
         
         /// <summary>

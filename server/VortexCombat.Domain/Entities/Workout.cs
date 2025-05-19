@@ -6,10 +6,10 @@ namespace VortexCombat.Domain.Entities
     {
         public int Id { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; }
-        public int Duration { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public string Room { get; set; }
-        public List<WorkoutMaster> WorkoutMasters { get; set; } = new();
-        public List<WorkoutStudent> WorkoutStudents { get; set; } = new();
+        public List<WorkoutMaster>? WorkoutMasters { get; set; } = new();
+        public List<WorkoutStudent>? WorkoutStudents { get; set; } = new();
     }
 }

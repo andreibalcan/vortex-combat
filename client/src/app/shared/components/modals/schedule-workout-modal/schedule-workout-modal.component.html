@@ -1,0 +1,97 @@
+<form
+	[formGroup]="scheduleForm"
+	(ngSubmit)="submit()"
+	class="flex flex-column gap-3"
+>
+	<div class="flex flex-row">
+		<p-inputgroup>
+			<p-inputgroup-addon>
+				<i class="pi pi-heart"></i>
+			</p-inputgroup-addon>
+			<input
+				pInputText
+				formControlName="title"
+				placeholder="Title"
+				required
+			/>
+		</p-inputgroup>
+	</div>
+	<div class="flex flex-row">
+		<p-inputgroup>
+			<p-inputgroup-addon>
+				<i class="pi pi-calendar"></i>
+			</p-inputgroup-addon>
+			<p-datepicker
+				class="p-datepicker-inputgroup-fix"
+				formControlName="start"
+				[showTime]="true"
+				[showIcon]="true"
+				[iconDisplay]="'input'"
+				hourFormat="24"
+				inputId="startDate"
+				placeholder="Start Date"
+				required
+			/>
+		</p-inputgroup>
+	</div>
+
+	<div class="flex flex-row">
+		<p-inputgroup>
+			<p-inputgroup-addon>
+				<i class="pi pi-calendar"></i>
+			</p-inputgroup-addon>
+			<p-datepicker
+				class="p-datepicker-inputgroup-fix"
+				formControlName="end"
+				[showTime]="true"
+				[showIcon]="true"
+				[iconDisplay]="'input'"
+				inputId="endDate"
+				hourFormat="24"
+				placeholder="End Date"
+				required
+			/>
+		</p-inputgroup>
+	</div>
+
+	<div class="flex flex-row">
+		<p-inputgroup>
+			<p-inputgroup-addon>
+				<i class="pi pi-map-marker"></i>
+			</p-inputgroup-addon>
+			<input
+				pInputText
+				formControlName="location"
+				placeholder="Room"
+				required
+			/>
+		</p-inputgroup>
+	</div>
+
+	<div class="flex flex-row">
+		<p-inputgroup>
+			<p-inputgroup-addon>
+				<i class="pi pi-user"></i>
+			</p-inputgroup-addon>
+			<input pInputText formControlName="people" placeholder="Masters" />
+		</p-inputgroup>
+	</div>
+
+	<p-footer>
+		<div class="flex w-full justify-content-end gap-3">
+			<button
+				pButton
+				type="button"
+				label="Cancel"
+				severity="danger"
+				(click)="cancel()"
+			></button>
+			<button
+				pButton
+				type="submit"
+				label="Submit"
+				severity="success"
+			></button>
+		</div>
+	</p-footer>
+</form>
