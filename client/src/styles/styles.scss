@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'primeicons/primeicons.css';
 @use './layout/layout.scss';
+@use '@schedule-x/theme-default/dist/index.css';
 @layer tailwind {
   @import "tailwindcss" important;
 }
@@ -20,7 +21,11 @@ body {
 		border-bottom-left-radius: 0;
 	}
 
-	// sx-calendar styles
+	// schedule-x styles
+	.ng-calendar-wrapper {
+		height: calc(100vh - 112px);
+	}
+
 	.auto-height-schedule-dialog .p-dialog {
 		height: auto;
 		max-height: none;
@@ -34,6 +39,22 @@ body {
 	.sx__calendar {
 		border: none;
 	}
+
+	.is-dark {
+	--sx-color-primary: var(--primary-color);
+	--sx-color-on-primary: var(--text-color);
+	--sx-color-primary-container: var(--p-primary-600);
+	--sx-color-on-primary-container: var(--text-color);
+	--sx-color-background: var(--surface-overlay);
+	--sx-internal-color-text: var(--text-color);
+	--sx-color-surface-dim: var(--p-primary-700);
+	}
+
+	--sx-color-primary: var(--primary-color);
+	--sx-color-on-primary: var(--text-color);
+	--sx-color-primary-container: var(--p-primary-100);
+	--sx-internal-color-text: var(--text-color);
+	--sx-color-surface-dim: var(--p-primary-200);
 
 	// PrimeNG dark mode toggle transition
 	html.dark-theme,

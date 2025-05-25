@@ -1,6 +1,5 @@
-import { Component, inject, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { CalendarComponent } from '@schedule-x/angular';
-import '@schedule-x/theme-default/dist/index.css';
 import {
 	CalendarApp,
 	createCalendar,
@@ -24,7 +23,6 @@ import { Subscription } from 'rxjs';
 	templateUrl: './schedule-workout.component.html',
 	styleUrl: './schedule-workout.component.scss',
 	providers: [DialogService],
-	encapsulation: ViewEncapsulation.None,
 })
 export class ScheduleWorkoutComponent implements OnDestroy {
 	private eventsServicePlugin = createEventsServicePlugin();
