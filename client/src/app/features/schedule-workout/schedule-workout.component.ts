@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { CalendarComponent } from '@schedule-x/angular';
 import '@schedule-x/theme-default/dist/index.css';
 import {
@@ -24,6 +24,7 @@ import { Subscription } from 'rxjs';
 	templateUrl: './schedule-workout.component.html',
 	styleUrl: './schedule-workout.component.scss',
 	providers: [DialogService],
+	encapsulation: ViewEncapsulation.None,
 })
 export class ScheduleWorkoutComponent implements OnDestroy {
 	private eventsServicePlugin = createEventsServicePlugin();
@@ -37,7 +38,7 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 	private updateWorkoutSubscription: Subscription = new Subscription();
 	private closeModalSubscription: Subscription = new Subscription();
 	private scheduleWorkoutSubscription: Subscription = new Subscription();
-
+	private themeSubscription: Subscription;
 	constructor() {
 		this.getWorkoutsSubscription = this.workoutService
 			.getWorkouts()
@@ -52,6 +53,10 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 
 				this.eventsServicePlugin.set(formattedEvents);
 			});
+
+		this.themeSubscription = this.themeService.theme$.subscribe(() => {
+			this.updateCalendarTheme();
+		});
 	}
 
 	calendarApp: CalendarApp = createCalendar({
@@ -162,6 +167,12 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 		);
 	}
 
+	private updateCalendarTheme() {
+		this.calendarApp.setTheme(
+			this.themeService.isDarkMode() ? 'dark' : 'light'
+		);
+	}
+
 	private utcToLocalString(utcDateString: string): string {
 		const date = new Date(utcDateString);
 		const offset = date.getTimezoneOffset();
@@ -181,6 +192,9 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 		}
 		if (this.scheduleWorkoutSubscription) {
 			this.scheduleWorkoutSubscription.unsubscribe();
+		}
+		if (this.themeSubscription) {
+			this.themeSubscription.unsubscribe();
 		}
 	}
 }
