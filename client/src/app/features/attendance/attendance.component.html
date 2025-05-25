@@ -10,50 +10,42 @@
 			[showClear]="true"
 		>
 			<ng-template #selectedItem let-selectedWorkout>
-				@if(selectedWorkout) {
-				<div class="flex items-center gap-2">
-					<div
-						class="font-semibold text-s"
-						style="display: flex; align-self: center"
-					>
-						{{ selectedWorkout?.description }}
+				@if (selectedWorkout) {
+					<div class="flex items-center gap-2">
+						<div class="font-semibold text-sm self-center">
+							{{ selectedWorkout?.description }}
+						</div>
+						<p-chip class="bg-primary">
+							<span class="flex items-center justify-center">
+								<i class="pi pi-calendar text-xs"></i>
+							</span>
+							<span class="text-xs">
+								{{ selectedWorkout?.start }}
+							</span>
+						</p-chip>
+						<p-chip class="bg-primary">
+							<span class="flex items-center justify-center">
+								<i class="pi pi-home text-xs"></i>
+							</span>
+							<span class="text-xs">
+								{{ selectedWorkout?.room }}
+							</span>
+						</p-chip>
 					</div>
-					<p-chip class="bg-primary">
-						<span class="flex items-center justify-center">
-							<i class="pi pi-calendar text-xs"></i>
-						</span>
-						<span class="text-xs">
-							{{
-								selectedWorkout?.date
-									| date : "MMM d, yyyy, h:mm a"
-							}}
-						</span>
-					</p-chip>
-					<p-chip class="bg-primary">
-						<span class="flex items-center justify-center">
-							<i class="pi pi-home text-xs"></i>
-						</span>
-						<span class="text-xs">
-							{{ selectedWorkout?.room }}
-						</span>
-					</p-chip>
-				</div>
 				}
 			</ng-template>
 
 			<ng-template let-workout #item>
 				<div class="flex items-center gap-2">
-					<span
-						class="text-s"
-						style="display: flex; align-self: center"
-						>{{ workout?.description }}</span
-					>
+					<span class="text-sm self-center">{{
+						workout?.description
+					}}</span>
 					<p-chip class="bg-primary">
 						<span class="flex items-center justify-center">
 							<i class="pi pi-calendar text-xs"></i>
 						</span>
 						<span class="text-xs">
-							{{ workout?.date | date : "MMM d, yyyy, h:mm a" }}
+							{{ workout?.start }}
 						</span>
 					</p-chip>
 					<p-chip class="bg-primary">
@@ -75,11 +67,11 @@
 			[value]="masters"
 			[(selection)]="selectedMasters"
 			dataKey="id"
-			[tableStyle]="{ 'min-width': '50rem' }"
+			class="min-w-[50rem]"
 		>
 			<ng-template #header>
 				<tr>
-					<th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+					<th class="w-16"><p-tableHeaderCheckbox /></th>
 					<th>Name</th>
 					<th>Role</th>
 					<th>Age</th>
@@ -115,11 +107,11 @@
 			[value]="students"
 			[(selection)]="selectedStudents"
 			dataKey="id"
-			[tableStyle]="{ 'min-width': '50rem' }"
+			class="min-w-[50rem]"
 		>
 			<ng-template #header>
 				<tr>
-					<th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+					<th class="w-16"><p-tableHeaderCheckbox /></th>
 					<th>Name</th>
 					<th>Age</th>
 					<th>Gender</th>

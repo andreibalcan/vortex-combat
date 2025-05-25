@@ -1,7 +1,7 @@
 <form
 	[formGroup]="scheduleForm"
 	(ngSubmit)="submit()"
-	class="flex flex-column gap-3"
+	class="flex flex-col gap-3"
 >
 	<div class="flex flex-row">
 		<p-inputgroup>
@@ -16,6 +16,7 @@
 			/>
 		</p-inputgroup>
 	</div>
+
 	<div class="flex flex-row">
 		<p-inputgroup>
 			<p-inputgroup-addon>
@@ -78,7 +79,7 @@
 	</div>
 
 	<p-footer>
-		<div class="flex w-full justify-content-end gap-3">
+		<div class="flex w-full justify-end gap-3">
 			<button
 				pButton
 				type="button"

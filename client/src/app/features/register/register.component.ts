@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import {
 	FormBuilder,
 	FormGroup,
@@ -24,6 +24,7 @@ import {
 	identityPasswordValidator,
 	passwordMatchValidator,
 } from '../../shared/validators/password.validator';
+import { Subscription } from 'rxjs';
 
 interface SelectOption {
 	label: string;
@@ -51,10 +52,11 @@ interface SelectOption {
 	templateUrl: './register.component.html',
 	styleUrl: './register.component.scss',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
 	private readonly formBuilder: FormBuilder = inject(FormBuilder);
 	private readonly authService: AuthService = inject(AuthService);
 	private readonly router: Router = inject(Router);
+	private registerSubscription: Subscription = new Subscription();
 
 	public readonly genders: SelectOption[] = [
 		{ label: 'Male', value: 0 },
@@ -77,7 +79,7 @@ export class RegisterComponent {
 	public readonly minBirthdayDate: Date = new Date(
 		new Date().setFullYear(new Date().getFullYear() - 150)
 	);
-    
+
 	public readonly maxBirthdayDate: Date = new Date();
 
 	public registerForm: FormGroup = this.formBuilder.group(
@@ -122,20 +124,28 @@ export class RegisterComponent {
 		);
 	}
 
-    public onSubmit(): void {
+	public onSubmit(): void {
 		if (this.registerForm.invalid) {
 			this.markAllControlsDirty(this.registerForm);
 			return;
 		}
 
-		this.authService.register(this.registerForm.value).subscribe({
-			next: (res) => {
-				this.authService.setToken(res.token);
-				this.router.navigate(['/login']);
-			},
-			error: (err) => {
-				console.error('Register failed:', err);
-			},
-		});
+		this.registerSubscription = this.authService
+			.register(this.registerForm.value)
+			.subscribe({
+				next: res => {
+					this.authService.setToken(res.token);
+					this.router.navigate(['/login']);
+				},
+				error: err => {
+					console.error('Register failed:', err);
+				},
+			});
+	}
+
+	ngOnDestroy(): void {
+		if (this.registerSubscription) {
+			this.registerSubscription.unsubscribe();
+		}
 	}
 }

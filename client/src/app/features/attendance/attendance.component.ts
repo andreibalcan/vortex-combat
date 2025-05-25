@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { BadgeModule } from 'primeng/badge';
 import { ChipModule } from 'primeng/chip';
+import { WorkoutService } from '../../shared/services/workout/workout.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-attendance',
@@ -22,7 +24,12 @@ import { ChipModule } from 'primeng/chip';
 	templateUrl: './attendance.component.html',
 	styleUrl: './attendance.component.scss',
 })
-export class AttendanceComponent implements OnInit {
+export class AttendanceComponent implements OnInit, OnDestroy {
+	private readonly httpClient: HttpClient = inject(HttpClient);
+	private readonly workoutService: WorkoutService = inject(WorkoutService);
+	private getWorkoutsSubscription: Subscription = new Subscription();
+
+	// TODO: Add DTOs
 	public workouts = [];
 	public selectedWorkout: any;
 
@@ -32,14 +39,18 @@ export class AttendanceComponent implements OnInit {
 	public masters = [];
 	public selectedMasters = [];
 
-	constructor(private httpClient: HttpClient) {}
-
 	ngOnInit() {
-		this.httpClient
-			.get('http://localhost:5299/api/workouts')
-			.subscribe((workouts: any) => {
-				this.workouts = workouts;
+		this.getWorkoutsSubscription = this.workoutService
+			.getWorkouts()
+			.subscribe(workouts => {
+				this.workouts = workouts.map((workout: any) => ({
+					...workout,
+					start: this.utcToLocalString(workout.startDate),
+					end: this.utcToLocalString(workout.endDate),
+				}));
 			});
+
+		// TODO: Create services for these endpoints.
 		this.httpClient
 			.get('http://localhost:5299/api/masters')
 			.subscribe((masters: any) => {
@@ -65,5 +76,18 @@ export class AttendanceComponent implements OnInit {
 				attendanceList
 			)
 			.subscribe();
+	}
+
+	private utcToLocalString(utcDateString: string): string {
+		const date = new Date(utcDateString);
+		const offset = date.getTimezoneOffset();
+		const adjustedDate = new Date(date.getTime() - offset * 60000);
+		return adjustedDate.toISOString().slice(0, 16).replace('T', ' ');
+	}
+
+	ngOnDestroy(): void {
+		if (this.getWorkoutsSubscription) {
+			this.getWorkoutsSubscription.unsubscribe();
+		}
 	}
 }

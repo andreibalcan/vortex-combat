@@ -1,41 +1,11 @@
-<div #mydiv class="drawer-container">
-	<p-drawer
-		#drawerRef
-		[appendTo]="mydiv"
-		[visible]="visible()"
-		dismissible="false"
-		closeOnEscape="false"
-		modal="false"
-	>
-		<ng-template #headless>
-			<div class="flex flex-col h-full">
-				<div class="overflow-y-auto">
-					<ul class="list-none p-4 m-0">
-						<li>
-							<a
-								pRipple
-								routerLink="/attendance"
-								class="flex items-center cursor-pointer p-4"
-							>
-								<span class="font-medium"
-									>Register Attendance</span
-								>
-							</a>
-						</li>
-						<li>
-							<a
-								pRipple
-								routerLink="/schedule-workout"
-								class="flex items-center cursor-pointer p-4"
-							>
-								<span class="font-medium"
-									>Schedule Workout</span
-								>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</ng-template>
-	</p-drawer>
+<div class="layout-sidebar">
+	<ul class="layout-menu">
+		@for (item of model; track item; let i = $index) { 
+            @if (!item.separator) {
+                <li app-drawer-item [item]="item" [index]="i" [root]="true"></li>
+            } @else {
+                <li class="menu-separator"></li>
+            }
+        }
+	</ul>
 </div>

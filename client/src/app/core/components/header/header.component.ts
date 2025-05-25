@@ -1,31 +1,29 @@
-import { Component, inject, output } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { Component, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { ThemeService } from '../../services/theme.service';
+import { CommonModule } from '@angular/common';
+import { LayoutService } from '../../services/layout.service';
+import { StyleClassModule } from 'primeng/styleclass';
+import { MenuModule } from 'primeng/menu';
 
 @Component({
 	selector: 'app-header',
-	imports: [MenubarModule, ButtonModule],
+	imports: [
+		CommonModule,
+		MenubarModule,
+		ButtonModule,
+		MenuModule,
+		StyleClassModule,
+	],
 	templateUrl: './header.component.html',
 	styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-	private readonly authService: AuthService = inject(AuthService);
+	public readonly layoutService: LayoutService = inject(LayoutService);
 	public readonly themeService: ThemeService = inject(ThemeService);
-	public readonly toggleDrawer = output<void>();
-	
-	public readonly items: MenuItem[] = [
-		{
-			label: 'item1',
-			icon: 'arrow',
-		},
-	];
-
-	public onMenuClick(): void {
-		this.toggleDrawer.emit();
-	}
+	private readonly authService: AuthService = inject(AuthService);
 
 	public onLogoutClick(): void {
 		this.authService.logout();

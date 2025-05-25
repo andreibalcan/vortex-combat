@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { CalendarComponent } from '@schedule-x/angular';
 import '@schedule-x/theme-default/dist/index.css';
 import {
@@ -16,6 +16,7 @@ import { ThemeService } from '../../core/services/theme.service';
 import { ToastService } from '../../core/services/toast.service';
 import { ScheduleWorkoutModalComponent } from '../../shared/components/modals/schedule-workout-modal/schedule-workout-modal.component';
 import { WorkoutService } from '../../shared/services/workout/workout.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-schedule-workout',
@@ -24,7 +25,7 @@ import { WorkoutService } from '../../shared/services/workout/workout.service';
 	styleUrl: './schedule-workout.component.scss',
 	providers: [DialogService],
 })
-export class ScheduleWorkoutComponent {
+export class ScheduleWorkoutComponent implements OnDestroy {
 	private eventsServicePlugin = createEventsServicePlugin();
 	private eventModalPlugin = createEventModalPlugin();
 	private ref: DynamicDialogRef | undefined;
@@ -32,19 +33,25 @@ export class ScheduleWorkoutComponent {
 	private readonly dialogService: DialogService = inject(DialogService);
 	private readonly toastService: ToastService = inject(ToastService);
 	private readonly themeService: ThemeService = inject(ThemeService);
+	private getWorkoutsSubscription: Subscription = new Subscription();
+	private updateWorkoutSubscription: Subscription = new Subscription();
+	private closeModalSubscription: Subscription = new Subscription();
+	private scheduleWorkoutSubscription: Subscription = new Subscription();
 
 	constructor() {
-		this.workoutService.getWorkouts().subscribe((workouts) => {
-			const formattedEvents = workouts.map((workout: any) => ({
-				id: workout.id.toString(),
-				title: workout.description,
-				start: this.utcToLocalString(workout.startDate),
-				end: this.utcToLocalString(workout.endDate),
-				location: workout.room,
-			}));
+		this.getWorkoutsSubscription = this.workoutService
+			.getWorkouts()
+			.subscribe(workouts => {
+				const formattedEvents = workouts.map((workout: any) => ({
+					id: workout.id.toString(),
+					title: workout.description,
+					start: this.utcToLocalString(workout.startDate),
+					end: this.utcToLocalString(workout.endDate),
+					location: workout.room,
+				}));
 
-			this.eventsServicePlugin.set(formattedEvents);
-		});
+				this.eventsServicePlugin.set(formattedEvents);
+			});
 	}
 
 	calendarApp: CalendarApp = createCalendar({
@@ -59,7 +66,7 @@ export class ScheduleWorkoutComponent {
 			createDragAndDropPlugin(30),
 		],
 		callbacks: {
-			onEventUpdate: (updatedEvent) => {
+			onEventUpdate: updatedEvent => {
 				const updatedWorkout = {
 					id: updatedEvent.id,
 					description: updatedEvent.title,
@@ -68,16 +75,18 @@ export class ScheduleWorkoutComponent {
 					endDate: new Date(updatedEvent.end).toISOString(),
 				};
 
-				this.workoutService.updateWorkout(updatedWorkout).subscribe({
-					next: () => {
-						this.toastService.success(
-							'Workout updated successfully'
-						);
-					},
-					error: () => {
-						this.toastService.error('Failed to update workout');
-					},
-				});
+				this.updateWorkoutSubscription = this.workoutService
+					.updateWorkout(updatedWorkout)
+					.subscribe({
+						next: () => {
+							this.toastService.success(
+								'Workout updated successfully'
+							);
+						},
+						error: () => {
+							this.toastService.error('Failed to update workout');
+						},
+					});
 			},
 			onBeforeEventUpdate(oldEvent, newEvent) {
 				const hasChanged =
@@ -90,8 +99,8 @@ export class ScheduleWorkoutComponent {
 
 				return hasChanged; // If false, update is cancelled
 			},
-			onClickDateTime: (data) => this.handleDateTimeClick(data),
-			onEventClick: (data) => console.log('onEventClick', data),
+			onClickDateTime: data => this.handleDateTimeClick(data),
+			onEventClick: data => console.log('onEventClick', data),
 		},
 	});
 
@@ -112,35 +121,45 @@ export class ScheduleWorkoutComponent {
 		});
 
 		// TODO: Add workout DTO
-		this.ref.onClose.subscribe((workout: any) => {
-			if (!workout) {
-				return;
-			}
+		this.closeModalSubscription = this.ref.onClose.subscribe(
+			(workout: any) => {
+				if (!workout) {
+					return;
+				}
 
-			const formattedWorkout = {
-				description: workout.title,
-				room: workout.location,
-				startDate: workout.start,
-				endDate: workout.end,
-			};
+				const formattedWorkout = {
+					description: workout.title,
+					room: workout.location,
+					startDate: workout.start,
+					endDate: workout.end,
+				};
 
-			this.workoutService.scheduleWorkout(formattedWorkout).subscribe({
-				next: (response) => {
-					this.eventsServicePlugin.add({
-						id: response.id,
-						title: response.description,
-						start: this.utcToLocalString(response.startDate),
-						end: this.utcToLocalString(response.endDate),
-						location: response.room,
+				this.scheduleWorkoutSubscription = this.workoutService
+					.scheduleWorkout(formattedWorkout)
+					.subscribe({
+						next: response => {
+							this.eventsServicePlugin.add({
+								id: response.id,
+								title: response.description,
+								start: this.utcToLocalString(
+									response.startDate
+								),
+								end: this.utcToLocalString(response.endDate),
+								location: response.room,
+							});
+
+							this.toastService.success(
+								'Workout scheduled successfully'
+							);
+						},
+						error: () => {
+							this.toastService.error(
+								'Failed to schedule workout'
+							);
+						},
 					});
-
-					this.toastService.success('Workout scheduled successfully');
-				},
-				error: () => {
-					this.toastService.error('Failed to schedule workout');
-				},
-			});
-		});
+			}
+		);
 	}
 
 	private utcToLocalString(utcDateString: string): string {
@@ -148,5 +167,20 @@ export class ScheduleWorkoutComponent {
 		const offset = date.getTimezoneOffset();
 		const adjustedDate = new Date(date.getTime() - offset * 60000);
 		return adjustedDate.toISOString().slice(0, 16).replace('T', ' ');
+	}
+
+	ngOnDestroy(): void {
+		if (this.getWorkoutsSubscription) {
+			this.getWorkoutsSubscription.unsubscribe();
+		}
+		if (this.updateWorkoutSubscription) {
+			this.updateWorkoutSubscription.unsubscribe();
+		}
+		if (this.closeModalSubscription) {
+			this.closeModalSubscription.unsubscribe();
+		}
+		if (this.scheduleWorkoutSubscription) {
+			this.scheduleWorkoutSubscription.unsubscribe();
+		}
 	}
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import {
 	FormBuilder,
 	FormGroup,
@@ -16,6 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../../shared/services/auth/auth.service';
 import { ToastService } from '../../core/services/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-login',
@@ -35,12 +36,12 @@ import { ToastService } from '../../core/services/toast.service';
 		RouterLink,
 	],
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
 	private readonly formBuilder: FormBuilder = inject(FormBuilder);
 	private readonly toastService: ToastService = inject(ToastService);
 	private readonly authService: AuthService = inject(AuthService);
 	private readonly router: Router = inject(Router);
-
+	private loginSubscription: Subscription = new Subscription;
 	public readonly loginForm: FormGroup;
 
 	constructor() {
@@ -52,17 +53,19 @@ export class LoginComponent {
 
 	public onSubmit(): void {
 		if (this.loginForm.invalid) {
-			Object.values(this.loginForm.controls).forEach((control) => {
+			Object.values(this.loginForm.controls).forEach(control => {
 				control.markAsDirty();
 			});
 			return;
 		}
 
 		const { email, password } = this.loginForm.value;
-		this.authService.login(email, password).subscribe({
-			next: this.loginSuccess.bind(this),
-			error: this.loginError.bind(this),
-		});
+		this.loginSubscription = this.authService
+			.login(email, password)
+			.subscribe({
+				next: this.loginSuccess.bind(this),
+				error: this.loginError.bind(this),
+			});
 	}
 
 	private loginSuccess(res: any): void {
@@ -79,5 +82,11 @@ export class LoginComponent {
 			'Authentication failed!',
 			'Invalid credentials, please try again.'
 		);
+	}
+
+	ngOnDestroy(): void {
+		if (this.loginSubscription) {
+			this.loginSubscription.unsubscribe();
+		}
 	}
 }

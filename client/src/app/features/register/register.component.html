@@ -1,22 +1,22 @@
-<div class="flex align-items-center justify-content-center min-h-screen px-3">
-	<p-card class="w-full sm:w-auto sm:max-w-40rem">
+<div class="flex items-center justify-center min-h-screen px-3">
+	<p-card class="w-full sm:w-auto sm:max-w-[40rem] p-5">
 		<form
 			[formGroup]="registerForm"
 			(ngSubmit)="onSubmit()"
-			class="flex flex-column gap-3"
+			class="flex flex-col gap-3"
 		>
-			<div class="flex justify-content-center mb-2">
+			<div class="flex justify-center mb-2">
 				<img
 					src="assets/images/vc_logo.png"
-					alt="Logo"
-					style="max-height: 5rem; width: auto"
+					alt="Vortex Combat"
+					class="max-h-20 w-auto"
 				/>
 			</div>
 			<div>
 				<label class="text-primary text-sm font-bold"
 					><i class="pi pi-user mr-1"></i>Personal Information</label
 				>
-				<p-divider class="my-2" />
+				<p-divider />
 			</div>
 
 			<div class="flex flex-row gap-3">
@@ -79,11 +79,11 @@
 				</p-input-group>
 			</div>
 
-			<div>
+			<div class="mt-3">
 				<label class="text-primary text-sm font-bold"
 					><i class="pi pi-sort-numeric-up mr-1"></i>Biometrics</label
 				>
-				<p-divider class="my-2" />
+				<p-divider />
 			</div>
 
 			<div class="flex flex-row gap-3">
@@ -112,11 +112,11 @@
 				</p-inputgroup>
 			</div>
 
-			<div>
+			<div class="mt-3">
 				<label class="text-primary text-sm font-bold"
 					><i class="pi pi-star mr-1"></i>Belt</label
 				>
-				<p-divider class="my-2" />
+				<p-divider />
 			</div>
 			<div class="flex gap-3" formGroupName="belt">
 				<p-inputgroup>
@@ -146,11 +146,11 @@
 				</p-inputgroup>
 			</div>
 
-			<div>
+			<div class="mt-3">
 				<label class="text-primary text-sm font-bold"
 					><i class="pi pi-home mr-1"></i>Address</label
 				>
-				<p-divider class="my-2" />
+				<p-divider />
 			</div>
 			<div formGroupName="address">
 				<div class="flex flex-row gap-3 pb-3">
@@ -213,11 +213,11 @@
 				</div>
 			</div>
 
-			<div>
+			<div class="mt-3">
 				<label class="text-primary text-sm font-bold"
 					><i class="pi pi-lock mr-1"></i>Authentication</label
 				>
-				<p-divider class="my-2" />
+				<p-divider />
 			</div>
 
 			<div class="flex flex-row gap-3">
@@ -275,16 +275,16 @@
 				</p-inputgroup>
 			</div>
 
-			@if (registerForm.errors?.['passwordsMismatch'] &&
-			registerForm.touched) {
-			<label class="p-error text-xs text-red-500"
-				>Passwords do not match.</label
-			>
+			@if (
+				registerForm.errors?.["passwordsMismatch"] &&
+				registerForm.touched
+			) {
+				<label class="p-error text-xs text-red-500"
+					>Passwords do not match.</label
+				>
 			}
 
-			<div
-				class="flex flex-column justify-content-center align-items-center mt-3"
-			>
+			<div class="flex flex-col justify-center items-center mt-3">
 				<p-button type="submit" label="Register" />
 				<a
 					routerLink="/login"
