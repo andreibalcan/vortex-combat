@@ -3,7 +3,7 @@
 @use './layout/layout.scss';
 @use '@schedule-x/theme-default/dist/index.css';
 @layer tailwind {
-  @import "tailwindcss" important;
+	@import 'tailwindcss' important;
 }
 @layer tailwind, primeng;
 @plugin "tailwindcss-primeui";
@@ -40,25 +40,29 @@ body {
 		border: none;
 	}
 
-	.is-dark {
-	--sx-color-primary: var(--primary-color);
-	--sx-color-on-primary: var(--text-color);
-	--sx-color-primary-container: var(--p-primary-600);
-	--sx-color-on-primary-container: var(--text-color);
-	--sx-color-background: var(--surface-overlay);
-	--sx-internal-color-text: var(--text-color);
-	--sx-color-surface-dim: var(--p-primary-700);
-	}
-
 	--sx-color-primary: var(--primary-color);
 	--sx-color-on-primary: var(--text-color);
 	--sx-color-primary-container: var(--p-primary-100);
 	--sx-internal-color-text: var(--text-color);
-	--sx-color-surface-dim: var(--p-primary-200);
+	--sx-color-surface-dim: var(--p-primary-100);
+	--sx-color-surface-container: var(--p-primary-200);
+
+	.is-dark {
+		--sx-color-primary: var(--primary-color);
+		--sx-color-on-primary: var(--text-color);
+		--sx-color-primary-container: var(--p-primary-600);
+		--sx-color-on-primary-container: var(--text-color);
+		--sx-color-background: var(--surface-overlay);
+		--sx-internal-color-text: var(--text-color);
+		--sx-color-surface-dim: var(--p-primary-800);
+		--sx-color-surface-container: var(--p-primary-700);
+	}
 
 	// PrimeNG dark mode toggle transition
 	html.dark-theme,
 	html.p-theme-dark {
-		transition: background-color 0.3s ease, color 0.3s ease;
+		transition:
+			background-color 0.3s ease,
+			color 0.3s ease;
 	}
 }
