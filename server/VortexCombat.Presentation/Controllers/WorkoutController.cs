@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,22 +20,39 @@ namespace server.Controllers
 
         [HttpGet]
         [Route("api/workouts")]
-        [Authorize(Roles = "PrimaryMaster")]
-        public async Task<ActionResult<IEnumerable<WorkoutDTO>>> GetWorkouts()
+        [Authorize(Roles = "PrimaryMaster,Student")]
+        public async Task<ActionResult<IEnumerable<object>>> GetWorkouts()
         {
             var workouts = await _context.Workouts
+                .Include(w => w.WorkoutStudents)
+                .ThenInclude(ws => ws.Student)
+                .ThenInclude(s => s.ApplicationUser)
+                .Include(w => w.WorkoutMasters)
+                .ThenInclude(wm => wm.Master)
+                .ThenInclude(m => m.ApplicationUser)
                 .Select(w => new
-            {
-                w.Id,
-                w.Description,
-                w.StartDate,
-                w.EndDate,
-                w.Room,
-            }).ToListAsync();
+                {
+                    w.Id,
+                    w.Description,
+                    w.StartDate,
+                    w.EndDate,
+                    w.Room,
+                    Students = w.WorkoutStudents.Select(ws => new
+                    {
+                        Id = ws.Student.Id,
+                        Name = ws.Student.ApplicationUser.Name
+                    }).ToList(),
+                    Masters = w.WorkoutMasters.Select(wm => new
+                    {
+                        Id = wm.Master.Id,
+                        Name = wm.Master.ApplicationUser.Name
+                    }).ToList()
+                })
+                .ToListAsync();
 
             return Ok(workouts);
         }
-        
+
         [HttpPost]
         [Route("nomis/workouts/schedule-workout")]
         [Authorize(Roles = "PrimaryMaster")]
@@ -65,7 +83,7 @@ namespace server.Controllers
 
             return CreatedAtAction(nameof(GetWorkouts), new { id = workout.Id }, responseDto);
         }
-        
+
         [HttpPut]
         [Route("nomis/workouts/update-workout/{id}")]
         [Authorize(Roles = "PrimaryMaster")]
@@ -94,7 +112,7 @@ namespace server.Controllers
                 workout.Room
             });
         }
-        
+
         /// <summary>
         /// Submits student attendance for a workout.
         /// </summary>
@@ -156,11 +174,80 @@ namespace server.Controllers
             return Ok("Attendance submitted successfully");
         }
 
+        [HttpPost]
+        [Route("/nomis/workouts/enroll-workout")]
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> EnrollInWorkout([FromBody] EnrollInWorkoutRequest request)
+        {
+            var studentId = await GetAuthenticatedStudentIdAsync();
+
+            var workout = await _context.Workouts.FindAsync(request.WorkoutId);
+            if (workout == null)
+                return NotFound("Workout not found");
+
+            var alreadyEnrolled = await _context.WorkoutStudents
+                .AnyAsync(ws => ws.WorkoutId == workout.Id && ws.StudentId == studentId);
+            if (alreadyEnrolled)
+                return BadRequest("You are already enrolled in this workout.");
+
+            var hasTimeConflict = await _context.WorkoutStudents
+                .Where(ws => ws.StudentId == studentId)
+                .AnyAsync(ws =>
+                    _context.Workouts.Any(w =>
+                            w.Id == ws.WorkoutId &&
+                            w.Id != workout.Id &&
+                            w.StartDate < workout.EndDate &&
+                            workout.StartDate < w.EndDate
+                    )
+                );
+
+            if (hasTimeConflict)
+                return BadRequest("You are already enrolled in another workout during this time.");
+
+            _context.WorkoutStudents.Add(new WorkoutStudent
+            {
+                WorkoutId = workout.Id,
+                StudentId = studentId
+            });
+
+            await _context.SaveChangesAsync();
+
+            var student = await _context.Students
+                .Include(s => s.ApplicationUser)
+                .FirstOrDefaultAsync(s => s.Id == studentId);
+
+            return Ok(new
+            {
+                id = student.Id,
+                name = student.ApplicationUser.Name
+            });
+        }
+
         public class SubmitAttendanceRequest
         {
             public int WorkoutId { get; set; }
             public List<int> StudentIds { get; set; } = new();
             public List<int> MasterIds { get; set; } = new();
+        }
+
+        public class EnrollInWorkoutRequest
+        {
+            public int WorkoutId { get; set; }
+        }
+
+        private async Task<int> GetAuthenticatedStudentIdAsync()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+                throw new UnauthorizedAccessException("User ID not found in token");
+
+            var student = await _context.Students
+                .FirstOrDefaultAsync(s => s.ApplicationUserId == userId);
+
+            if (student == null)
+                throw new UnauthorizedAccessException("Student not found");
+
+            return student.Id;
         }
     }
 }

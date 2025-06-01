@@ -70,7 +70,7 @@ export class LoginComponent implements OnDestroy {
 
 	private loginSuccess(res: any): void {
 		this.authService.setToken(res.token);
-		this.router.navigate(['/attendance']);
+		this.router.navigate(['/home']);
 		this.toastService.success(
 			'Authentication Successful!',
 			'You have logged in successfully.'

@@ -36,7 +36,7 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 	private updateWorkoutSubscription: Subscription = new Subscription();
 	private closeModalSubscription: Subscription = new Subscription();
 	private scheduleWorkoutSubscription: Subscription = new Subscription();
-	private themeSubscription: Subscription;
+	private themeSubscription: Subscription = new Subscription();
 	constructor() {
 		this.getWorkoutsSubscription = this.workoutService
 			.getWorkouts()
@@ -165,12 +165,14 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 		);
 	}
 
+	// TODO: Make this a shared reusable function. Reused in 2 components already.
 	private updateCalendarTheme() {
 		this.calendarApp.setTheme(
 			this.themeService.isDarkMode() ? 'dark' : 'light'
 		);
 	}
 
+  	// TODO: Make this a shared reusable function. Reused in 2 components already.
 	private utcToLocalString(utcDateString: string): string {
 		const date = new Date(utcDateString);
 		const offset = date.getTimezoneOffset();

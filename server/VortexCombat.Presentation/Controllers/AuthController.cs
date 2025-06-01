@@ -1,5 +1,6 @@
 using VortexCombat.Application.DTOs;
 using VortexCombat.Domain.Entities;
+using VortexCombat.Infrastructure.Data;
 using VortexCombat.Infrastructure.Services;
 
 namespace server.Controllers;
@@ -14,12 +15,15 @@ public class AuthController : ControllerBase
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly JwtService _jwtService;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly IServiceProvider _serviceProvider;
+    
     public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-        JwtService jwtService, RoleManager<IdentityRole> roleManager)
+        JwtService jwtService, RoleManager<IdentityRole> roleManager, IServiceProvider serviceProvider)
     {
         _userManager = userManager;
         _jwtService = jwtService;
         _roleManager = roleManager;
+        _serviceProvider = serviceProvider;
     }
 
     [HttpPost("register")]
@@ -56,7 +60,17 @@ public class AuthController : ControllerBase
             }
 
             await _userManager.AddToRoleAsync(user, "Student");
+            
+            var context = _serviceProvider.GetRequiredService<ApplicationDbContext>();
+            var student = new Student
+            {
+                ApplicationUserId = user.Id,
+                EnrollDate = DateTime.Now
+            };
 
+            context.Students.Add(student);
+            await context.SaveChangesAsync();
+            
             return Ok(new { message = "User registered successfully" });
         }
 

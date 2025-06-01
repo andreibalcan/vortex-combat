@@ -1,0 +1,130 @@
+<form
+	[formGroup]="workoutForm"
+	(ngSubmit)="submit()"
+	class="flex flex-col gap-3">
+	<div class="flex flex-row">
+		<p-inputgroup>
+			<p-inputgroup-addon>
+				<i class="pi pi-heart"></i>
+			</p-inputgroup-addon>
+			<input pInputText formControlName="title" placeholder="Title" />
+		</p-inputgroup>
+	</div>
+
+	<div class="flex flex-row">
+		<p-inputgroup>
+			<p-inputgroup-addon>
+				<i class="pi pi-calendar"></i>
+			</p-inputgroup-addon>
+			<p-datepicker
+				class="p-datepicker-inputgroup-fix"
+				formControlName="start"
+				[showTime]="true"
+				[showIcon]="true"
+				[iconDisplay]="'input'"
+				hourFormat="24"
+				inputId="startDate"
+				placeholder="Start Date" />
+		</p-inputgroup>
+	</div>
+
+	<div class="flex flex-row">
+		<p-inputgroup>
+			<p-inputgroup-addon>
+				<i class="pi pi-calendar"></i>
+			</p-inputgroup-addon>
+			<p-datepicker
+				class="p-datepicker-inputgroup-fix"
+				formControlName="end"
+				[showTime]="true"
+				[showIcon]="true"
+				[iconDisplay]="'input'"
+				inputId="endDate"
+				hourFormat="24"
+				placeholder="End Date" />
+		</p-inputgroup>
+	</div>
+
+	<div class="flex flex-row">
+		<p-inputgroup>
+			<p-inputgroup-addon>
+				<i class="pi pi-map-marker"></i>
+			</p-inputgroup-addon>
+			<input pInputText formControlName="location" placeholder="Room" />
+		</p-inputgroup>
+	</div>
+
+	<div class="flex flex-row">
+		<p-accordion>
+			<p-accordion-panel value="1">
+				<p-accordion-header>
+					<span class="flex items-center gap-2 w-full">
+						<span class="font-bold whitespace-nowrap">Masters</span>
+						<p-badge
+							[value]="config.data.masters.length"
+							class="ml-auto mr-2" />
+					</span>
+				</p-accordion-header>
+				<p-accordion-content class="p-accordion-content-height">
+					@if (config.data.masters.length === 0) {
+						<p class="m-0 text-surface-300">
+							No masters enrolled...
+						</p>
+					} @else {
+						@for (master of config.data.masters; track master.id) {
+							<p class="m-0">{{ master.name }}</p>
+						}
+					}
+				</p-accordion-content>
+			</p-accordion-panel>
+
+			<p-accordion-panel value="2">
+				<p-accordion-header>
+					<span class="flex items-center gap-2 w-full">
+						<span class="font-bold whitespace-nowrap"
+							>Students</span
+						>
+						<p-badge
+							[value]="config.data.students.length"
+							class="ml-auto mr-2" />
+					</span>
+				</p-accordion-header>
+				<p-accordion-content class="p-accordion-content-height">
+					@if (config.data.students.length === 0) {
+						<p class="m-0">No students enrolled...</p>
+					} @else {
+						@for (
+							student of config.data.students;
+							track student.id
+						) {
+							<p class="m-0">{{ student.name }}</p>
+						}
+					}
+				</p-accordion-content>
+			</p-accordion-panel>
+		</p-accordion>
+	</div>
+
+	<p-footer>
+		<div class="flex w-full justify-end gap-3">
+			<button
+				pButton
+				type="button"
+				label="Cancel"
+				severity="danger"
+				(click)="cancel()"></button>
+			<button
+				pButton
+				type="button"
+				label="Remove"
+				severity="danger"
+				(click)="remove()"></button>
+			<button
+				pButton
+				type="button"
+				label="Enroll"
+				severity="success"
+				(click)="submit()"></button>
+		</div>
+	</p-footer>
+</form>

@@ -28,4 +28,11 @@ export class WorkoutService {
 			workout
 		);
 	}
+
+	// TODO: Create DTO
+	enrollWorkout(workoutId: string) {
+		return this.http.post(
+			`${this.nomisApiUrl}/enroll-workout`, { WorkoutId: workoutId }
+		);
+	}
 }

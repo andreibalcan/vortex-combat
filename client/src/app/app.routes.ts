@@ -7,6 +7,8 @@ import { authGuard } from './shared/guards/auth.guard';
 import { roleGuard } from './shared/guards/role.guard';
 import { ErrorPageComponent } from './core/components/error-page/error-page.component';
 import { LayoutComponent } from './core/components/layout/layout.component';
+import { WorkoutEnrollComponent } from './features/workout-enroll/workout-enroll.component';
+import { HomepageComponent } from './core/components/homepage/homepage.component';
 
 export const routes: Routes = [
 	// No layout
@@ -18,7 +20,13 @@ export const routes: Routes = [
 		path: '',
 		component: LayoutComponent,
 		children: [
-			{ path: '', redirectTo: '/login', pathMatch: 'full' }, // TODO: Create a home page and redirect to it.
+			{ path: '', redirectTo: '/login', pathMatch: 'full' },
+			{
+				path: 'home',
+				title: 'Home',
+				component: HomepageComponent,
+				canActivate: [authGuard, roleGuard(['PrimaryMaster', 'Student'])],
+			},
 			{
 				path: 'attendance',
 				title: 'Register Attendance',
@@ -30,6 +38,12 @@ export const routes: Routes = [
 				title: 'Schedule Workout',
 				component: ScheduleWorkoutComponent,
 				canActivate: [authGuard, roleGuard(['PrimaryMaster'])],
+			},
+			{
+				path: 'workout-enroll',
+				title: 'Workout Enroll',
+				component: WorkoutEnrollComponent,
+				canActivate: [authGuard, roleGuard(['Student'])],
 			},
 			{
 				path: '**',
