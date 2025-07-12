@@ -35,4 +35,10 @@ export class WorkoutService {
 			`${this.nomisApiUrl}/enroll-workout`, { WorkoutId: workoutId }
 		);
 	}
+
+	deleteWorkout(workoutId: string) {
+		return this.http.delete(
+			`${this.nomisApiUrl}/delete-workout/${workoutId}`,
+		);
+	}
 }

@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+	FormBuilder,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -11,7 +16,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { BadgeModule } from 'primeng/badge';
 
 @Component({
-	selector: 'app-workout-enroll-modal',
+	selector: 'app-edit-workout-modal',
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,
@@ -23,31 +28,45 @@ import { BadgeModule } from 'primeng/badge';
 		AccordionModule,
 		BadgeModule,
 	],
-	templateUrl: './workout-enroll-modal.component.html',
-	styleUrl: './workout-enroll-modal.component.scss',
+	templateUrl: './edit-workout-modal.component.html',
+	styleUrl: './edit-workout-modal.component.scss',
 })
-export class WorkoutEnrollModalComponent {
+export class EditWorkoutModalComponent {
 	private readonly ref = inject(DynamicDialogRef);
 	private readonly formBuilder: FormBuilder = inject(FormBuilder);
 	public readonly config = inject(DynamicDialogConfig);
+	
+	public workoutForm: FormGroup;
+	private readonly initialFormValue: any;
 
-	public workoutForm: FormGroup = this.formBuilder.group({
-		title: { value: this.config.data.title, disabled: true },
-		start: { value: new Date(this.config.data.start), disabled: true },
-		end: { value: new Date(this.config.data.end), disabled: true },
-		location: { value: this.config.data.location, disabled: true },
-	});
+	constructor() {
+		this.workoutForm = this.formBuilder.group({
+			title: [this.config.data.title, Validators.required],
+			start: [new Date(this.config.data.start), Validators.required],
+			end: [new Date(this.config.data.end), Validators.required],
+			location: [this.config.data.location, Validators.required],
+		});
+
+		this.initialFormValue = this.workoutForm.getRawValue();
+	}
 
 	public submit(): void {
-		this.ref.close({ enrolled: true });
+		this.ref.close({ workout: this.workoutForm.value, delete: false });
 	}
 
 	// TODO: Create endpoint and implement the undo enroll / remove enroll action.
 	public remove(): void {
-		this.ref.close({ enrolled: false });
+		this.ref.close({ workout: null, delete: true });
 	}
 
 	public cancel(): void {
-		this.ref.close();
+		this.ref.close({ workout: null, delete: false });
+	}
+
+	public hasFormChanged(): boolean {
+		return (
+			JSON.stringify(this.initialFormValue) !==
+			JSON.stringify(this.workoutForm.getRawValue())
+		);
 	}
 }

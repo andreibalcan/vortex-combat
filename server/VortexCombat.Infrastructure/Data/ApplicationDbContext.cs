@@ -26,12 +26,14 @@ namespace VortexCombat.Infrastructure.Data
             modelBuilder.Entity<WorkoutMaster>()
                 .HasOne(wm => wm.Workout)
                 .WithMany(w => w.WorkoutMasters)
-                .HasForeignKey(wm => wm.WorkoutId);
+                .HasForeignKey(wm => wm.WorkoutId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<WorkoutMaster>()
                 .HasOne(wm => wm.Master)
                 .WithMany(m => m.WorkoutMasters)
-                .HasForeignKey(wm => wm.MasterId);
+                .HasForeignKey(wm => wm.MasterId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<WorkoutStudent>()
                 .HasKey(ws => new { ws.WorkoutId, ws.StudentId });
@@ -39,12 +41,14 @@ namespace VortexCombat.Infrastructure.Data
             modelBuilder.Entity<WorkoutStudent>()
                 .HasOne(ws => ws.Workout)
                 .WithMany(w => w.WorkoutStudents)
-                .HasForeignKey(ws => ws.WorkoutId);
+                .HasForeignKey(ws => ws.WorkoutId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<WorkoutStudent>()
                 .HasOne(ws => ws.Student)
                 .WithMany(s => s.WorkoutStudents)
-                .HasForeignKey(ws => ws.StudentId);
+                .HasForeignKey(ws => ws.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ApplicationUser>().OwnsOne(u => u.Address);
 

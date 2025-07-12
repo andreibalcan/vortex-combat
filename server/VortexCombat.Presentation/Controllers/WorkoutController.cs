@@ -223,6 +223,22 @@ namespace server.Controllers
             });
         }
 
+        [HttpDelete]
+        [Route("nomis/workouts/delete-workout/{id}")]
+        [Authorize(Roles = "PrimaryMaster")]
+        public async Task<IActionResult> DeleteWorkout(int id)
+        {
+            var workout = await _context.Workouts.FindAsync(id);
+
+            if (workout == null)
+                return NotFound("Workout not found");
+
+            _context.Workouts.Remove(workout);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Workout deleted successfully" });
+        }
+        
         public class SubmitAttendanceRequest
         {
             public int WorkoutId { get; set; }

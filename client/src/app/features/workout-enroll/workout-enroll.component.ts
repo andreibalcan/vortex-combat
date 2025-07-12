@@ -64,8 +64,7 @@ export class WorkoutEnrollComponent {
 		},
 	});
 
-	handleEventClick(data: any) {
-		console.log('dataaaaaa', data);
+	private handleEventClick(data: any) {
 		this.ref = this.dialogService.open(WorkoutEnrollModalComponent, {
 			data: data,
 			header: 'Enroll in Workout',
