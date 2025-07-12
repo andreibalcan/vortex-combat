@@ -1,6 +1,6 @@
 # Vortex Combat 🥋
 
-**Vortex Combat** is a modern martial arts gyn management platform, focusing specifically in Jiu-Jitsu. It allows masters and students to interact in a digital environment that supports the tracking training progress, belt progress, workout scheduling, certifications, and communication.
+**Vortex Combat** is a modern martial arts gym management platform, focusing specifically in Jiu-Jitsu. It allows masters and students to interact in a digital environment that supports the tracking training progress, belt progress, workout scheduling, certifications, and communication.
 
 This project is divided into two main parts:
 
