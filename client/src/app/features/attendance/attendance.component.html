@@ -84,18 +84,25 @@
 					<td>
 						<p-tableCheckbox [value]="master" />
 					</td>
-					<td>{{ master.name }}</td>
+					<td>{{ master.applicationUser?.name }}</td>
 					<td>
 						<p-badge
-							[value]="master.role"
+							[value]="
+								master.hasTrainerCertificate
+									? 'Primary'
+									: 'Assistant'
+							"
 							[severity]="
-								master.role === 'Primary' ? 'info' : 'danger'
+								master.hasTrainerCertificate ? 'info' : 'danger'
 							"
 						></p-badge>
 					</td>
-					<td>{{ master.age }}</td>
-					<td>{{ master.gender }}</td>
-					<td>{{ master.belt }}</td>
+					<td>{{ master.applicationUser?.birthday | date }}</td>
+					<td>{{ master.applicationUser?.eGender }}</td>
+					<td>
+						{{ master.applicationUser?.belt?.color }}
+						{{ master.applicationUser?.belt?.degrees }}
+					</td>
 				</tr>
 			</ng-template>
 		</p-table>
@@ -126,13 +133,16 @@
 					<td>
 						<p-tableCheckbox [value]="student" />
 					</td>
-					<td>{{ student.name }}</td>
-					<td>{{ student.age }}</td>
-					<td>{{ student.gender }}</td>
-					<td>{{ student.weight }} kg</td>
-					<td>{{ student.height }} m</td>
+					<td>{{ student.applicationUser?.name }}</td>
+					<td>{{ student.applicationUser?.birthday | date }}</td>
+					<td>{{ student.applicationUser?.eGender }}</td>
+					<td>{{ student.applicationUser?.weight }} kg</td>
+					<td>{{ student.applicationUser?.height }} m</td>
 					<td>{{ student.enrollDate | date }}</td>
-					<td>{{ student.belt }}</td>
+					<td>
+						{{ student.applicationUser?.belt?.color }}
+						{{ student.applicationUser?.belt?.degrees }}
+					</td>
 				</tr>
 			</ng-template>
 		</p-table>

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using VortexCombat.Application.DTOs;
 using VortexCombat.Infrastructure.Data;
 using VortexCombat.Domain.Entities;
+using VortexCombat.Shared.Enums;
 
 namespace server.Controllers
 {
@@ -142,36 +143,48 @@ namespace server.Controllers
 
             foreach (var student in selectedStudents)
             {
-                bool alreadyExists = await _context.WorkoutStudents
-                    .AnyAsync(ws => ws.WorkoutId == workout.Id && ws.StudentId == student.Id);
+                var workoutStudent = await _context.WorkoutStudents
+                    .FirstOrDefaultAsync(ws => ws.WorkoutId == workout.Id && ws.StudentId == student.Id);
 
-                if (!alreadyExists)
+                if (workoutStudent == null)
                 {
                     _context.WorkoutStudents.Add(new WorkoutStudent
                     {
                         WorkoutId = workout.Id,
-                        StudentId = student.Id
+                        StudentId = student.Id,
+                        Status = EAttendanceStatus.Attended
                     });
+                }
+                else
+                {
+                    workoutStudent.Status = EAttendanceStatus.Attended;
+                    _context.WorkoutStudents.Update(workoutStudent);
                 }
             }
 
             foreach (var master in selectedMasters)
             {
-                bool alreadyExists = await _context.WorkoutMasters
-                    .AnyAsync(wm => wm.WorkoutId == workout.Id && wm.MasterId == master.Id);
+                var workoutMaster = await _context.WorkoutMasters
+                    .FirstOrDefaultAsync(wm => wm.WorkoutId == workout.Id && wm.MasterId == master.Id);
 
-                if (!alreadyExists)
+                if (workoutMaster == null)
                 {
                     _context.WorkoutMasters.Add(new WorkoutMaster
                     {
                         WorkoutId = workout.Id,
-                        MasterId = master.Id
+                        MasterId = master.Id,
+                        Status = EAttendanceStatus.Attended
                     });
+                }
+                else
+                {
+                    workoutMaster.Status = EAttendanceStatus.Attended;
+                    _context.WorkoutMasters.Update(workoutMaster);
                 }
             }
 
             await _context.SaveChangesAsync();
-            return Ok("Attendance submitted successfully");
+            return Ok(new { message = "Attendance submitted successfully" });
         }
 
         [HttpPost]
@@ -207,7 +220,8 @@ namespace server.Controllers
             _context.WorkoutStudents.Add(new WorkoutStudent
             {
                 WorkoutId = workout.Id,
-                StudentId = studentId
+                StudentId = studentId,
+                Status = EAttendanceStatus.Enrolled
             });
 
             await _context.SaveChangesAsync();

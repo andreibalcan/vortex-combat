@@ -9,6 +9,9 @@ import { BadgeModule } from 'primeng/badge';
 import { ChipModule } from 'primeng/chip';
 import { WorkoutService } from '../../shared/services/workout/workout.service';
 import { Subscription } from 'rxjs';
+import { MasterService } from '../../shared/services/users/master.service';
+import { StudentService } from '../../shared/services/users/student.service';
+import { ToastService } from '../../core/services/toast.service';
 
 @Component({
 	selector: 'app-attendance',
@@ -27,19 +30,31 @@ import { Subscription } from 'rxjs';
 export class AttendanceComponent implements OnInit, OnDestroy {
 	private readonly httpClient: HttpClient = inject(HttpClient);
 	private readonly workoutService: WorkoutService = inject(WorkoutService);
+	private readonly masterService: MasterService = inject(MasterService);
+	private readonly studentService: StudentService = inject(StudentService);
+	private readonly toastService: ToastService = inject(ToastService);
 	private getWorkoutsSubscription: Subscription = new Subscription();
+	private getMastersSubscription: Subscription = new Subscription();
+	private getStudentsSubscription: Subscription = new Subscription();
+	private registerAttendanceSubscription: Subscription = new Subscription();
 
 	// TODO: Add DTOs
-	public workouts = [];
+	public workouts: any = [];
 	public selectedWorkout: any;
 
-	public students = [];
+	public students: any = [];
 	public selectedStudents = [];
 
-	public masters = [];
+	public masters: any = [];
 	public selectedMasters = [];
 
 	ngOnInit() {
+		this.getWorkouts();
+		this.getMasters();
+		this.getStudents();
+	}
+
+	private getWorkouts(): void {
 		this.getWorkoutsSubscription = this.workoutService
 			.getWorkouts()
 			.subscribe(workouts => {
@@ -49,17 +64,21 @@ export class AttendanceComponent implements OnInit, OnDestroy {
 					end: this.utcToLocalString(workout.endDate),
 				}));
 			});
+	}
 
-		// TODO: Create services for these endpoints.
-		this.httpClient
-			.get('http://localhost:5299/api/masters')
-			.subscribe((masters: any) => {
-				this.masters = masters;
-			});
-		this.httpClient
-			.get('http://localhost:5299/api/students')
-			.subscribe((students: any) => {
+	private getStudents(): void {
+		this.getStudentsSubscription = this.studentService
+			.getStudents()
+			.subscribe(students => {
 				this.students = students;
+			});
+	}
+
+	private getMasters(): void {
+		this.getMastersSubscription = this.masterService
+			.getMasters()
+			.subscribe(masters => {
+				this.masters = masters;
 			});
 	}
 
@@ -70,12 +89,18 @@ export class AttendanceComponent implements OnInit, OnDestroy {
 			masterIds: this.selectedMasters.map((el: any) => el.id),
 		};
 
-		this.httpClient
-			.post(
-				'http://localhost:5299/nomis/workouts/register-attendance',
-				attendanceList
-			)
-			.subscribe();
+		this.registerAttendanceSubscription = this.workoutService
+			.registerAttendance(attendanceList)
+			.subscribe({
+				next: response => {
+					this.toastService.success(
+						'Attendance registered successfully'
+					);
+				},
+				error: () => {
+					this.toastService.error('Failed to register attendance');
+				},
+			});
 	}
 
 	private utcToLocalString(utcDateString: string): string {
@@ -88,6 +113,15 @@ export class AttendanceComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		if (this.getWorkoutsSubscription) {
 			this.getWorkoutsSubscription.unsubscribe();
+		}
+		if (this.getMastersSubscription) {
+			this.getMastersSubscription.unsubscribe();
+		}
+		if (this.getStudentsSubscription) {
+			this.getStudentsSubscription.unsubscribe();
+		}
+		if (this.registerAttendanceSubscription) {
+			this.registerAttendanceSubscription.unsubscribe();
 		}
 	}
 }

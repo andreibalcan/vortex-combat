@@ -41,4 +41,11 @@ export class WorkoutService {
 			`${this.nomisApiUrl}/delete-workout/${workoutId}`,
 		);
 	}
+
+	registerAttendance(attendanceList: any) {
+		return this.http.post(
+			`${this.nomisApiUrl}/register-attendance/`,
+			attendanceList
+		);
+	}
 }

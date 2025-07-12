@@ -1,3 +1,5 @@
+using VortexCombat.Shared.Enums;
+
 namespace VortexCombat.Domain.Entities
 {
     public class WorkoutMaster
@@ -7,5 +9,7 @@ namespace VortexCombat.Domain.Entities
 
         public int MasterId { get; set; }
         public Master Master { get; set; }
+        
+        public EAttendanceStatus Status { get; set; } = EAttendanceStatus.None;
     }
 }

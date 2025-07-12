@@ -21,7 +21,9 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
         {
-            var students = await _context.Students.ToListAsync();
+            var students = await _context.Students
+                .Include(s => s.ApplicationUser)
+                .ToListAsync();
             return Ok(students);
         }
     }
