@@ -31,6 +31,8 @@ namespace server.Controllers
                 .Include(w => w.WorkoutMasters)
                 .ThenInclude(wm => wm.Master)
                 .ThenInclude(m => m.ApplicationUser)
+                .Include(w => w.WorkoutExercises)
+                .ThenInclude(we => we.Exercise)
                 .Select(w => new
                 {
                     w.Id,
@@ -47,6 +49,11 @@ namespace server.Controllers
                     {
                         Id = wm.Master.Id,
                         Name = wm.Master.ApplicationUser.Name
+                    }).ToList(),
+                    Exercises = w.WorkoutExercises.Select(we => new
+                    {
+                        Id = we.Exercise.Id,
+                        Name = we.Exercise.Name
                     }).ToList()
                 })
                 .ToListAsync();

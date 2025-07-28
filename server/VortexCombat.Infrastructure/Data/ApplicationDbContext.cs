@@ -15,6 +15,7 @@ namespace VortexCombat.Infrastructure.Data
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<WorkoutMaster> WorkoutMasters { get; set; }
         public DbSet<WorkoutStudent> WorkoutStudents { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -53,6 +54,25 @@ namespace VortexCombat.Infrastructure.Data
             modelBuilder.Entity<ApplicationUser>().OwnsOne(u => u.Address);
 
             modelBuilder.Entity<ApplicationUser>().OwnsOne(u => u.Belt);
+            
+            modelBuilder.Entity<WorkoutExercise>()
+                .HasKey(we => new { we.WorkoutId, we.ExerciseId });
+
+            modelBuilder.Entity<WorkoutExercise>()
+                .HasOne(we => we.Workout)
+                .WithMany(w => w.WorkoutExercises)
+                .HasForeignKey(we => we.WorkoutId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<WorkoutExercise>()
+                .HasOne(we => we.Exercise)
+                .WithMany(e => e.WorkoutExercises)
+                .HasForeignKey(we => we.ExerciseId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Exercise>().OwnsOne(e => e.Grade);
+            modelBuilder.Entity<Exercise>().OwnsOne(e => e.BeltLevelMin);
+            modelBuilder.Entity<Exercise>().OwnsOne(e => e.BeltLevelMax);
         }
     }
 }

@@ -12,4 +12,5 @@ public class WorkoutDTO
     
     public List<Student> Students { get; set; }
     public List<Master> Masters { get; set; }
+    public List<Exercise> Exercises { get; set; }
 }
