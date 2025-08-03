@@ -12,7 +12,7 @@ using VortexCombat.Infrastructure.Data;
 namespace VortexCombat.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250510232522_InitialCreate")]
+    [Migration("20250803170217_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -241,6 +241,41 @@ namespace VortexCombat.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("VortexCombat.Domain.Entities.Exercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Difficulty")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Duration")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("MinYearsOfTraining")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Exercises");
+                });
+
             modelBuilder.Entity("VortexCombat.Domain.Entities.Master", b =>
                 {
                     b.Property<int>("Id")
@@ -285,6 +320,26 @@ namespace VortexCombat.Infrastructure.Migrations
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("VortexCombat.Domain.Entities.StudentWorkoutExercise", b =>
+                {
+                    b.Property<int>("WorkoutId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("WorkoutId", "StudentId", "ExerciseId");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentWorkoutExercise");
+                });
+
             modelBuilder.Entity("VortexCombat.Domain.Entities.Workout", b =>
                 {
                     b.Property<int>("Id")
@@ -293,23 +348,38 @@ namespace VortexCombat.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Room")
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime(6)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Workouts");
+                });
+
+            modelBuilder.Entity("VortexCombat.Domain.Entities.WorkoutExercise", b =>
+                {
+                    b.Property<int>("WorkoutId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("WorkoutId", "ExerciseId");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.ToTable("WorkoutExercise");
                 });
 
             modelBuilder.Entity("VortexCombat.Domain.Entities.WorkoutMaster", b =>
@@ -318,6 +388,9 @@ namespace VortexCombat.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("MasterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("WorkoutId", "MasterId");
@@ -333,6 +406,9 @@ namespace VortexCombat.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("WorkoutId", "StudentId");
@@ -448,6 +524,75 @@ namespace VortexCombat.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("VortexCombat.Domain.Entities.Exercise", b =>
+                {
+                    b.OwnsOne("VortexCombat.Domain.Entities.Belt", "BeltLevelMax", b1 =>
+                        {
+                            b1.Property<int>("ExerciseId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Color")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Degrees")
+                                .HasColumnType("int");
+
+                            b1.HasKey("ExerciseId");
+
+                            b1.ToTable("Exercises");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ExerciseId");
+                        });
+
+                    b.OwnsOne("VortexCombat.Domain.Entities.Belt", "BeltLevelMin", b1 =>
+                        {
+                            b1.Property<int>("ExerciseId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Color")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Degrees")
+                                .HasColumnType("int");
+
+                            b1.HasKey("ExerciseId");
+
+                            b1.ToTable("Exercises");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ExerciseId");
+                        });
+
+                    b.OwnsOne("VortexCombat.Domain.Entities.Belt", "Grade", b1 =>
+                        {
+                            b1.Property<int>("ExerciseId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Color")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Degrees")
+                                .HasColumnType("int");
+
+                            b1.HasKey("ExerciseId");
+
+                            b1.ToTable("Exercises");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ExerciseId");
+                        });
+
+                    b.Navigation("BeltLevelMax")
+                        .IsRequired();
+
+                    b.Navigation("BeltLevelMin")
+                        .IsRequired();
+
+                    b.Navigation("Grade")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("VortexCombat.Domain.Entities.Master", b =>
                 {
                     b.HasOne("VortexCombat.Domain.Entities.ApplicationUser", "ApplicationUser")
@@ -470,12 +615,58 @@ namespace VortexCombat.Infrastructure.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
+            modelBuilder.Entity("VortexCombat.Domain.Entities.StudentWorkoutExercise", b =>
+                {
+                    b.HasOne("VortexCombat.Domain.Entities.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VortexCombat.Domain.Entities.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VortexCombat.Domain.Entities.Workout", "Workout")
+                        .WithMany()
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Workout");
+                });
+
+            modelBuilder.Entity("VortexCombat.Domain.Entities.WorkoutExercise", b =>
+                {
+                    b.HasOne("VortexCombat.Domain.Entities.Exercise", "Exercise")
+                        .WithMany("WorkoutExercises")
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("VortexCombat.Domain.Entities.Workout", "Workout")
+                        .WithMany("WorkoutExercises")
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("Workout");
+                });
+
             modelBuilder.Entity("VortexCombat.Domain.Entities.WorkoutMaster", b =>
                 {
                     b.HasOne("VortexCombat.Domain.Entities.Master", "Master")
                         .WithMany("WorkoutMasters")
                         .HasForeignKey("MasterId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("VortexCombat.Domain.Entities.Workout", "Workout")
@@ -494,7 +685,7 @@ namespace VortexCombat.Infrastructure.Migrations
                     b.HasOne("VortexCombat.Domain.Entities.Student", "Student")
                         .WithMany("WorkoutStudents")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("VortexCombat.Domain.Entities.Workout", "Workout")
@@ -506,6 +697,11 @@ namespace VortexCombat.Infrastructure.Migrations
                     b.Navigation("Student");
 
                     b.Navigation("Workout");
+                });
+
+            modelBuilder.Entity("VortexCombat.Domain.Entities.Exercise", b =>
+                {
+                    b.Navigation("WorkoutExercises");
                 });
 
             modelBuilder.Entity("VortexCombat.Domain.Entities.Master", b =>
@@ -520,6 +716,8 @@ namespace VortexCombat.Infrastructure.Migrations
 
             modelBuilder.Entity("VortexCombat.Domain.Entities.Workout", b =>
                 {
+                    b.Navigation("WorkoutExercises");
+
                     b.Navigation("WorkoutMasters");
 
                     b.Navigation("WorkoutStudents");

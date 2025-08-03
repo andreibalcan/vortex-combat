@@ -90,6 +90,35 @@ namespace VortexCombat.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Exercises",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Category = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Difficulty = table.Column<int>(type: "int", nullable: false),
+                    Grade_Color = table.Column<int>(type: "int", nullable: false),
+                    Grade_Degrees = table.Column<int>(type: "int", nullable: false),
+                    BeltLevelMin_Color = table.Column<int>(type: "int", nullable: false),
+                    BeltLevelMin_Degrees = table.Column<int>(type: "int", nullable: false),
+                    BeltLevelMax_Color = table.Column<int>(type: "int", nullable: false),
+                    BeltLevelMax_Degrees = table.Column<int>(type: "int", nullable: false),
+                    Duration = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MinYearsOfTraining = table.Column<double>(type: "double", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exercises", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Workouts",
                 columns: table => new
                 {
@@ -97,8 +126,8 @@ namespace VortexCombat.Infrastructure.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Duration = table.Column<int>(type: "int", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Room = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
@@ -280,11 +309,37 @@ namespace VortexCombat.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "WorkoutExercise",
+                columns: table => new
+                {
+                    WorkoutId = table.Column<int>(type: "int", nullable: false),
+                    ExerciseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkoutExercise", x => new { x.WorkoutId, x.ExerciseId });
+                    table.ForeignKey(
+                        name: "FK_WorkoutExercise_Exercises_ExerciseId",
+                        column: x => x.ExerciseId,
+                        principalTable: "Exercises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_WorkoutExercise_Workouts_WorkoutId",
+                        column: x => x.WorkoutId,
+                        principalTable: "Workouts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "WorkoutMasters",
                 columns: table => new
                 {
                     WorkoutId = table.Column<int>(type: "int", nullable: false),
-                    MasterId = table.Column<int>(type: "int", nullable: false)
+                    MasterId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -294,9 +349,41 @@ namespace VortexCombat.Infrastructure.Migrations
                         column: x => x.MasterId,
                         principalTable: "Masters",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_WorkoutMasters_Workouts_WorkoutId",
+                        column: x => x.WorkoutId,
+                        principalTable: "Workouts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "StudentWorkoutExercise",
+                columns: table => new
+                {
+                    WorkoutId = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    ExerciseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentWorkoutExercise", x => new { x.WorkoutId, x.StudentId, x.ExerciseId });
+                    table.ForeignKey(
+                        name: "FK_StudentWorkoutExercise_Exercises_ExerciseId",
+                        column: x => x.ExerciseId,
+                        principalTable: "Exercises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StudentWorkoutExercise_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StudentWorkoutExercise_Workouts_WorkoutId",
                         column: x => x.WorkoutId,
                         principalTable: "Workouts",
                         principalColumn: "Id",
@@ -309,7 +396,8 @@ namespace VortexCombat.Infrastructure.Migrations
                 columns: table => new
                 {
                     WorkoutId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false)
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -319,7 +407,7 @@ namespace VortexCombat.Infrastructure.Migrations
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_WorkoutStudents_Workouts_WorkoutId",
                         column: x => x.WorkoutId,
@@ -377,6 +465,21 @@ namespace VortexCombat.Infrastructure.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StudentWorkoutExercise_ExerciseId",
+                table: "StudentWorkoutExercise",
+                column: "ExerciseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentWorkoutExercise_StudentId",
+                table: "StudentWorkoutExercise",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkoutExercise_ExerciseId",
+                table: "WorkoutExercise",
+                column: "ExerciseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WorkoutMasters_MasterId",
                 table: "WorkoutMasters",
                 column: "MasterId");
@@ -406,6 +509,12 @@ namespace VortexCombat.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "StudentWorkoutExercise");
+
+            migrationBuilder.DropTable(
+                name: "WorkoutExercise");
+
+            migrationBuilder.DropTable(
                 name: "WorkoutMasters");
 
             migrationBuilder.DropTable(
@@ -413,6 +522,9 @@ namespace VortexCombat.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Exercises");
 
             migrationBuilder.DropTable(
                 name: "Masters");

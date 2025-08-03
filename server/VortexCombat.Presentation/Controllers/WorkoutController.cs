@@ -79,7 +79,18 @@ namespace server.Controllers
 
             _context.Workouts.Add(workout);
             await _context.SaveChangesAsync();
+            
+            foreach (var exerciseId in dto.Exercises)
+            {
+                _context.WorkoutExercise.Add(new WorkoutExercise
+                {
+                    WorkoutId = workout.Id,
+                    ExerciseId = exerciseId
+                });
+            }
 
+            await _context.SaveChangesAsync();
+            
             var responseDto = new WorkoutDTO
             {
                 Id = workout.Id,
@@ -190,6 +201,32 @@ namespace server.Controllers
                 }
             }
 
+            var workoutExercises = await _context.WorkoutExercise
+                .Where(we => we.WorkoutId == workout.Id)
+                .ToListAsync();
+
+            foreach (var student in selectedStudents)
+            {
+                foreach (var exercise in workoutExercises)
+                {
+                    var alreadyExists = await _context.StudentWorkoutExercise
+                        .AnyAsync(swe =>
+                            swe.WorkoutId == workout.Id &&
+                            swe.StudentId == student.Id &&
+                            swe.ExerciseId == exercise.ExerciseId);
+
+                    if (!alreadyExists)
+                    {
+                        _context.StudentWorkoutExercise.Add(new StudentWorkoutExercise
+                        {
+                            WorkoutId = workout.Id,
+                            StudentId = student.Id,
+                            ExerciseId = exercise.ExerciseId
+                        });
+                    }
+                }
+            }
+            
             await _context.SaveChangesAsync();
             return Ok(new { message = "Attendance submitted successfully" });
         }
