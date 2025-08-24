@@ -1,22 +1,23 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using VortexCombat.Application.DTOs;
-using VortexCombat.Infrastructure.Data;
 using VortexCombat.Domain.Entities;
+using VortexCombat.Domain.Interfaces;
 using VortexCombat.Shared.Enums;
 
-namespace server.Controllers
+namespace VortexCombat.Presentation.Controllers
 {
     [ApiController]
-    public class WorkoutsController : ControllerBase
+    public class WorkoutController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IWorkoutRepository _workoutRepository;
+        private readonly IStudentRepository _studentRepository;
 
-        public WorkoutsController(ApplicationDbContext context)
+        public WorkoutController(IWorkoutRepository workoutRepository, IStudentRepository studentRepository)
         {
-            _context = context;
+            _workoutRepository = workoutRepository;
+            _studentRepository = studentRepository;
         }
 
         [HttpGet]
@@ -24,41 +25,21 @@ namespace server.Controllers
         [Authorize(Roles = "PrimaryMaster,Student")]
         public async Task<ActionResult<IEnumerable<object>>> GetWorkouts()
         {
-            var workouts = await _context.Workouts
-                .Include(w => w.WorkoutStudents)
-                .ThenInclude(ws => ws.Student)
-                .ThenInclude(s => s.ApplicationUser)
-                .Include(w => w.WorkoutMasters)
-                .ThenInclude(wm => wm.Master)
-                .ThenInclude(m => m.ApplicationUser)
-                .Include(w => w.WorkoutExercises)
-                .ThenInclude(we => we.Exercise)
-                .Select(w => new
-                {
-                    w.Id,
-                    w.Description,
-                    w.StartDate,
-                    w.EndDate,
-                    w.Room,
-                    Students = w.WorkoutStudents.Select(ws => new
-                    {
-                        Id = ws.Student.Id,
-                        Name = ws.Student.ApplicationUser.Name
-                    }).ToList(),
-                    Masters = w.WorkoutMasters.Select(wm => new
-                    {
-                        Id = wm.Master.Id,
-                        Name = wm.Master.ApplicationUser.Name
-                    }).ToList(),
-                    Exercises = w.WorkoutExercises.Select(we => new
-                    {
-                        Id = we.Exercise.Id,
-                        Name = we.Exercise.Name
-                    }).ToList()
-                })
-                .ToListAsync();
+            var workouts = await _workoutRepository.GetAllWithDetailsAsync();
+            var shaped = workouts.Select(w => new
+            {
+                w.Id,
+                w.Description,
+                w.StartDate,
+                w.EndDate,
+                w.Room,
+                Students = w.WorkoutStudents.Select(ws => new { Id = ws.Student.Id, Name = ws.Student.ApplicationUser.Name }).ToList(),
+                Masters = w.WorkoutMasters.Select(wm => new { Id = wm.Master.Id, Name = wm.Master.ApplicationUser.Name }).ToList(),
+                Exercises = w.WorkoutExercises.Select(we => new { Id = we.Exercise.Id, Name = we.Exercise.Name }).ToList()
+            })
+            .ToList();
 
-            return Ok(workouts);
+            return Ok(shaped);
         }
 
         [HttpPost]
@@ -66,8 +47,7 @@ namespace server.Controllers
         [Authorize(Roles = "PrimaryMaster")]
         public async Task<ActionResult<ScheduleWorkoutDTO>> CreateWorkout([FromBody] ScheduleWorkoutDTO dto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var workout = new Workout
             {
@@ -77,20 +57,21 @@ namespace server.Controllers
                 Room = dto.Room
             };
 
-            _context.Workouts.Add(workout);
-            await _context.SaveChangesAsync();
-            
+            await _workoutRepository.AddAsync(workout);
+            await _workoutRepository.SaveChangesAsync();
+
             foreach (var exerciseId in dto.Exercises)
             {
-                _context.WorkoutExercise.Add(new WorkoutExercise
+                // hydrate via navigation collection (tracked by context inside repo)
+                workout.WorkoutExercises.Add(new WorkoutExercise
                 {
                     WorkoutId = workout.Id,
                     ExerciseId = exerciseId
                 });
             }
 
-            await _context.SaveChangesAsync();
-            
+            await _workoutRepository.SaveChangesAsync();
+
             var responseDto = new WorkoutDTO
             {
                 Id = workout.Id,
@@ -108,19 +89,18 @@ namespace server.Controllers
         [Authorize(Roles = "PrimaryMaster")]
         public async Task<IActionResult> UpdateWorkout(int id, [FromBody] ScheduleWorkoutDTO dto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var workout = await _context.Workouts.FindAsync(id);
-            if (workout == null)
-                return NotFound("Workout not found");
+            var workout = await _workoutRepository.GetByIdAsync(id);
+            if (workout == null) return NotFound("Workout not found");
 
             workout.Description = dto.Description;
             workout.Room = dto.Room;
             workout.StartDate = dto.StartDate;
             workout.EndDate = dto.EndDate;
 
-            await _context.SaveChangesAsync();
+            _workoutRepository.Update(workout);
+            await _workoutRepository.SaveChangesAsync();
 
             return Ok(new
             {
@@ -132,102 +112,15 @@ namespace server.Controllers
             });
         }
 
-        /// <summary>
-        /// Submits student attendance for a workout.
-        /// </summary>
-        /// <param name="request">The attendance request containing workoutId, studentIds and masterIds</param>
-        /// <returns>Success message or error</returns>
         [HttpPost]
         [Route("/nomis/workouts/register-attendance")]
         [Authorize(Roles = "PrimaryMaster")]
         public async Task<IActionResult> SubmitAttendance([FromBody] SubmitAttendanceRequest request)
         {
-            var workout = await _context.Workouts.FindAsync(request.WorkoutId);
+            var workout = await _workoutRepository.GetByIdAsync(request.WorkoutId);
+            if (workout == null) return NotFound("Workout not found");
 
-            if (workout == null)
-                return NotFound("Workout not found");
-
-            var students = await _context.Students.ToListAsync();
-            var selectedStudents = students.Where(s => request.StudentIds.Contains(s.Id)).ToList();
-
-            if (selectedStudents.Count != request.StudentIds.Count)
-                return BadRequest("Some students not found");
-
-            var masters = await _context.Masters.ToListAsync();
-            var selectedMasters = masters.Where(m => request.MasterIds.Contains(m.Id)).ToList();
-
-            if (selectedMasters.Count != request.MasterIds.Count)
-                return BadRequest("Some masters not found");
-
-            foreach (var student in selectedStudents)
-            {
-                var workoutStudent = await _context.WorkoutStudents
-                    .FirstOrDefaultAsync(ws => ws.WorkoutId == workout.Id && ws.StudentId == student.Id);
-
-                if (workoutStudent == null)
-                {
-                    _context.WorkoutStudents.Add(new WorkoutStudent
-                    {
-                        WorkoutId = workout.Id,
-                        StudentId = student.Id,
-                        Status = EAttendanceStatus.Attended
-                    });
-                }
-                else
-                {
-                    workoutStudent.Status = EAttendanceStatus.Attended;
-                    _context.WorkoutStudents.Update(workoutStudent);
-                }
-            }
-
-            foreach (var master in selectedMasters)
-            {
-                var workoutMaster = await _context.WorkoutMasters
-                    .FirstOrDefaultAsync(wm => wm.WorkoutId == workout.Id && wm.MasterId == master.Id);
-
-                if (workoutMaster == null)
-                {
-                    _context.WorkoutMasters.Add(new WorkoutMaster
-                    {
-                        WorkoutId = workout.Id,
-                        MasterId = master.Id,
-                        Status = EAttendanceStatus.Attended
-                    });
-                }
-                else
-                {
-                    workoutMaster.Status = EAttendanceStatus.Attended;
-                    _context.WorkoutMasters.Update(workoutMaster);
-                }
-            }
-
-            var workoutExercises = await _context.WorkoutExercise
-                .Where(we => we.WorkoutId == workout.Id)
-                .ToListAsync();
-
-            foreach (var student in selectedStudents)
-            {
-                foreach (var exercise in workoutExercises)
-                {
-                    var alreadyExists = await _context.StudentWorkoutExercise
-                        .AnyAsync(swe =>
-                            swe.WorkoutId == workout.Id &&
-                            swe.StudentId == student.Id &&
-                            swe.ExerciseId == exercise.ExerciseId);
-
-                    if (!alreadyExists)
-                    {
-                        _context.StudentWorkoutExercise.Add(new StudentWorkoutExercise
-                        {
-                            WorkoutId = workout.Id,
-                            StudentId = student.Id,
-                            ExerciseId = exercise.ExerciseId
-                        });
-                    }
-                }
-            }
-            
-            await _context.SaveChangesAsync();
+            await _workoutRepository.MarkAttendanceAsync(request.WorkoutId, request.StudentIds, request.MasterIds);
             return Ok(new { message = "Attendance submitted successfully" });
         }
 
@@ -238,47 +131,19 @@ namespace server.Controllers
         {
             var studentId = await GetAuthenticatedStudentIdAsync();
 
-            var workout = await _context.Workouts.FindAsync(request.WorkoutId);
-            if (workout == null)
-                return NotFound("Workout not found");
+            var workout = await _workoutRepository.GetByIdAsync(request.WorkoutId);
+            if (workout == null) return NotFound("Workout not found");
 
-            var alreadyEnrolled = await _context.WorkoutStudents
-                .AnyAsync(ws => ws.WorkoutId == workout.Id && ws.StudentId == studentId);
-            if (alreadyEnrolled)
+            if (await _workoutRepository.IsStudentEnrolledAsync(workout.Id, studentId))
                 return BadRequest("You are already enrolled in this workout.");
 
-            var hasTimeConflict = await _context.WorkoutStudents
-                .Where(ws => ws.StudentId == studentId)
-                .AnyAsync(ws =>
-                    _context.Workouts.Any(w =>
-                            w.Id == ws.WorkoutId &&
-                            w.Id != workout.Id &&
-                            w.StartDate < workout.EndDate &&
-                            workout.StartDate < w.EndDate
-                    )
-                );
-
-            if (hasTimeConflict)
+            if (await _workoutRepository.StudentHasTimeConflictAsync(studentId, workout.StartDate, workout.EndDate))
                 return BadRequest("You are already enrolled in another workout during this time.");
 
-            _context.WorkoutStudents.Add(new WorkoutStudent
-            {
-                WorkoutId = workout.Id,
-                StudentId = studentId,
-                Status = EAttendanceStatus.Enrolled
-            });
+            await _workoutRepository.EnrollStudentAsync(workout.Id, studentId, EAttendanceStatus.Enrolled);
 
-            await _context.SaveChangesAsync();
-
-            var student = await _context.Students
-                .Include(s => s.ApplicationUser)
-                .FirstOrDefaultAsync(s => s.Id == studentId);
-
-            return Ok(new
-            {
-                id = student.Id,
-                name = student.ApplicationUser.Name
-            });
+            var student = await _studentRepository.GetByIdWithUserAsync(studentId);
+            return Ok(new { id = student!.Id, name = student.ApplicationUser.Name });
         }
 
         [HttpDelete]
@@ -286,17 +151,15 @@ namespace server.Controllers
         [Authorize(Roles = "PrimaryMaster")]
         public async Task<IActionResult> DeleteWorkout(int id)
         {
-            var workout = await _context.Workouts.FindAsync(id);
+            var workout = await _workoutRepository.GetByIdAsync(id);
+            if (workout == null) return NotFound("Workout not found");
 
-            if (workout == null)
-                return NotFound("Workout not found");
-
-            _context.Workouts.Remove(workout);
-            await _context.SaveChangesAsync();
+            _workoutRepository.Remove(workout);
+            await _workoutRepository.SaveChangesAsync();
 
             return Ok(new { message = "Workout deleted successfully" });
         }
-        
+
         public class SubmitAttendanceRequest
         {
             public int WorkoutId { get; set; }
@@ -315,9 +178,7 @@ namespace server.Controllers
             if (string.IsNullOrEmpty(userId))
                 throw new UnauthorizedAccessException("User ID not found in token");
 
-            var student = await _context.Students
-                .FirstOrDefaultAsync(s => s.ApplicationUserId == userId);
-
+            var student = await _studentRepository.GetByApplicationUserIdAsync(userId);
             if (student == null)
                 throw new UnauthorizedAccessException("Student not found");
 

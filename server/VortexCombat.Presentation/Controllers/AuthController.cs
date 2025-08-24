@@ -1,6 +1,6 @@
 using VortexCombat.Application.DTOs;
 using VortexCombat.Domain.Entities;
-using VortexCombat.Infrastructure.Data;
+using VortexCombat.Domain.Interfaces;
 using VortexCombat.Infrastructure.Services;
 
 namespace server.Controllers;
@@ -15,15 +15,18 @@ public class AuthController : ControllerBase
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly JwtService _jwtService;
     private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly IServiceProvider _serviceProvider;
-    
-    public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-        JwtService jwtService, RoleManager<IdentityRole> roleManager, IServiceProvider serviceProvider)
+    private readonly IStudentRepository _studentRepository;
+
+    public AuthController(
+        UserManager<ApplicationUser> userManager,
+        JwtService jwtService,
+        RoleManager<IdentityRole> roleManager,
+        IStudentRepository studentRepository)
     {
         _userManager = userManager;
         _jwtService = jwtService;
         _roleManager = roleManager;
-        _serviceProvider = serviceProvider;
+        _studentRepository = studentRepository;
     }
 
     [HttpPost("register")]
@@ -45,36 +48,25 @@ public class AuthController : ControllerBase
         };
 
         var result = await _userManager.CreateAsync(user, model.Password);
+        if (!result.Succeeded) return BadRequest(result.Errors);
 
-        if (result.Succeeded)
+        if (!await _roleManager.RoleExistsAsync("Student"))
         {
-            var roleExist = await _roleManager.RoleExistsAsync("Student");
-
-            if (!roleExist)
-            {
-                var roleResult = await _roleManager.CreateAsync(new IdentityRole("Student"));
-                if (!roleResult.Succeeded)
-                {
-                    return BadRequest("Failed to create 'Student' role");
-                }
-            }
-
-            await _userManager.AddToRoleAsync(user, "Student");
-            
-            var context = _serviceProvider.GetRequiredService<ApplicationDbContext>();
-            var student = new Student
-            {
-                ApplicationUserId = user.Id,
-                EnrollDate = DateTime.Now
-            };
-
-            context.Students.Add(student);
-            await context.SaveChangesAsync();
-            
-            return Ok(new { message = "User registered successfully" });
+            var roleResult = await _roleManager.CreateAsync(new IdentityRole("Student"));
+            if (!roleResult.Succeeded) return BadRequest("Failed to create 'Student' role");
         }
 
-        return BadRequest(result.Errors);
+        await _userManager.AddToRoleAsync(user, "Student");
+
+        var student = new Student
+        {
+            ApplicationUserId = user.Id,
+            EnrollDate = DateTime.Now
+        };
+        await _studentRepository.AddAsync(student);
+        await _studentRepository.SaveChangesAsync();
+
+        return Ok(new { message = "User registered successfully" });
     }
 
     [HttpPost("login")]
@@ -82,16 +74,10 @@ public class AuthController : ControllerBase
     {
         var user = await _userManager.FindByEmailAsync(model.Email);
         if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
-        {
             return BadRequest(new { message = "Invalid email or password." });
-        }
 
         var token = await _jwtService.GenerateToken(user, _userManager);
 
-        return Ok(new
-        {
-            token,
-            expiration = DateTime.UtcNow.AddMinutes(30)
-        });
+        return Ok(new { token, expiration = DateTime.UtcNow.AddMinutes(30) });
     }
 }

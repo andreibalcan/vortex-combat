@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using VortexCombat.Infrastructure.Data;
 using VortexCombat.Domain.Entities;
+using VortexCombat.Infrastructure.Data;
 using VortexCombat.Infrastructure.Services;
+using VortexCombat.Domain.Interfaces;
+using VortexCombat.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -125,6 +127,12 @@ builder.Services.AddCors(options =>
                 .AllowAnyHeader();
         });
 });
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IMasterRepository, MasterRepository>();
+builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
 
 var app = builder.Build();
 

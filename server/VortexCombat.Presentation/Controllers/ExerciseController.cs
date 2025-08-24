@@ -1,32 +1,28 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using VortexCombat.Domain.Entities;
-using VortexCombat.Infrastructure.Data;
+using VortexCombat.Domain.Interfaces;
 
-namespace server.Controllers
+namespace VortexCombat.Presentation.Controllers
 {
     [ApiController]
     [Route("nomis/exercise")]
     [Authorize(Roles = "PrimaryMaster")]
     public class ExerciseController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IExerciseRepository _exerciseRepository;
 
-        public ExerciseController(ApplicationDbContext context)
+        public ExerciseController(IExerciseRepository exerciseRepository)
         {
-            _context = context;
+            _exerciseRepository = exerciseRepository;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateExercises([FromBody] List<Exercise> exercises)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            _context.Exercises.AddRange(exercises);
-            await _context.SaveChangesAsync();
-
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            await _exerciseRepository.AddRangeAsync(exercises);
+            await _exerciseRepository.SaveChangesAsync();
             return Ok(new { count = exercises.Count });
         }
 
@@ -34,7 +30,7 @@ namespace server.Controllers
         [Authorize(Roles = "PrimaryMaster,Student")]
         public async Task<ActionResult<IEnumerable<Exercise>>> GetExercises()
         {
-            var exercises = await _context.Exercises.ToListAsync();
+            var exercises = await _exerciseRepository.GetAllAsync();
             return Ok(exercises);
         }
     }
