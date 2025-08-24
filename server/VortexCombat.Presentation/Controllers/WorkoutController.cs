@@ -2,86 +2,73 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VortexCombat.Application.DTOs;
+using VortexCombat.Application.Mappings;
+using VortexCombat.Application.Actions.Nomis;
 using VortexCombat.Domain.Entities;
 using VortexCombat.Domain.Interfaces;
-using VortexCombat.Shared.Enums;
 
 namespace VortexCombat.Presentation.Controllers
 {
     [ApiController]
-    public class WorkoutController : ControllerBase
+    public class WorkoutsController : ControllerBase
     {
-        private readonly IWorkoutRepository _workoutRepository;
-        private readonly IStudentRepository _studentRepository;
+        private readonly IWorkoutRepository _workoutRepo;
+        private readonly IStudentRepository _studentRepo;
 
-        public WorkoutController(IWorkoutRepository workoutRepository, IStudentRepository studentRepository)
+        private readonly INomisAction<ScheduleWorkoutRequest, Workout> _scheduleWorkout;
+        private readonly INomisAction<UpdateWorkoutRequest, Workout?> _updateWorkout;
+        private readonly INomisAction<RegisterAttendanceRequest, bool> _registerAttendance;
+        private readonly INomisAction<EnrollWorkoutRequest, (int studentId, string studentName)> _enrollWorkout;
+        private readonly INomisAction<int, bool> _deleteWorkout;
+
+        public WorkoutsController(
+            IWorkoutRepository workoutRepo,
+            IStudentRepository studentRepo,
+            INomisAction<ScheduleWorkoutRequest, Workout> scheduleWorkout,
+            INomisAction<UpdateWorkoutRequest, Workout?> updateWorkout,
+            INomisAction<RegisterAttendanceRequest, bool> registerAttendance,
+            INomisAction<EnrollWorkoutRequest, (int studentId, string studentName)> enrollWorkout,
+            INomisAction<int, bool> deleteWorkout)
         {
-            _workoutRepository = workoutRepository;
-            _studentRepository = studentRepository;
+            _workoutRepo = workoutRepo;
+            _studentRepo = studentRepo;
+            _scheduleWorkout = scheduleWorkout;
+            _updateWorkout = updateWorkout;
+            _registerAttendance = registerAttendance;
+            _enrollWorkout = enrollWorkout;
+            _deleteWorkout = deleteWorkout;
         }
 
         [HttpGet]
         [Route("api/workouts")]
         [Authorize(Roles = "PrimaryMaster,Student")]
-        public async Task<ActionResult<IEnumerable<object>>> GetWorkouts()
+        public async Task<ActionResult<IEnumerable<WorkoutDTO>>> GetWorkouts()
         {
-            var workouts = await _workoutRepository.GetAllWithDetailsAsync();
-            var shaped = workouts.Select(w => new
-            {
-                w.Id,
-                w.Description,
-                w.StartDate,
-                w.EndDate,
-                w.Room,
-                Students = w.WorkoutStudents.Select(ws => new { Id = ws.Student.Id, Name = ws.Student.ApplicationUser.Name }).ToList(),
-                Masters = w.WorkoutMasters.Select(wm => new { Id = wm.Master.Id, Name = wm.Master.ApplicationUser.Name }).ToList(),
-                Exercises = w.WorkoutExercises.Select(we => new { Id = we.Exercise.Id, Name = we.Exercise.Name }).ToList()
-            })
-            .ToList();
-
-            return Ok(shaped);
+            var workouts = await _workoutRepo.GetAllWithDetailsAsync();
+            return Ok(workouts.Select(w => w.ToDto()));
         }
 
         [HttpPost]
         [Route("nomis/workouts/schedule-workout")]
         [Authorize(Roles = "PrimaryMaster")]
-        public async Task<ActionResult<ScheduleWorkoutDTO>> CreateWorkout([FromBody] ScheduleWorkoutDTO dto)
+        public async Task<ActionResult<WorkoutDTO>> CreateWorkout([FromBody] ScheduleWorkoutDTO dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var workout = new Workout
+            var req = new ScheduleWorkoutRequest
             {
                 Description = dto.Description,
                 StartDate = dto.StartDate,
                 EndDate = dto.EndDate,
-                Room = dto.Room
+                Room = dto.Room,
+                Exercises = dto.Exercises
             };
 
-            await _workoutRepository.AddAsync(workout);
-            await _workoutRepository.SaveChangesAsync();
+            var (ok, error) = await _scheduleWorkout.CanExecuteAsync(req);
+            if (!ok) return BadRequest(error);
 
-            foreach (var exerciseId in dto.Exercises)
-            {
-                // hydrate via navigation collection (tracked by context inside repo)
-                workout.WorkoutExercises.Add(new WorkoutExercise
-                {
-                    WorkoutId = workout.Id,
-                    ExerciseId = exerciseId
-                });
-            }
-
-            await _workoutRepository.SaveChangesAsync();
-
-            var responseDto = new WorkoutDTO
-            {
-                Id = workout.Id,
-                Description = workout.Description,
-                StartDate = workout.StartDate,
-                EndDate = workout.EndDate,
-                Room = workout.Room
-            };
-
-            return CreatedAtAction(nameof(GetWorkouts), new { id = workout.Id }, responseDto);
+            var w = await _scheduleWorkout.ExecuteAsync(req);
+            return CreatedAtAction(nameof(GetWorkouts), new { id = w.Id }, w.ToDto());
         }
 
         [HttpPut]
@@ -91,59 +78,46 @@ namespace VortexCombat.Presentation.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var workout = await _workoutRepository.GetByIdAsync(id);
-            if (workout == null) return NotFound("Workout not found");
-
-            workout.Description = dto.Description;
-            workout.Room = dto.Room;
-            workout.StartDate = dto.StartDate;
-            workout.EndDate = dto.EndDate;
-
-            _workoutRepository.Update(workout);
-            await _workoutRepository.SaveChangesAsync();
-
-            return Ok(new
+            var req = new UpdateWorkoutRequest
             {
-                workout.Id,
-                workout.Description,
-                workout.StartDate,
-                workout.EndDate,
-                workout.Room
-            });
+                Id = id,
+                Description = dto.Description,
+                StartDate = dto.StartDate,
+                EndDate = dto.EndDate,
+                Room = dto.Room,
+                Exercises = dto.Exercises
+            };
+
+            var (ok, error) = await _updateWorkout.CanExecuteAsync(req);
+            if (!ok) return NotFound(error);
+
+            var w = await _updateWorkout.ExecuteAsync(req)!;
+            return Ok(w.ToDto());
         }
 
         [HttpPost]
         [Route("/nomis/workouts/register-attendance")]
         [Authorize(Roles = "PrimaryMaster")]
-        public async Task<IActionResult> SubmitAttendance([FromBody] SubmitAttendanceRequest request)
+        public async Task<IActionResult> SubmitAttendance([FromBody] RegisterAttendanceRequest request)
         {
-            var workout = await _workoutRepository.GetByIdAsync(request.WorkoutId);
-            if (workout == null) return NotFound("Workout not found");
+            var (ok, error) = await _registerAttendance.CanExecuteAsync(request);
+            if (!ok) return BadRequest(error);
 
-            await _workoutRepository.MarkAttendanceAsync(request.WorkoutId, request.StudentIds, request.MasterIds);
+            await _registerAttendance.ExecuteAsync(request);
             return Ok(new { message = "Attendance submitted successfully" });
         }
 
         [HttpPost]
         [Route("/nomis/workouts/enroll-workout")]
         [Authorize(Roles = "Student")]
-        public async Task<IActionResult> EnrollInWorkout([FromBody] EnrollInWorkoutRequest request)
+        public async Task<IActionResult> EnrollInWorkout([FromBody] EnrollWorkoutRequest request)
         {
-            var studentId = await GetAuthenticatedStudentIdAsync();
+            request.StudentId = await GetAuthenticatedStudentIdAsync();
+            var (ok, error) = await _enrollWorkout.CanExecuteAsync(request);
+            if (!ok) return BadRequest(error);
 
-            var workout = await _workoutRepository.GetByIdAsync(request.WorkoutId);
-            if (workout == null) return NotFound("Workout not found");
-
-            if (await _workoutRepository.IsStudentEnrolledAsync(workout.Id, studentId))
-                return BadRequest("You are already enrolled in this workout.");
-
-            if (await _workoutRepository.StudentHasTimeConflictAsync(studentId, workout.StartDate, workout.EndDate))
-                return BadRequest("You are already enrolled in another workout during this time.");
-
-            await _workoutRepository.EnrollStudentAsync(workout.Id, studentId, EAttendanceStatus.Enrolled);
-
-            var student = await _studentRepository.GetByIdWithUserAsync(studentId);
-            return Ok(new { id = student!.Id, name = student.ApplicationUser.Name });
+            var (id, name) = await _enrollWorkout.ExecuteAsync(request);
+            return Ok(new { id, name });
         }
 
         [HttpDelete]
@@ -151,37 +125,19 @@ namespace VortexCombat.Presentation.Controllers
         [Authorize(Roles = "PrimaryMaster")]
         public async Task<IActionResult> DeleteWorkout(int id)
         {
-            var workout = await _workoutRepository.GetByIdAsync(id);
-            if (workout == null) return NotFound("Workout not found");
+            var (ok, error) = await _deleteWorkout.CanExecuteAsync(id);
+            if (!ok) return NotFound(error);
 
-            _workoutRepository.Remove(workout);
-            await _workoutRepository.SaveChangesAsync();
-
+            await _deleteWorkout.ExecuteAsync(id);
             return Ok(new { message = "Workout deleted successfully" });
-        }
-
-        public class SubmitAttendanceRequest
-        {
-            public int WorkoutId { get; set; }
-            public List<int> StudentIds { get; set; } = new();
-            public List<int> MasterIds { get; set; } = new();
-        }
-
-        public class EnrollInWorkoutRequest
-        {
-            public int WorkoutId { get; set; }
         }
 
         private async Task<int> GetAuthenticatedStudentIdAsync()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userId))
-                throw new UnauthorizedAccessException("User ID not found in token");
-
-            var student = await _studentRepository.GetByApplicationUserIdAsync(userId);
-            if (student == null)
-                throw new UnauthorizedAccessException("Student not found");
-
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                         ?? throw new UnauthorizedAccessException("User ID not found in token");
+            var student = await _studentRepo.GetByApplicationUserIdAsync(userId)
+                          ?? throw new UnauthorizedAccessException("Student not found");
             return student.Id;
         }
     }

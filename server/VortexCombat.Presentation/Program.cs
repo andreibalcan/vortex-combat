@@ -10,6 +10,7 @@ using VortexCombat.Infrastructure.Data;
 using VortexCombat.Infrastructure.Services;
 using VortexCombat.Domain.Interfaces;
 using VortexCombat.Infrastructure.Repositories;
+using VortexCombat.Application.Actions.Nomis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -128,11 +129,20 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Repository Pattern
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IMasterRepository, MasterRepository>();
 builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
+
+// Strategy Pattern & Specification Pattern
+builder.Services.AddScoped<INomisAction<List<VortexCombat.Domain.Entities.Exercise>, int>, CreateExercisesAction>();
+builder.Services.AddScoped<INomisAction<ScheduleWorkoutRequest, VortexCombat.Domain.Entities.Workout>, ScheduleWorkoutAction>();
+builder.Services.AddScoped<INomisAction<UpdateWorkoutRequest, VortexCombat.Domain.Entities.Workout?>, UpdateWorkoutAction>();
+builder.Services.AddScoped<INomisAction<RegisterAttendanceRequest, bool>, RegisterWorkoutAttendanceAction>();
+builder.Services.AddScoped<INomisAction<EnrollWorkoutRequest, (int studentId, string studentName)>, EnrollInWorkoutAction>();
+builder.Services.AddScoped<INomisAction<int, bool>, DeleteWorkoutAction>();
 
 var app = builder.Build();
 

@@ -1,9 +1,10 @@
 using VortexCombat.Application.DTOs;
+using VortexCombat.Application.Mappings;
 using VortexCombat.Domain.Entities;
 using VortexCombat.Domain.Interfaces;
 using VortexCombat.Infrastructure.Services;
 
-namespace server.Controllers;
+namespace VortexCombat.Presentation.Controllers;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -32,42 +33,22 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDTO model)
     {
-        var user = new ApplicationUser
-        {
-            UserName = model.Email,
-            Email = model.Email,
-            Name = model.Name,
-            Address = model.Address,
-            Nif = model.Nif,
-            EGender = model.EGender,
-            Birthday = model.Birthday,
-            PhoneNumber = model.PhoneNumber,
-            Belt = model.Belt,
-            Height = model.Height,
-            Weight = model.Weight
-        };
-
+        var user = model.ToApplicationUser();
         var result = await _userManager.CreateAsync(user, model.Password);
         if (!result.Succeeded) return BadRequest(result.Errors);
 
         if (!await _roleManager.RoleExistsAsync("Student"))
-        {
-            var roleResult = await _roleManager.CreateAsync(new IdentityRole("Student"));
-            if (!roleResult.Succeeded) return BadRequest("Failed to create 'Student' role");
-        }
+            await _roleManager.CreateAsync(new IdentityRole("Student"));
 
         await _userManager.AddToRoleAsync(user, "Student");
 
-        var student = new Student
-        {
-            ApplicationUserId = user.Id,
-            EnrollDate = DateTime.Now
-        };
+        var student = model.ToStudent(user.Id);
         await _studentRepository.AddAsync(student);
         await _studentRepository.SaveChangesAsync();
 
         return Ok(new { message = "User registered successfully" });
     }
+
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDTO model)

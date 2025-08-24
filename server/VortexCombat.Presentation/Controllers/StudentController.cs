@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VortexCombat.Application.DTOs;
+using VortexCombat.Application.Mappings;
 using VortexCombat.Domain.Entities;
 using VortexCombat.Domain.Interfaces;
-using VortexCombat.Shared.Enums;
 
 namespace VortexCombat.Presentation.Controllers
 {
@@ -40,43 +39,14 @@ namespace VortexCombat.Presentation.Controllers
 
             var currentBelt = user.Belt;
 
-            // Required and completed exercises for current belt
             var requiredExercises = await _exerciseRepository.GetByBeltAsync(currentBelt);
             var completedExercises = await _studentRepository.GetCompletedExercisesForBeltAsync(student.Id, currentBelt);
-
-            var completedCount = completedExercises.Count;
-            var totalRequired = requiredExercises.Count;
-            var progress = totalRequired > 0 ? Math.Min(1.0, (double)completedCount / totalRequired) * 100 : 0;
-
             var attendedWorkouts = await _studentRepository.GetAttendedWorkoutsAsync(student.Id);
 
-            var completedIds = completedExercises.Select(e => e.Id).ToHashSet();
-            var remainingExercises = requiredExercises
-                .Where(e => !completedIds.Contains(e.Id))
-                .Select(e => new SimplifiedExerciseDTO { Id = e.Id, Name = e.Name })
-                .ToList();
+            var nextBelt = CalculateNextBelt(currentBelt);
 
-            var progressDto = new StudentProgressDTO
-            {
-                Id = student.Id,
-                ApplicationUserId = user.Id,
-                Name = user.Name,
-                EGender = user.EGender,
-                Birthday = user.Birthday,
-                EnrollDate = student.EnrollDate,
-                Height = user.Height,
-                Weight = user.Weight,
-                CurrentBelt = currentBelt,
-                NextBelt = CalculateNextBelt(currentBelt),
-                ProgressPercentage = progress,
-                CompletedExercises = completedExercises
-                    .Select(e => new SimplifiedExerciseDTO { Id = e.Id, Name = e.Name })
-                    .ToList(),
-                AttendedWorkouts = attendedWorkouts
-                    .Select(w => new WorkoutDTO { Id = w.Id, StartDate = w.StartDate, EndDate = w.EndDate })
-                    .ToList(),
-                RemainingExercises = remainingExercises
-            };
+            var progressDto = student.ToProgressDto(nextBelt, completedExercises, 
+                requiredExercises.Except(completedExercises).ToList(), attendedWorkouts);
 
             return Ok(progressDto);
         }

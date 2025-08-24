@@ -12,7 +12,7 @@ using VortexCombat.Infrastructure.Data;
 namespace VortexCombat.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250824170111_InitialCreate")]
+    [Migration("20250824181543_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
