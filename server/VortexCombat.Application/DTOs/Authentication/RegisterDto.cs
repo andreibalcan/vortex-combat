@@ -1,8 +1,8 @@
 using VortexCombat.Domain.Entities;
 
-namespace VortexCombat.Application.DTOs;
+namespace VortexCombat.Application.DTOs.Authentication;
 
-public class RegisterDTO
+public class RegisterDto
 {
     public string Name { get; set; }
     public Address? Address { get; set; }

@@ -14,5 +14,10 @@ namespace VortexCombat.Infrastructure.Repositories
             return _dbSet.Where(e => e.Grade.Color == belt.Color && e.Grade.Degrees == belt.Degrees)
                 .ToListAsync();
         }
+
+        public Task<List<Exercise>> GetByIdsAsync(IEnumerable<int> id)
+        {
+            return _dbSet.Where(e => id.Contains(e.Id)).ToListAsync();
+        }
     }
 }

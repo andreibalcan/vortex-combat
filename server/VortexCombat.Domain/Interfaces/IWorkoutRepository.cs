@@ -11,5 +11,8 @@ namespace VortexCombat.Domain.Interfaces
         Task EnrollStudentAsync(int workoutId, int studentId, EAttendanceStatus status);
         Task MarkAttendanceAsync(int workoutId, IEnumerable<int> studentIds, IEnumerable<int> masterIds);
         Task<List<WorkoutExercise>> GetWorkoutExercisesAsync(int workoutId);
+        Task UpdateWorkoutExercisesAsync(int workoutId, List<int> exerciseIds);
+        Task<List<int>> GetWorkoutExerciseIdsAsync(int workoutId);
+        Task<Workout?> GetByIdWithDetailsAsync(int id);
     }
 }

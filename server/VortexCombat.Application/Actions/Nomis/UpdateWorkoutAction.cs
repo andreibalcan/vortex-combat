@@ -13,7 +13,8 @@ namespace VortexCombat.Application.Actions.Nomis
             _workoutRepo = workoutRepo;
         }
 
-        public async Task<(bool ok, string? error)> CanExecuteAsync(UpdateWorkoutRequest req, CancellationToken ct = default)
+        public async Task<(bool ok, string? error)> CanExecuteAsync(UpdateWorkoutRequest req,
+            CancellationToken ct = default)
         {
             if (req.StartDate >= req.EndDate) return (false, "Start date must be before end date");
             var exists = await _workoutRepo.FirstOrDefaultAsync(new WorkoutByIdSpec(req.Id));
@@ -29,6 +30,8 @@ namespace VortexCombat.Application.Actions.Nomis
             w.StartDate = req.StartDate;
             w.EndDate = req.EndDate;
             w.Room = req.Room;
+
+            await _workoutRepo.UpdateWorkoutExercisesAsync(req.Id, req.Exercises);
 
             _workoutRepo.Update(w);
             await _workoutRepo.SaveChangesAsync();

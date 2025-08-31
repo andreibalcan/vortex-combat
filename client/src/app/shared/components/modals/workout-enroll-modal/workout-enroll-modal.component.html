@@ -1,7 +1,8 @@
 <form
 	[formGroup]="workoutForm"
 	(ngSubmit)="submit()"
-	class="flex flex-col gap-3">
+	class="flex flex-col gap-3"
+>
 	<div class="flex flex-row">
 		<p-inputgroup>
 			<p-inputgroup-addon>
@@ -24,7 +25,8 @@
 				[iconDisplay]="'input'"
 				hourFormat="24"
 				inputId="startDate"
-				placeholder="Start Date" />
+				placeholder="Start Date"
+			/>
 		</p-inputgroup>
 	</div>
 
@@ -41,7 +43,8 @@
 				[iconDisplay]="'input'"
 				inputId="endDate"
 				hourFormat="24"
-				placeholder="End Date" />
+				placeholder="End Date"
+			/>
 		</p-inputgroup>
 	</div>
 
@@ -62,7 +65,8 @@
 						<span class="font-bold whitespace-nowrap">Masters</span>
 						<p-badge
 							[value]="config.data.masters.length"
-							class="ml-auto mr-2" />
+							class="ml-auto mr-2"
+						/>
 					</span>
 				</p-accordion-header>
 				<p-accordion-content class="p-accordion-content-height">
@@ -86,7 +90,8 @@
 						>
 						<p-badge
 							[value]="config.data.students.length"
-							class="ml-auto mr-2" />
+							class="ml-auto mr-2"
+						/>
 					</span>
 				</p-accordion-header>
 				<p-accordion-content class="p-accordion-content-height">
@@ -102,6 +107,31 @@
 					}
 				</p-accordion-content>
 			</p-accordion-panel>
+
+			<p-accordion-panel value="3">
+				<p-accordion-header>
+					<span class="flex items-center gap-2 w-full">
+						<span class="font-bold whitespace-nowrap"
+							>Exercises</span
+						>
+						<p-badge
+							[value]="workoutExercises.length"
+							class="ml-auto mr-2"
+						/>
+					</span>
+				</p-accordion-header>
+				<p-accordion-content class="p-accordion-content-height">
+					@if (workoutExercises.length === 0) {
+						<p class="m-0">No exercises available...</p>
+					} @else {
+						@for (exercise of workoutExercises; track exercise.id) {
+							<p class="m-0">
+								{{ exercise.category }} - {{ exercise.name }}
+							</p>
+						}
+					}
+				</p-accordion-content>
+			</p-accordion-panel>
 		</p-accordion>
 	</div>
 
@@ -112,19 +142,22 @@
 				type="button"
 				label="Cancel"
 				severity="warn"
-				(click)="cancel()"></button>
+				(click)="cancel()"
+			></button>
 			<button
 				pButton
 				type="button"
 				label="Remove"
 				severity="danger"
-				(click)="remove()"></button>
+				(click)="remove()"
+			></button>
 			<button
 				pButton
 				type="button"
 				label="Enroll"
 				severity="success"
-				(click)="submit()"></button>
+				(click)="submit()"
+			></button>
 		</div>
 	</p-footer>
 </form>

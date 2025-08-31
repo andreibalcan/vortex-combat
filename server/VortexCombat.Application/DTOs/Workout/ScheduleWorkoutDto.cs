@@ -1,6 +1,6 @@
-namespace VortexCombat.Application.DTOs;
+namespace VortexCombat.Application.DTOs.Workout;
 
-public class ScheduleWorkoutDTO
+public class ScheduleWorkoutDto
 {
     public string Description { get; set; }
     public DateTime StartDate { get; set; }

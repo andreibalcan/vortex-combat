@@ -72,9 +72,27 @@
 	<div class="flex flex-row">
 		<p-inputgroup>
 			<p-inputgroup-addon>
-				<i class="pi pi-user"></i>
+				<i class="pi pi-wave-pulse"></i>
 			</p-inputgroup-addon>
-			<input pInputText formControlName="people" placeholder="Masters" />
+			<p-multiselect
+				[options]="exercises"
+				[filter]="false"
+				formControlName="exercises"
+				optionLabel="name"
+				optionValue="id"
+				placeholder="Select an Exercise"
+				required
+			>
+				<ng-template let-selectedWorkout pTemplate="selectedItem">
+					@if (selectedWorkout) {
+						<div class="flex items-center gap-2">
+							<div class="self-center">
+								{{ selectedWorkout?.name }}
+							</div>
+						</div>
+					}
+				</ng-template>
+			</p-multiselect>
 		</p-inputgroup>
 	</div>
 

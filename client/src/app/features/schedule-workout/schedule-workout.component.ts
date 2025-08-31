@@ -49,6 +49,7 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 					start: this.utcToLocalString(workout.startDate),
 					end: this.utcToLocalString(workout.endDate),
 					location: workout.room,
+					exercises: workout.exercises,
 				}));
 
 				this.eventsServicePlugin.set(formattedEvents);
@@ -129,6 +130,7 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 							closeData.workout.start
 						).toISOString(),
 						endDate: new Date(closeData.workout.end).toISOString(),
+						exercises: closeData.workout.exercises,
 					};
 
 					this.updateWorkoutSubscription = this.workoutService
@@ -145,6 +147,7 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 										updatedWorkout.endDate
 									),
 									title: updatedWorkout.description,
+									exercises: updatedWorkout.exercises,
 								});
 								this.toastService.success(
 									'Workout updated successfully'
@@ -207,6 +210,7 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 					room: workout.location,
 					startDate: workout.start,
 					endDate: workout.end,
+					exercises: workout.exercises,
 				};
 
 				this.scheduleWorkoutSubscription = this.workoutService
@@ -221,6 +225,7 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 								),
 								end: this.utcToLocalString(response.endDate),
 								location: response.room,
+								exercises: response.exercises,
 							});
 
 							this.toastService.success(

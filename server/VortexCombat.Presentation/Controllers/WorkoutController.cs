@@ -1,9 +1,9 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VortexCombat.Application.DTOs;
 using VortexCombat.Application.Mappings;
 using VortexCombat.Application.Actions.Nomis;
+using VortexCombat.Application.DTOs.Workout;
 using VortexCombat.Domain.Entities;
 using VortexCombat.Domain.Interfaces;
 
@@ -42,16 +42,16 @@ namespace VortexCombat.Presentation.Controllers
         [HttpGet]
         [Route("api/workouts")]
         [Authorize(Roles = "PrimaryMaster,Student")]
-        public async Task<ActionResult<IEnumerable<WorkoutDTO>>> GetWorkouts()
+        public async Task<ActionResult<IEnumerable<WorkoutDto>>> GetWorkouts()
         {
             var workouts = await _workoutRepo.GetAllWithDetailsAsync();
-            return Ok(workouts.Select(w => w.ToDto()));
+            return Ok(workouts.Select(w => w.ToWorkoutDto()));
         }
 
         [HttpPost]
         [Route("nomis/workouts/schedule-workout")]
         [Authorize(Roles = "PrimaryMaster")]
-        public async Task<ActionResult<WorkoutDTO>> CreateWorkout([FromBody] ScheduleWorkoutDTO dto)
+        public async Task<ActionResult<WorkoutDto>> CreateWorkout([FromBody] ScheduleWorkoutDto dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -68,13 +68,14 @@ namespace VortexCombat.Presentation.Controllers
             if (!ok) return BadRequest(error);
 
             var w = await _scheduleWorkout.ExecuteAsync(req);
-            return CreatedAtAction(nameof(GetWorkouts), new { id = w.Id }, w.ToDto());
+            var detailedWorkout = await _workoutRepo.GetByIdWithDetailsAsync(w.Id);
+            return CreatedAtAction(nameof(GetWorkouts), new { id = w.Id }, detailedWorkout!.ToWorkoutDto());
         }
 
         [HttpPut]
         [Route("nomis/workouts/update-workout/{id}")]
         [Authorize(Roles = "PrimaryMaster")]
-        public async Task<IActionResult> UpdateWorkout(int id, [FromBody] ScheduleWorkoutDTO dto)
+        public async Task<IActionResult> UpdateWorkout(int id, [FromBody] ScheduleWorkoutDto dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -91,8 +92,10 @@ namespace VortexCombat.Presentation.Controllers
             var (ok, error) = await _updateWorkout.CanExecuteAsync(req);
             if (!ok) return NotFound(error);
 
-            var w = await _updateWorkout.ExecuteAsync(req)!;
-            return Ok(w.ToDto());
+            await _updateWorkout.ExecuteAsync(req);
+
+            var updatedWorkout = await _workoutRepo.GetByIdWithDetailsAsync(id);
+            return Ok(updatedWorkout?.ToWorkoutDto());
         }
 
         [HttpPost]

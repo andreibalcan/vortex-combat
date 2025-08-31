@@ -5,5 +5,6 @@ namespace VortexCombat.Domain.Interfaces
     public interface IExerciseRepository : IRepository<Exercise>
     {
         Task<List<Exercise>> GetByBeltAsync(Belt belt);
+        Task<List<Exercise>> GetByIdsAsync(IEnumerable<int> ids);
     }
 }

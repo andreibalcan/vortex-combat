@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VortexCombat.Application.Mappings;
 using VortexCombat.Domain.Entities;
 using VortexCombat.Domain.Interfaces;
 
@@ -21,7 +22,9 @@ namespace VortexCombat.Presentation.Controllers
         public async Task<ActionResult<IEnumerable<Master>>> GetMasters()
         {
             var masters = await _masterRepository.GetAllWithUserAsync();
-            return Ok(masters);
+            var formattedDto = masters.Select(s => s.ToExtendedMasterDto()).ToList();
+
+            return Ok(formattedDto);
         }
     }
 }

@@ -1,7 +1,8 @@
 <form
 	[formGroup]="workoutForm"
 	(ngSubmit)="submit()"
-	class="flex flex-col gap-3">
+	class="flex flex-col gap-3"
+>
 	<div class="flex flex-row">
 		<p-inputgroup>
 			<p-inputgroup-addon>
@@ -24,7 +25,8 @@
 				[iconDisplay]="'input'"
 				hourFormat="24"
 				inputId="startDate"
-				placeholder="Start Date" />
+				placeholder="Start Date"
+			/>
 		</p-inputgroup>
 	</div>
 
@@ -41,7 +43,8 @@
 				[iconDisplay]="'input'"
 				inputId="endDate"
 				hourFormat="24"
-				placeholder="End Date" />
+				placeholder="End Date"
+			/>
 		</p-inputgroup>
 	</div>
 
@@ -54,6 +57,33 @@
 		</p-inputgroup>
 	</div>
 
+	<div class="flex flex-row">
+		<p-inputgroup>
+			<p-inputgroup-addon>
+				<i class="pi pi-wave-pulse"></i>
+			</p-inputgroup-addon>
+			<p-multiselect
+				[options]="exercises"
+				[filter]="false"
+				formControlName="exercises"
+				optionLabel="name"
+				optionValue="id"
+				placeholder="Select an Exercise"
+				required
+			>
+				<ng-template let-selectedWorkout pTemplate="selectedItem">
+					@if (selectedWorkout) {
+						<div class="flex items-center gap-2">
+							<div class="self-center">
+								{{ selectedWorkout?.name }}
+							</div>
+						</div>
+					}
+				</ng-template>
+			</p-multiselect>
+		</p-inputgroup>
+	</div>
+
 	<p-footer>
 		<div class="flex w-full justify-end gap-3">
 			<button
@@ -61,20 +91,23 @@
 				type="button"
 				label="Cancel"
 				severity="warn"
-				(click)="cancel()"></button>
+				(click)="cancel()"
+			></button>
 			<button
 				pButton
 				type="button"
 				label="Delete"
 				severity="danger"
-				(click)="remove()"></button>
+				(click)="remove()"
+			></button>
 			<button
 				pButton
 				type="button"
 				label="Update"
 				severity="success"
 				(click)="submit()"
-				[disabled]="!hasFormChanged() || workoutForm.invalid"></button>
+				[disabled]="!hasFormChanged() || workoutForm.invalid"
+			></button>
 		</div>
 	</p-footer>
 </form>

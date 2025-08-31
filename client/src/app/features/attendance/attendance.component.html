@@ -84,7 +84,7 @@
 					<td>
 						<p-tableCheckbox [value]="master" />
 					</td>
-					<td>{{ master.applicationUser?.name }}</td>
+					<td>{{ master.name }}</td>
 					<td>
 						<p-badge
 							[value]="
@@ -97,11 +97,11 @@
 							"
 						></p-badge>
 					</td>
-					<td>{{ master.applicationUser?.birthday | date }}</td>
-					<td>{{ master.applicationUser?.eGender }}</td>
+					<td>{{ master.birthday | date }}</td>
+					<td>{{ master.gender }}</td>
 					<td>
-						{{ master.applicationUser?.belt?.color }}
-						{{ master.applicationUser?.belt?.degrees }}
+						{{ master.belt?.color }}
+						{{ master.belt?.degrees }}
 					</td>
 				</tr>
 			</ng-template>
@@ -133,15 +133,15 @@
 					<td>
 						<p-tableCheckbox [value]="student" />
 					</td>
-					<td>{{ student.applicationUser?.name }}</td>
-					<td>{{ student.applicationUser?.birthday | date }}</td>
-					<td>{{ student.applicationUser?.eGender }}</td>
-					<td>{{ student.applicationUser?.weight }} kg</td>
-					<td>{{ student.applicationUser?.height }} m</td>
+					<td>{{ student.name }}</td>
+					<td>{{ student.birthday | date }}</td>
+					<td>{{ student.gender }}</td>
+					<td>{{ student.weight }} kg</td>
+					<td>{{ student.height }} m</td>
 					<td>{{ student.enrollDate | date }}</td>
 					<td>
-						{{ student.applicationUser?.belt?.color }}
-						{{ student.applicationUser?.belt?.degrees }}
+						{{ student.belt?.color }}
+						{{ student.belt?.degrees }}
 					</td>
 				</tr>
 			</ng-template>

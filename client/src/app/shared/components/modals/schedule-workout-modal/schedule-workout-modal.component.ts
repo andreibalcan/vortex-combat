@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import {
 	FormBuilder,
 	FormGroup,
@@ -12,6 +12,9 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ExerciseService } from '../../../services/exercise/exercise.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-schedule-workout-modal',
@@ -22,31 +25,52 @@ import { InputTextModule } from 'primeng/inputtext';
 		InputGroupAddonModule,
 		InputTextModule,
 		ButtonModule,
-		DatePickerModule
+		DatePickerModule,
+		MultiSelectModule,
 	],
 	templateUrl: './schedule-workout-modal.component.html',
 	styleUrl: './schedule-workout-modal.component.scss',
 })
-export class ScheduleWorkoutModalComponent {
+export class ScheduleWorkoutModalComponent implements OnInit, OnDestroy {
 	private readonly ref = inject(DynamicDialogRef);
 	private readonly formBuilder: FormBuilder = inject(FormBuilder);
 	private readonly config = inject(DynamicDialogConfig);
-	
+	private readonly exerciseService: ExerciseService = inject(ExerciseService);
+
+	private exercisesSubscription: Subscription = new Subscription();
+	public exercises = [];
+
+	ngOnInit(): void {
+		this.getExercises();
+	}
+
 	public scheduleForm: FormGroup = this.formBuilder.group({
 		title: ['New workout', Validators.required],
 		start: [this.config.data.start, Validators.required],
 		end: [this.config.data.end, Validators.required],
 		location: ['', Validators.required],
-		people: '',
+		exercises: ['', Validators.required],
 	});
 
-	submit(): void {
+	private getExercises(): void {
+		this.exercisesSubscription = this.exerciseService
+			.getExercises()
+			.subscribe(exercises => (this.exercises = exercises));
+	}
+
+	public submit(): void {
 		if (this.scheduleForm.valid) {
 			this.ref.close(this.scheduleForm.value);
 		}
 	}
 
-	cancel(): void {
+	public cancel(): void {
 		this.ref.close();
+	}
+
+	ngOnDestroy(): void {
+		if (this.exercisesSubscription) {
+			this.exercisesSubscription.unsubscribe();
+		}
 	}
 }

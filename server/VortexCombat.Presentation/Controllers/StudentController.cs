@@ -24,7 +24,9 @@ namespace VortexCombat.Presentation.Controllers
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
         {
             var students = await _studentRepository.GetAllWithUserAsync();
-            return Ok(students);
+            var formattedDto = students.Select(s => s.ToExtendedStudentDto()).ToList();
+
+            return Ok(formattedDto);
         }
 
         [HttpGet("nomis/students/progress/{studentId}")]

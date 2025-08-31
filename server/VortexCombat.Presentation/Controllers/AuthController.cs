@@ -1,4 +1,4 @@
-using VortexCombat.Application.DTOs;
+using VortexCombat.Application.DTOs.Authentication;
 using VortexCombat.Application.Mappings;
 using VortexCombat.Domain.Entities;
 using VortexCombat.Domain.Interfaces;
@@ -31,9 +31,9 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(RegisterDTO model)
+    public async Task<IActionResult> Register(RegisterDto model)
     {
-        var user = model.ToApplicationUser();
+        var user = model.ToApplicationUserDto();
         var result = await _userManager.CreateAsync(user, model.Password);
         if (!result.Succeeded) return BadRequest(result.Errors);
 
@@ -42,7 +42,7 @@ public class AuthController : ControllerBase
 
         await _userManager.AddToRoleAsync(user, "Student");
 
-        var student = model.ToStudent(user.Id);
+        var student = model.ToStudentDto(user.Id);
         await _studentRepository.AddAsync(student);
         await _studentRepository.SaveChangesAsync();
 
@@ -51,7 +51,7 @@ public class AuthController : ControllerBase
 
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginDTO model)
+    public async Task<IActionResult> Login([FromBody] LoginDto model)
     {
         var user = await _userManager.FindByEmailAsync(model.Email);
         if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))

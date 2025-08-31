@@ -1,12 +1,15 @@
-using VortexCombat.Application.DTOs;
+using VortexCombat.Application.DTOs.Authentication;
+using VortexCombat.Application.DTOs.Master;
+using VortexCombat.Application.DTOs.Student;
+using VortexCombat.Application.DTOs.Workout;
 using VortexCombat.Domain.Entities;
 
 namespace VortexCombat.Application.Mappings;
 
 public static class MappingExtensions
 {
-    // RegisterDTO -> ApplicationUser
-    public static ApplicationUser ToApplicationUser(this RegisterDTO dto) =>
+    // RegisterDto -> ApplicationUser
+    public static ApplicationUser ToApplicationUserDto(this RegisterDto dto) =>
         new()
         {
             UserName = dto.Email,
@@ -22,8 +25,8 @@ public static class MappingExtensions
             Weight = dto.Weight
         };
 
-    // RegisterDTO -> Student
-    public static Student ToStudent(this RegisterDTO dto, string applicationUserId) =>
+    // RegisterDto -> Student
+    public static Student ToStudentDto(this RegisterDto dto, string applicationUserId) =>
         new()
         {
             ApplicationUserId = applicationUserId,
@@ -31,19 +34,8 @@ public static class MappingExtensions
             // Removed HasTrainerCertificate because it doesn't exist in Student entity
         };
 
-    // ScheduleWorkoutDTO -> Workout
-    public static Workout ToWorkout(this ScheduleWorkoutDTO dto, List<Exercise> exercises) =>
-        new()
-        {
-            Description = dto.Description,
-            StartDate = dto.StartDate,
-            EndDate = dto.EndDate,
-            Room = dto.Room,
-            WorkoutExercises = exercises.Select(e => new WorkoutExercise { Exercise = e }).ToList()
-        };
-
-    // Workout -> WorkoutDTO
-    public static WorkoutDTO ToDto(this Workout workout) =>
+    // Workout -> WorkoutDto
+    public static WorkoutDto ToWorkoutDto(this Workout workout) =>
         new()
         {
             Id = workout.Id,
@@ -51,13 +43,23 @@ public static class MappingExtensions
             StartDate = workout.StartDate,
             EndDate = workout.EndDate,
             Room = workout.Room,
-            Students = workout.WorkoutStudents.Select(ws => ws.Student).ToList(),
-            Masters = workout.WorkoutMasters.Select(wm => wm.Master).ToList(),
-            Exercises = workout.WorkoutExercises.Select(we => we.Exercise).ToList()
+            Students = workout.WorkoutStudents.Select(ws => new SimplifiedStudentDto
+            {
+                Id = ws.Student.Id,
+                Name = ws.Student.ApplicationUser.Name,
+                Belt = ws.Student.ApplicationUser.Belt
+            }).ToList(),
+            Masters = workout.WorkoutMasters.Select(wm => new MasterSimplifiedDto
+            {
+                Id = wm.Master.Id,
+                Name = wm.Master.ApplicationUser.Name,
+                Belt = wm.Master.ApplicationUser.Belt
+            }).ToList(),
+            Exercises = workout.WorkoutExercises.Select(we => we.Exercise.Id).ToList()
         };
 
-    // Student -> StudentProgressDTO
-    public static StudentProgressDTO ToProgressDto(this Student student, Belt nextBelt,
+    // Student -> StudentProgressDto
+    public static StudentProgressDto ToProgressDto(this Student student, Belt nextBelt,
         List<Exercise> completed, List<Exercise> remaining, List<Workout> attended) =>
         new()
         {
@@ -76,6 +78,34 @@ public static class MappingExtensions
                 : (double)completed.Count / (completed.Count + remaining.Count) * 100,
             CompletedExercises = completed.Select(e => new SimplifiedExerciseDTO { Id = e.Id, Name = e.Name }).ToList(),
             RemainingExercises = remaining.Select(e => new SimplifiedExerciseDTO { Id = e.Id, Name = e.Name }).ToList(),
-            AttendedWorkouts = attended.Select(w => w.ToDto()).ToList()
+            AttendedWorkouts = attended.Select(w => w.ToWorkoutDto()).ToList()
+        };
+    
+    public static ExtendedStudentDto ToExtendedStudentDto(this Student student) =>
+        new ExtendedStudentDto
+        {
+            Id = student.Id,
+            Name = student.ApplicationUser.Name,
+            Address = student.ApplicationUser.Address,
+            Gender = student.ApplicationUser.EGender,
+            Birthday = student.ApplicationUser.Birthday,
+            Belt = student.ApplicationUser.Belt,
+            Height = student.ApplicationUser.Height,
+            Weight = student.ApplicationUser.Weight,
+            EnrollDate = student.EnrollDate
+        };
+    
+    public static MasterExtendedDto ToExtendedMasterDto(this Master master) =>
+        new MasterExtendedDto
+        {
+            Id = master.Id,
+            Name = master.ApplicationUser.Name,
+            Address = master.ApplicationUser.Address,
+            Gender = master.ApplicationUser.EGender,
+            Birthday = master.ApplicationUser.Birthday,
+            Belt = master.ApplicationUser.Belt,
+            Height = master.ApplicationUser.Height,
+            Weight = master.ApplicationUser.Weight,
+            HasTrainerCertificate = master.HasTrainerCertificate,
         };
 }

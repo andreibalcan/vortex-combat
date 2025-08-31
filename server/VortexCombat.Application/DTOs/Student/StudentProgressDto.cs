@@ -1,8 +1,9 @@
+using VortexCombat.Application.DTOs.Workout;
 using VortexCombat.Domain.Entities;
 
-namespace VortexCombat.Application.DTOs;
+namespace VortexCombat.Application.DTOs.Student;
 
-public class StudentProgressDTO
+public class StudentProgressDto
 {
     public int Id { get; set; }
     public string ApplicationUserId { get; set; }
@@ -23,7 +24,7 @@ public class StudentProgressDTO
 
     public List<SimplifiedExerciseDTO> RemainingExercises { get; set; } = new();
 
-    public List<WorkoutDTO> AttendedWorkouts { get; set; } = new();
+    public List<WorkoutDto> AttendedWorkouts { get; set; } = new();
 }
 
 public class SimplifiedExerciseDTO

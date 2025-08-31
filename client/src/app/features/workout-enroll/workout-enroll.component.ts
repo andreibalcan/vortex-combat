@@ -44,6 +44,7 @@ export class WorkoutEnrollComponent {
 					location: workout.room,
 					masters: workout.masters,
 					students: workout.students,
+					exercises: workout.exercises,
 				}));
 
 				this.eventsServicePlugin.set(formattedEvents);
@@ -67,7 +68,7 @@ export class WorkoutEnrollComponent {
 	private handleEventClick(data: any) {
 		this.ref = this.dialogService.open(WorkoutEnrollModalComponent, {
 			data: data,
-			header: 'Enroll in Workout',
+			header: 'Workout Details',
 			modal: true,
 			closable: true,
 			width: '500px',
