@@ -8,6 +8,7 @@ namespace VortexCombat.Presentation.Controllers;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using VortexCombat.Infrastructure.Identity;
 
 [ApiController]
 [Route("api/auth")]
@@ -17,32 +18,45 @@ public class AuthController : ControllerBase
     private readonly JwtService _jwtService;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IStudentRepository _studentRepository;
+    private readonly IUserRepository _userRepository;
 
     public AuthController(
         UserManager<ApplicationUser> userManager,
         JwtService jwtService,
         RoleManager<IdentityRole> roleManager,
-        IStudentRepository studentRepository)
+        IStudentRepository studentRepository,
+        IUserRepository userRepository)
     {
         _userManager = userManager;
         _jwtService = jwtService;
         _roleManager = roleManager;
         _studentRepository = studentRepository;
+        _userRepository = userRepository;
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto model)
     {
-        var user = model.ToApplicationUserDto();
-        var result = await _userManager.CreateAsync(user, model.Password);
+        var appUser = new ApplicationUser
+        {
+            UserName = model.Email,
+            Email = model.Email,
+            PhoneNumber = model.PhoneNumber,
+        };
+        var result = await _userManager.CreateAsync(appUser, model.Password);
         if (!result.Succeeded) return BadRequest(result.Errors);
 
         if (!await _roleManager.RoleExistsAsync("Student"))
             await _roleManager.CreateAsync(new IdentityRole("Student"));
 
-        await _userManager.AddToRoleAsync(user, "Student");
+        await _userManager.AddToRoleAsync(appUser, "Student");
 
-        var student = model.ToStudentDto(user.Id);
+        var user = model.ToDomainUser();
+        appUser.DomainUserId = user.Id.Value;
+        await _userRepository.AddAsync(user);
+        await _userRepository.SaveChangesAsync();
+
+        var student = model.ToStudent(user);
         await _studentRepository.AddAsync(student);
         await _studentRepository.SaveChangesAsync();
 

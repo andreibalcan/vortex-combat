@@ -36,7 +36,7 @@ namespace VortexCombat.Presentation.Controllers
             var student = await _studentRepository.GetByIdWithUserAsync(studentId);
             if (student is null) return NotFound("Student not found");
 
-            var user = student.ApplicationUser;
+            var user = student.User;
             if (user?.Belt is null) return BadRequest("Student does not have a belt assigned");
 
             var currentBelt = user.Belt;

@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace VortexCombat.Domain.Entities;
 
 public class Exercise
@@ -24,5 +22,5 @@ public class Exercise
 
     public double MinYearsOfTraining { get; set; }
     
-    [JsonIgnore] public List<WorkoutExercise> WorkoutExercises { get; set; } = new();
+    public List<WorkoutExercise> WorkoutExercises { get; set; } = new();
 }

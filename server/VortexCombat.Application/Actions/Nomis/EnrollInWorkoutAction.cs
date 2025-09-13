@@ -33,7 +33,7 @@ namespace VortexCombat.Application.Actions.Nomis
         {
             await _workoutRepo.EnrollStudentAsync(req.WorkoutId, req.StudentId, EAttendanceStatus.Enrolled);
             var student = await _studentRepo.GetByIdWithUserAsync(req.StudentId);
-            return (student!.Id, student.ApplicationUser.Name);
+            return (student!.Id, student.User.Name);
         }
     }
 }

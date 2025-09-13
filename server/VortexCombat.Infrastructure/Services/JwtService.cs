@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using VortexCombat.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using VortexCombat.Infrastructure.Identity;
 
 namespace VortexCombat.Infrastructure.Services
 {
@@ -26,7 +27,8 @@ namespace VortexCombat.Infrastructure.Services
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.Name),
+                // new Claim(ClaimTypes.Name, user.Name), - nao e usado em Angular e teria de ser alterado para obter o Name do DomainUser
+                new Claim("domain_user_id", user.DomainUserId.Value.ToString()),
                 new Claim(ClaimTypes.Email, user.Email)
             };
 

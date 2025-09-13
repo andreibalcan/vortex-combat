@@ -1,4 +1,5 @@
 using VortexCombat.Application.DTOs.Workout;
+using VortexCombat.Domain.Common;
 using VortexCombat.Domain.Entities;
 
 namespace VortexCombat.Application.DTOs.Student;
@@ -6,7 +7,9 @@ namespace VortexCombat.Application.DTOs.Student;
 public class StudentProgressDto
 {
     public int Id { get; set; }
-    public string ApplicationUserId { get; set; }
+
+    //public string ApplicationUserId { get; set; }
+    public UserId UserId { get; set; }
 
     public string Name { get; set; }
     public EGender EGender { get; set; }

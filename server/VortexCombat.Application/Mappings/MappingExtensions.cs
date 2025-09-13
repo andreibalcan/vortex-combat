@@ -2,22 +2,37 @@ using VortexCombat.Application.DTOs.Authentication;
 using VortexCombat.Application.DTOs.Master;
 using VortexCombat.Application.DTOs.Student;
 using VortexCombat.Application.DTOs.Workout;
+using VortexCombat.Domain.Common;
 using VortexCombat.Domain.Entities;
 
 namespace VortexCombat.Application.Mappings;
 
 public static class MappingExtensions
 {
-    // RegisterDto -> ApplicationUser
-    public static ApplicationUser ToApplicationUserDto(this RegisterDto dto) =>
-        new()
+    //// RegisterDto -> ApplicationUser
+    //public static ApplicationUser ToApplicationUserDto(this RegisterDto dto) =>
+    //    new()
+    //    {
+    //        UserName = dto.Email,
+    //        Email = dto.Email,
+    //        Name = dto.Name,
+    //        Address = dto.Address,
+    //        PhoneNumber = dto.PhoneNumber,
+    //        Nif = dto.Nif,
+    //        EGender = dto.EGender,
+    //        Birthday = dto.Birthday,
+    //        Belt = dto.Belt,
+    //        Height = dto.Height,
+    //        Weight = dto.Weight
+    //    };
+
+    public static User ToDomainUser(this RegisterDto dto)
+        => new User
         {
-            UserName = dto.Email,
-            Email = dto.Email,
+            Id = new UserId(Guid.NewGuid()),
             Name = dto.Name,
-            Address = dto.Address,
-            PhoneNumber = dto.PhoneNumber,
-            Nif = dto.Nif,
+            Address = dto.Address,   
+            Nif = dto.Nif ?? string.Empty,
             EGender = dto.EGender,
             Birthday = dto.Birthday,
             Belt = dto.Belt,
@@ -25,11 +40,21 @@ public static class MappingExtensions
             Weight = dto.Weight
         };
 
+
+    //// RegisterDto -> Student
+    //public static Student ToStudentDto(this RegisterDto dto, string applicationUserId) =>
+    //    new()
+    //    {
+    //        ApplicationUserId = applicationUserId,
+    //        EnrollDate = dto.EnrollDate ?? DateTime.UtcNow
+    //        // Removed HasTrainerCertificate because it doesn't exist in Student entity
+    //    };
+
     // RegisterDto -> Student
-    public static Student ToStudentDto(this RegisterDto dto, string applicationUserId) =>
+    public static Student ToStudent(this RegisterDto dto, User User) =>
         new()
         {
-            ApplicationUserId = applicationUserId,
+            UserId = User.Id,
             EnrollDate = dto.EnrollDate ?? DateTime.UtcNow
             // Removed HasTrainerCertificate because it doesn't exist in Student entity
         };
@@ -46,14 +71,14 @@ public static class MappingExtensions
             Students = workout.WorkoutStudents.Select(ws => new SimplifiedStudentDto
             {
                 Id = ws.Student.Id,
-                Name = ws.Student.ApplicationUser.Name,
-                Belt = ws.Student.ApplicationUser.Belt
+                Name = ws.Student.User.Name,
+                Belt = ws.Student.User.Belt
             }).ToList(),
             Masters = workout.WorkoutMasters.Select(wm => new MasterSimplifiedDto
             {
                 Id = wm.Master.Id,
-                Name = wm.Master.ApplicationUser.Name,
-                Belt = wm.Master.ApplicationUser.Belt
+                Name = wm.Master.User.Name,
+                Belt = wm.Master.User.Belt
             }).ToList(),
             Exercises = workout.WorkoutExercises.Select(we => we.Exercise.Id).ToList()
         };
@@ -64,14 +89,14 @@ public static class MappingExtensions
         new()
         {
             Id = student.Id,
-            ApplicationUserId = student.ApplicationUserId,
-            Name = student.ApplicationUser.Name,
-            EGender = student.ApplicationUser.EGender,
-            Birthday = student.ApplicationUser.Birthday,
+            UserId = student.UserId,
+            Name = student.User.Name,
+            EGender = student.User.EGender,
+            Birthday = student.User.Birthday,
             EnrollDate = student.EnrollDate,
-            Height = student.ApplicationUser.Height,
-            Weight = student.ApplicationUser.Weight,
-            CurrentBelt = student.ApplicationUser.Belt,
+            Height = student.User.Height,
+            Weight = student.User.Weight,
+            CurrentBelt = student.User.Belt,
             NextBelt = nextBelt,
             ProgressPercentage = (completed.Count + remaining.Count) == 0
                 ? 0
@@ -85,13 +110,13 @@ public static class MappingExtensions
         new ExtendedStudentDto
         {
             Id = student.Id,
-            Name = student.ApplicationUser.Name,
-            Address = student.ApplicationUser.Address,
-            Gender = student.ApplicationUser.EGender,
-            Birthday = student.ApplicationUser.Birthday,
-            Belt = student.ApplicationUser.Belt,
-            Height = student.ApplicationUser.Height,
-            Weight = student.ApplicationUser.Weight,
+            Name = student.User.Name,
+            Address = student.User.Address,
+            Gender = student.User.EGender,
+            Birthday = student.User.Birthday,
+            Belt = student.User.Belt,
+            Height = student.User.Height,
+            Weight = student.User.Weight,
             EnrollDate = student.EnrollDate
         };
     
@@ -99,13 +124,13 @@ public static class MappingExtensions
         new MasterExtendedDto
         {
             Id = master.Id,
-            Name = master.ApplicationUser.Name,
-            Address = master.ApplicationUser.Address,
-            Gender = master.ApplicationUser.EGender,
-            Birthday = master.ApplicationUser.Birthday,
-            Belt = master.ApplicationUser.Belt,
-            Height = master.ApplicationUser.Height,
-            Weight = master.ApplicationUser.Weight,
+            Name = master.User.Name,
+            Address = master.User.Address,
+            Gender = master.User.EGender,
+            Birthday = master.User.Birthday,
+            Belt = master.User.Belt,
+            Height = master.User.Height,
+            Weight = master.User.Weight,
             HasTrainerCertificate = master.HasTrainerCertificate,
         };
 }

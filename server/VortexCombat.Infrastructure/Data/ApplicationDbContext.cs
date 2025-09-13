@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using VortexCombat.Domain.Entities;
+using VortexCombat.Domain.Common;
+using VortexCombat.Infrastructure.Identity;
 
 namespace VortexCombat.Infrastructure.Data
 {
@@ -10,6 +12,7 @@ namespace VortexCombat.Infrastructure.Data
         {
         }
 
+        public DbSet<User> Users { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Master> Masters { get; set; }
         public DbSet<Workout> Workouts { get; set; }
@@ -53,10 +56,10 @@ namespace VortexCombat.Infrastructure.Data
                 .HasForeignKey(ws => ws.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<ApplicationUser>().OwnsOne(u => u.Address);
+            //modelBuilder.Entity<ApplicationUser>().OwnsOne(u => u.Address);
 
-            modelBuilder.Entity<ApplicationUser>().OwnsOne(u => u.Belt);
-            
+            //modelBuilder.Entity<ApplicationUser>().OwnsOne(u => u.Belt);
+
             modelBuilder.Entity<WorkoutExercise>()
                 .HasKey(we => new { we.WorkoutId, we.ExerciseId });
 
@@ -89,9 +92,76 @@ namespace VortexCombat.Infrastructure.Data
                 .HasOne(swe => swe.Exercise)
                 .WithMany()
                 .HasForeignKey(swe => swe.ExerciseId);
+
+            modelBuilder.Entity<User>(e =>
+            {
+                e.HasKey(u => u.Id);
+                e.Property(u => u.Id)
+                 .HasConversion(v => v.Value, v => new UserId(v))
+                 .ValueGeneratedNever();
+
+                e.Property(u => u.Name);
+                e.Property(u => u.EGender);
+                e.Property(u => u.Birthday);
+                e.Property(u => u.Height);
+                e.Property(u => u.Weight);
+                e.Property(u => u.Nif);
+
+                e.OwnsOne(u => u.Belt, b =>
+                {
+                    b.Property(p => p.Color).HasConversion<string>();
+                });
+                
+                e.OwnsOne(u => u.Address, a =>
+                {
+                    a.Property(p => p.Street);
+                    a.Property(p => p.Number);
+                    a.Property(p => p.Floor);
+                    a.Property(p => p.City);
+                    a.Property(p => p.ZipCode);
+                });
+            });
+            
+            modelBuilder.Entity<Student>(e =>
+            {
+                e.Property(s => s.UserId)
+                 .HasConversion(v => v.Value, v => new UserId(v))
+                 .IsRequired();
+
+                e.HasOne(s => s.User)
+                 .WithMany()
+                 .HasForeignKey(s => s.UserId)
+                 .HasPrincipalKey(u => u.Id)
+                 .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Master>(e =>
+            {
+                e.HasKey(m => m.Id);
+
+                e.Property(m => m.UserId)
+                 .HasConversion(v => v.Value, v => new UserId(v))
+                 .IsRequired();
+
+                e.HasOne(m => m.User)
+                 .WithMany()
+                 .HasForeignKey(m => m.UserId)
+                 .HasPrincipalKey(u => u.Id)
+                 .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // --- ApplicationUser: ponte para dom�nio ---
+            modelBuilder.Entity<ApplicationUser>(e =>
+            {
+                e.Property(u => u.DomainUserId);
+                e.HasIndex(u => u.DomainUserId);
+            });
+
             modelBuilder.Entity<Exercise>().OwnsOne(e => e.Grade);
             modelBuilder.Entity<Exercise>().OwnsOne(e => e.BeltLevelMin);
             modelBuilder.Entity<Exercise>().OwnsOne(e => e.BeltLevelMax);
+
+
         }
     }
 }

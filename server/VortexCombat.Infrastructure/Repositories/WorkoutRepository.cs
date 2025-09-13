@@ -15,8 +15,8 @@ namespace VortexCombat.Infrastructure.Repositories
         public Task<List<Workout>> GetAllWithDetailsAsync()
         {
             return _dbSet
-                .Include(w => w.WorkoutStudents).ThenInclude(ws => ws.Student).ThenInclude(s => s.ApplicationUser)
-                .Include(w => w.WorkoutMasters).ThenInclude(wm => wm.Master).ThenInclude(m => m.ApplicationUser)
+                .Include(w => w.WorkoutStudents).ThenInclude(ws => ws.Student).ThenInclude(s => s.User)
+                .Include(w => w.WorkoutMasters).ThenInclude(wm => wm.Master).ThenInclude(m => m.User)
                 .Include(w => w.WorkoutExercises).ThenInclude(we => we.Exercise)
                 .ToListAsync();
         }
@@ -145,8 +145,8 @@ namespace VortexCombat.Infrastructure.Repositories
         {
             return _dbSet
                 .AsNoTracking()
-                .Include(w => w.WorkoutStudents).ThenInclude(ws => ws.Student).ThenInclude(s => s.ApplicationUser)
-                .Include(w => w.WorkoutMasters).ThenInclude(wm => wm.Master).ThenInclude(m => m.ApplicationUser)
+                .Include(w => w.WorkoutStudents).ThenInclude(ws => ws.Student).ThenInclude(s => s.User)
+                .Include(w => w.WorkoutMasters).ThenInclude(wm => wm.Master).ThenInclude(m => m.User)
                 .Include(w => w.WorkoutExercises).ThenInclude(we => we.Exercise)
                 .FirstOrDefaultAsync(w => w.Id == id);
         }

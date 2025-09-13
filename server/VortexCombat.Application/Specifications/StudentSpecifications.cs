@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using VortexCombat.Domain.Common;
 using VortexCombat.Domain.Entities;
 using VortexCombat.Domain.Specifications;
 
@@ -13,8 +14,8 @@ namespace VortexCombat.Application.Specifications
 
     public sealed class StudentByUserIdSpec : Specification<Student>
     {
-        private readonly string _userId;
-        public StudentByUserIdSpec(string userId) => _userId = userId;
-        public override Expression<Func<Student, bool>> Criteria => s => s.ApplicationUserId == _userId;
+        private readonly UserId _userId;
+        public StudentByUserIdSpec(UserId userId) => _userId = userId;
+        public override Expression<Func<Student, bool>> Criteria => s => s.UserId == _userId;
     }
 }

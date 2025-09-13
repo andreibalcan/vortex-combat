@@ -11,7 +11,7 @@ namespace VortexCombat.Infrastructure.Repositories
 
         public Task<List<Master>> GetAllWithUserAsync()
         {
-            return _dbSet.Include(m => m.ApplicationUser).ToListAsync();
+            return _dbSet.Include(m => m.User).ToListAsync();
         }
     }
 }

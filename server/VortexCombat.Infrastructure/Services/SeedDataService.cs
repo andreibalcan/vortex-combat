@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using VortexCombat.Infrastructure.Data;
+using VortexCombat.Domain.Common;
 using VortexCombat.Domain.Entities;
+using VortexCombat.Infrastructure.Data;
+using VortexCombat.Infrastructure.Identity;
 
 namespace  VortexCombat.Infrastructure.Services;
 
@@ -24,25 +26,32 @@ public class SeedDataService
         var defaultUser = await userManager.FindByEmailAsync("admin@vortexcombat.com");
         if (defaultUser == null)
         {
-            var primaryMaster = new ApplicationUser
+            var domainUser = new User
             {
-                UserName = "admin@vortexcombat.com",
+                Id = new UserId(Guid.NewGuid()),
                 Address = new Address
                 {
                     Street = "Main Street",
                     Number = "123",
                     Floor = "2A",
-                    City="Lisbon",
+                    City = "Lisbon",
                     ZipCode = "12345"
                 },
                 Nif = "123456789",
-                Email = "admin@vortexcombat.com",
                 Name = "Rick Johnston",
                 Belt = new Belt { Color = EBeltColor.Black, Degrees = 3 },
                 EGender = EGender.M,
                 Birthday = new DateTime(1985, 5, 12),
                 Height = 183,
                 Weight = 80,
+            };
+
+
+            var primaryMaster = new ApplicationUser
+            {
+                UserName = "admin@vortexcombat.com",
+                Email = "admin@vortexcombat.com",
+                DomainUserId = domainUser.Id.Value,
             };
 
             var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_ADMIN_PASSWORD");
@@ -53,9 +62,12 @@ public class SeedDataService
                 await userManager.AddToRoleAsync(primaryMaster, "PrimaryMaster");
                 var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
+                context.Users.Add(domainUser);
+                await context.SaveChangesAsync();
+                
                 var master = new Master
                 {
-                    ApplicationUserId = primaryMaster.Id,
+                    UserId = domainUser.Id,
                     HasTrainerCertificate = true
                 };
 

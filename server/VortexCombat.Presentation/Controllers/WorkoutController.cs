@@ -6,6 +6,7 @@ using VortexCombat.Application.Actions.Nomis;
 using VortexCombat.Application.DTOs.Workout;
 using VortexCombat.Domain.Entities;
 using VortexCombat.Domain.Interfaces;
+using VortexCombat.Domain.Common;
 
 namespace VortexCombat.Presentation.Controllers
 {
@@ -137,10 +138,17 @@ namespace VortexCombat.Presentation.Controllers
 
         private async Task<int> GetAuthenticatedStudentIdAsync()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
-                         ?? throw new UnauthorizedAccessException("User ID not found in token");
-            var student = await _studentRepo.GetByApplicationUserIdAsync(userId)
-                          ?? throw new UnauthorizedAccessException("Student not found");
+            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            //             ?? throw new UnauthorizedAccessException("User ID not found in token");
+            var domainUserIdStr = User.FindFirstValue("domain_user_id")
+                        ?? throw new UnauthorizedAccessException("Domain user id not found in token");
+                        
+            if (!Guid.TryParse(domainUserIdStr, out var domainGuid))
+                throw new UnauthorizedAccessException("Invalid domain user id in token");
+            var studentUserId = new UserId(domainGuid);
+            var student = await _studentRepo.GetByUserIdAsync(studentUserId)
+                                   ?? throw new UnauthorizedAccessException("Student not found");
+
             return student.Id;
         }
     }

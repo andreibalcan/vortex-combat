@@ -11,6 +11,7 @@ using VortexCombat.Infrastructure.Services;
 using VortexCombat.Domain.Interfaces;
 using VortexCombat.Infrastructure.Repositories;
 using VortexCombat.Application.Actions.Nomis;
+using VortexCombat.Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -135,6 +136,7 @@ builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IMasterRepository, MasterRepository>();
 builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Strategy Pattern & Specification Pattern
 builder.Services.AddScoped<INomisAction<List<VortexCombat.Domain.Entities.Exercise>, int>, CreateExercisesAction>();
