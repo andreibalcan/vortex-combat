@@ -1,4 +1,5 @@
 using VortexCombat.Application.Specifications;
+using VortexCombat.Domain.Entities;
 using VortexCombat.Domain.Interfaces;
 
 namespace VortexCombat.Application.Actions.Nomis
@@ -20,9 +21,10 @@ namespace VortexCombat.Application.Actions.Nomis
 
         public async Task<bool> ExecuteAsync(int id, CancellationToken ct = default)
         {
-            var w = await _workoutRepo.FirstOrDefaultAsync(new WorkoutByIdSpec(id));
-            if (w is null) return false;
-            _workoutRepo.Remove(w);
+            var workout = await _workoutRepo.FirstOrDefaultAsync(new WorkoutByIdSpec(id));
+            if (workout is null) return false;
+
+            _workoutRepo.Remove(workout);
             await _workoutRepo.SaveChangesAsync();
             return true;
         }

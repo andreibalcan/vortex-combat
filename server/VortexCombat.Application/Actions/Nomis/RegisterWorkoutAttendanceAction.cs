@@ -19,17 +19,16 @@ namespace VortexCombat.Application.Actions.Nomis
             _masterRepo = masterRepo;
         }
 
-        public async Task<(bool ok, string? error)> CanExecuteAsync(RegisterAttendanceRequest req, CancellationToken ct = default)
+        public async Task<(bool ok, string? error)> CanExecuteAsync(RegisterAttendanceRequest req,
+            CancellationToken ct = default)
         {
             var workout = await _workoutRepo.FirstOrDefaultAsync(new WorkoutByIdSpec(req.WorkoutId));
             if (workout is null) return (false, "Workout not found");
 
-            // Validate all students exist
             foreach (var sid in req.StudentIds)
                 if (await _studentRepo.FirstOrDefaultAsync(new StudentByIdSpec(sid)) is null)
                     return (false, $"Student {sid} not found");
 
-            // Validate all masters exist
             foreach (var mid in req.MasterIds)
                 if (await _masterRepo.FirstOrDefaultAsync(new MasterByIdSpec(mid)) is null)
                     return (false, $"Master {mid} not found");

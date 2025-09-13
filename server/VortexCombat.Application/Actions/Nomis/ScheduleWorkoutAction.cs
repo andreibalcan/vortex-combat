@@ -1,4 +1,3 @@
-using VortexCombat.Application.Actions.Nomis;
 using VortexCombat.Domain.Entities;
 using VortexCombat.Domain.Interfaces;
 
@@ -13,7 +12,8 @@ namespace VortexCombat.Application.Actions.Nomis
             _workoutRepo = workoutRepo;
         }
 
-        public Task<(bool ok, string? error)> CanExecuteAsync(ScheduleWorkoutRequest req, CancellationToken ct = default)
+        public Task<(bool ok, string? error)> CanExecuteAsync(ScheduleWorkoutRequest req,
+            CancellationToken ct = default)
         {
             if (req.StartDate >= req.EndDate) return Task.FromResult((false, "Start date must be before end date"));
             if (string.IsNullOrWhiteSpace(req.Room)) return Task.FromResult((false, "Room is required"));
@@ -22,7 +22,7 @@ namespace VortexCombat.Application.Actions.Nomis
 
         public async Task<Workout> ExecuteAsync(ScheduleWorkoutRequest req, CancellationToken ct = default)
         {
-            var w = new Workout
+            var workout = new Workout
             {
                 Description = req.Description,
                 StartDate = req.StartDate,
@@ -30,16 +30,14 @@ namespace VortexCombat.Application.Actions.Nomis
                 Room = req.Room
             };
 
-            await _workoutRepo.AddAsync(w);
+            await _workoutRepo.AddAsync(workout);
             await _workoutRepo.SaveChangesAsync();
 
             foreach (var exId in req.Exercises.Distinct())
-            {
-                w.WorkoutExercises.Add(new WorkoutExercise { WorkoutId = w.Id, ExerciseId = exId });
-            }
-            await _workoutRepo.SaveChangesAsync();
+                workout.WorkoutExercises.Add(new WorkoutExercise { WorkoutId = workout.Id, ExerciseId = exId });
 
-            return w;
+            await _workoutRepo.SaveChangesAsync();
+            return workout;
         }
     }
 }

@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using VortexCombat.Domain.Specifications;
 
@@ -6,10 +5,12 @@ namespace VortexCombat.Infrastructure.Specifications
 {
     internal static class SpecificationEvaluator
     {
-        public static IQueryable<T> GetQuery<T>(IQueryable<T> input, ISpecification<T> spec) where T : class
+        public static IQueryable<T> GetQuery<T>(
+            IQueryable<T> input,
+            Specification<T>? spec)
         {
-            if (spec?.Criteria is null) return input;
-            return input.Where(spec.Criteria);
+            if (spec == null) return input;
+            return input.Where(e => spec.IsSatisfiedBy(e));
         }
     }
 }

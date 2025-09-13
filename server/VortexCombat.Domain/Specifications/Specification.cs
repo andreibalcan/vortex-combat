@@ -1,38 +1,53 @@
-using System.Linq.Expressions;
+using System;
 
 namespace VortexCombat.Domain.Specifications
 {
     public abstract class Specification<T> : ISpecification<T>
     {
-        public abstract Expression<Func<T, bool>> Criteria { get; }
+        public abstract bool IsSatisfiedBy(T entity);
 
-        protected static Expression<Func<T, bool>> And(
-            Expression<Func<T, bool>> left,
-            Expression<Func<T, bool>> right)
+        public Specification<T> And(Specification<T> other) => new AndSpecification<T>(this, other);
+        public Specification<T> Or(Specification<T> other) => new OrSpecification<T>(this, other);
+        public Specification<T> Not() => new NotSpecification<T>(this);
+    }
+
+    public sealed class AndSpecification<T> : Specification<T>
+    {
+        private readonly Specification<T> _left;
+        private readonly Specification<T> _right;
+
+        public AndSpecification(Specification<T> left, Specification<T> right)
         {
-            var param = Expression.Parameter(typeof(T));
-            var body = Expression.AndAlso(
-                Expression.Invoke(left, param),
-                Expression.Invoke(right, param));
-            return Expression.Lambda<Func<T, bool>>(body, param);
+            _left = left;
+            _right = right;
         }
 
-        protected static Expression<Func<T, bool>> Or(
-            Expression<Func<T, bool>> left,
-            Expression<Func<T, bool>> right)
+        public override bool IsSatisfiedBy(T entity) => _left.IsSatisfiedBy(entity) && _right.IsSatisfiedBy(entity);
+    }
+
+    public sealed class OrSpecification<T> : Specification<T>
+    {
+        private readonly Specification<T> _left;
+        private readonly Specification<T> _right;
+
+        public OrSpecification(Specification<T> left, Specification<T> right)
         {
-            var param = Expression.Parameter(typeof(T));
-            var body = Expression.OrElse(
-                Expression.Invoke(left, param),
-                Expression.Invoke(right, param));
-            return Expression.Lambda<Func<T, bool>>(body, param);
+            _left = left;
+            _right = right;
         }
 
-        protected static Expression<Func<T, bool>> Not(Expression<Func<T, bool>> expr)
+        public override bool IsSatisfiedBy(T entity) => _left.IsSatisfiedBy(entity) || _right.IsSatisfiedBy(entity);
+    }
+
+    public sealed class NotSpecification<T> : Specification<T>
+    {
+        private readonly Specification<T> _spec;
+
+        public NotSpecification(Specification<T> spec)
         {
-            var param = Expression.Parameter(typeof(T));
-            var body = Expression.Not(Expression.Invoke(expr, param));
-            return Expression.Lambda<Func<T, bool>>(body, param);
+            _spec = spec;
         }
+
+        public override bool IsSatisfiedBy(T entity) => !_spec.IsSatisfiedBy(entity);
     }
 }
