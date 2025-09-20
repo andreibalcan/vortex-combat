@@ -9,6 +9,7 @@ import { ErrorPageComponent } from './core/components/error-page/error-page.comp
 import { LayoutComponent } from './core/components/layout/layout.component';
 import { WorkoutEnrollComponent } from './features/workout-enroll/workout-enroll.component';
 import { HomepageComponent } from './core/components/homepage/homepage.component';
+import { ExerciseComponent } from './features/exercise/exercise.component';
 
 export const routes: Routes = [
 	// No layout
@@ -44,6 +45,12 @@ export const routes: Routes = [
 				title: 'Workout Enroll',
 				component: WorkoutEnrollComponent,
 				canActivate: [authGuard, roleGuard(['Student'])],
+			},
+			{
+				path: 'exercises',
+				title: 'Exercises',
+				component: ExerciseComponent,
+				canActivate: [authGuard, roleGuard(['PrimaryMaster', 'Student'])],
 			},
 			{
 				path: '**',

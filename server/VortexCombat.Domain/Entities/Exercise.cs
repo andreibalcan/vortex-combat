@@ -21,6 +21,8 @@ public class Exercise
     public string Duration { get; set; }
 
     public double MinYearsOfTraining { get; set; }
-    
+
+    public string VideoURL { get; set; }
+
     public List<WorkoutExercise> WorkoutExercises { get; set; } = new();
 }

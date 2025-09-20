@@ -47,6 +47,21 @@ export class DrawerComponent implements OnInit {
 						},
 					],
 				},
+				{
+					label: 'Exercises',
+					items: [
+						{
+							label: 'Exercises List',
+							icon: 'pi pi-fw pi-list',
+							routerLink: ['/exercises'],
+						},
+						{
+							label: 'New Exercise',
+							icon: 'pi pi-fw pi-plus',
+							routerLink: ['/new-exercise'],
+						},
+					],
+				},
 			];
 		}
 
@@ -68,6 +83,16 @@ export class DrawerComponent implements OnInit {
 							label: 'Enroll',
 							icon: 'pi pi-fw pi-calendar-plus',
 							routerLink: ['/workout-enroll'],
+						},
+					],
+				},
+								{
+					label: 'Exercises',
+					items: [
+						{
+							label: 'Exercises List',
+							icon: 'pi pi-fw pi-list',
+							routerLink: ['/exercises'],
 						},
 					],
 				},

@@ -91,7 +91,9 @@ namespace VortexCombat.Infrastructure.Migrations
                     BeltLevelMax_Degrees = table.Column<int>(type: "int", nullable: false),
                     Duration = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    MinYearsOfTraining = table.Column<double>(type: "double", nullable: false)
+                    MinYearsOfTraining = table.Column<double>(type: "double", nullable: false),
+                    VideoURL = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {

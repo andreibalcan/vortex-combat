@@ -1,0 +1,127 @@
+<p-accordion-panel [value]="value()">
+	<p-accordion-header>
+		<ng-template #toggleicon let-active="active">
+			@if (active) {
+				<i class="pi pi-minus"></i>
+			} @else {
+				<i class="pi pi-plus"></i>
+			}
+		</ng-template>
+		<span class="flex items-center gap-2 w-full">
+			<p-avatar [image]="image()" shape="square" />
+			<span class="font-bold whitespace-nowrap">{{ title() }}</span>
+			<p-badge [value]="exercises().length" class="ml-auto mr-2" />
+		</span>
+	</p-accordion-header>
+	<p-accordion-content>
+		@if (exercises().length) {
+			<div class="grid gap-4">
+				@for (exercise of exercises(); track exercise.id) {
+					<p-panel
+						class="shadow-md rounded-2xl exercise-panel"
+						[header]="exercise.name"
+						[toggleable]="true"
+						[collapsed]="true"
+						toggler="header"
+						(collapsedChange)="onPanelToggle(exercise.id, $event)"
+					>
+						<p class="text-sm mb-4">{{ exercise.description }}</p>
+
+						<div
+							class="flex flex-col md:flex-row md:items-center md:gap-6"
+						>
+							<div
+								class="flex flex-col md:flex-row md:items-center md:gap-12 w-full"
+							>
+								<!-- Metadata -->
+								<div class="flex flex-col gap-6 text-sm">
+									<div class="flex items-center gap-2">
+										<i class="pi pi-tag text-blue-500"></i>
+										<span>{{
+											exercise.category | titlecase
+										}}</span>
+									</div>
+									<div class="flex items-center gap-2">
+										<i
+											class="pi pi-clock text-green-500"
+										></i>
+										<span>{{ exercise.duration }}</span>
+									</div>
+									<div class="flex items-center gap-2">
+										<i
+											class="pi pi-calendar text-purple-500"
+										></i>
+										<span
+											>{{
+												exercise.minYearsOfTraining
+											}}
+											years</span
+										>
+									</div>
+								</div>
+
+								<!-- Difficulty -->
+								<div
+									class="flex flex-col items-center justify-center mt-4 md:mt-0"
+								>
+									<span
+										class="text-xs uppercase font-semibold text-gray-500 mb-1"
+									>
+										Difficulty
+									</span>
+									<p-knob
+										[(ngModel)]="exercise.difficulty"
+										readonly
+										[min]="0"
+										[max]="5"
+										size="70"
+									/>
+								</div>
+							</div>
+
+							<!-- Video -->
+							@if (
+								activeVideo() === exercise.id &&
+								exercise.videoURL
+							) {
+								<div
+									class="w-full flex justify-center md:justify-end"
+								>
+									<iframe
+										loading="lazy"
+										class="rounded-lg shadow-md"
+										width="100%"
+										height="200"
+										[src]="getSafeUrl(exercise.videoURL)"
+										title="YouTube video player"
+										frameborder="0"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+										referrerpolicy="strict-origin-when-cross-origin"
+										allowfullscreen
+									></iframe>
+								</div>
+							} @else if (!exercise.videoURL) {
+								<div
+									class="w-full flex justify-center md:justify-end"
+								>
+									<div
+										class="w-full max-w-[100%] h-[200px] rounded-lg bg-gray-100 flex flex-col items-center justify-center"
+									>
+										<i
+											class="pi pi-video text-gray-400 text-4xl mb-2"
+										></i>
+										<span class="text-xs text-gray-500"
+											>No video available...</span
+										>
+									</div>
+								</div>
+							}
+						</div>
+					</p-panel>
+				}
+			</div>
+		} @else {
+			<span class="text-xs text-gray-500">No exercises available...</span>
+		}
+	</p-accordion-content>
+</p-accordion-panel>

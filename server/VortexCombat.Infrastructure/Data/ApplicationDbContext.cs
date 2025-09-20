@@ -150,7 +150,7 @@ namespace VortexCombat.Infrastructure.Data
                  .OnDelete(DeleteBehavior.Restrict);
             });
 
-            // --- ApplicationUser: ponte para dom�nio ---
+            // --- ApplicationUser: ponte para domínio ---
             modelBuilder.Entity<ApplicationUser>(e =>
             {
                 e.Property(u => u.DomainUserId);

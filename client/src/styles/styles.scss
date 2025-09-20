@@ -21,6 +21,26 @@ body {
 		border-bottom-left-radius: 0;
 	}
 
+	.p-avatar img {
+		object-fit: contain;
+		width: 100%;
+		height: 100%;
+	}
+
+	.p-knob-text {
+		font-size: 2rem;
+	}
+
+	.p-tabs-scrollable > .p-tablist {
+		border-top-left-radius: var(--content-border-radius);
+		border-top-right-radius: var(--content-border-radius);
+	}
+
+	.p-tabpanels {
+		border-bottom-left-radius: var(--content-border-radius);
+		border-bottom-right-radius: var(--content-border-radius);
+	}
+
 	// schedule-x styles
 	.ng-calendar-wrapper {
 		height: calc(100vh - 112px);

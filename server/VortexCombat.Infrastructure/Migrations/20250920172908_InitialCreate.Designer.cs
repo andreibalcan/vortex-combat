@@ -12,7 +12,7 @@ using VortexCombat.Infrastructure.Data;
 namespace VortexCombat.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250913114043_InitialCreate")]
+    [Migration("20250920172908_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -184,6 +184,10 @@ namespace VortexCombat.Infrastructure.Migrations
                         .HasColumnType("double");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("VideoURL")
                         .IsRequired()
                         .HasColumnType("longtext");
 

@@ -1,0 +1,240 @@
+<p-tabs value="0" scrollable>
+	<p-tablist>
+		<ng-template #previcon>
+			<i class="pi pi-minus"></i>
+		</ng-template>
+		<p-tab value="0" class="flex items-center !gap-2" lazy="true">
+			<p-avatar image="assets/images/belts/white.svg" shape="circle" />
+			<span class="font-bold whitespace-nowrap">White Belt</span>
+		</p-tab>
+		<p-tab value="1" class="flex items-center !gap-2" lazy="true">
+			<p-avatar image="assets/images/belts/blue.svg" shape="circle" />
+			<span class="font-bold whitespace-nowrap">Blue Belt</span>
+		</p-tab>
+		<p-tab value="2" class="flex items-center !gap-2" lazy="true">
+			<p-avatar image="assets/images/belts/purple.svg" shape="circle" />
+			<span class="font-bold whitespace-nowrap">Purple Belt</span>
+		</p-tab>
+		<p-tab value="3" class="flex items-center !gap-2" lazy="true">
+			<p-avatar image="assets/images/belts/brown.svg" shape="circle" />
+			<span class="font-bold whitespace-nowrap">Brown Belt</span>
+		</p-tab>
+		<p-tab value="4" class="flex items-center !gap-2" lazy="true">
+			<p-avatar image="assets/images/belts/black.svg" shape="circle" />
+			<span class="font-bold whitespace-nowrap">Black Belt</span>
+		</p-tab>
+		<p-tab value="5" class="flex items-center !gap-2" lazy="true">
+			<p-avatar image="assets/images/belts/red.svg" shape="circle" />
+			<span class="font-bold whitespace-nowrap">Red Belt</span>
+		</p-tab>
+		<ng-template #nexticon>
+			<i class="pi pi-plus"></i>
+		</ng-template>
+	</p-tablist>
+	<p-tabpanels>
+		<p-tabpanel value="0">
+			<p-accordion value="0">
+				<app-accordion
+					[exercises]="getBeltExercises(0, 0)"
+					title="0 Degrees"
+					image="assets/images/belts/0-degrees.svg"
+					value="0"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(0, 1)"
+					title="1 Degree"
+					image="assets/images/belts/1-degree.svg"
+					value="1"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(0, 2)"
+					title="2 Degrees"
+					image="assets/images/belts/2-degrees.svg"
+					value="2"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(0, 3)"
+					title="3 Degrees"
+					image="assets/images/belts/3-degrees.svg"
+					value="3"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(0, 4)"
+					title="4 Degrees"
+					image="assets/images/belts/4-degrees.svg"
+					value="4"
+				></app-accordion>
+			</p-accordion>
+		</p-tabpanel>
+		<p-tabpanel value="1">
+			<p-accordion value="1">
+				<app-accordion
+					[exercises]="getBeltExercises(1, 0)"
+					title="0 Degrees"
+					image="assets/images/belts/0-degrees.svg"
+					value="0"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(1, 1)"
+					title="1 Degree"
+					image="assets/images/belts/1-degree.svg"
+					value="1"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(1, 2)"
+					title="2 Degrees"
+					image="assets/images/belts/2-degrees.svg"
+					value="2"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(1, 3)"
+					title="3 Degrees"
+					image="assets/images/belts/3-degrees.svg"
+					value="3"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(1, 4)"
+					title="4 Degrees"
+					image="assets/images/belts/4-degrees.svg"
+					value="4"
+				></app-accordion>
+			</p-accordion>
+		</p-tabpanel>
+		<p-tabpanel value="2">
+			<p-accordion value="2">
+				<app-accordion
+					[exercises]="getBeltExercises(2, 0)"
+					title="0 Degrees"
+					image="assets/images/belts/0-degrees.svg"
+					value="0"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(2, 1)"
+					title="1 Degree"
+					image="assets/images/belts/1-degree.svg"
+					value="1"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(2, 2)"
+					title="2 Degrees"
+					image="assets/images/belts/2-degrees.svg"
+					value="2"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(2, 3)"
+					title="3 Degrees"
+					image="assets/images/belts/3-degrees.svg"
+					value="3"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(2, 4)"
+					title="4 Degrees"
+					image="assets/images/belts/4-degrees.svg"
+					value="4"
+				></app-accordion>
+			</p-accordion>
+		</p-tabpanel>
+		<p-tabpanel value="3">
+			<p-accordion value="3">
+				<app-accordion
+					[exercises]="getBeltExercises(3, 0)"
+					title="0 Degrees"
+					image="assets/images/belts/0-degrees.svg"
+					value="0"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(3, 1)"
+					title="1 Degree"
+					image="assets/images/belts/1-degree.svg"
+					value="1"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(3, 2)"
+					title="2 Degrees"
+					image="assets/images/belts/2-degrees.svg"
+					value="2"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(3, 3)"
+					title="3 Degrees"
+					image="assets/images/belts/3-degrees.svg"
+					value="3"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(3, 4)"
+					title="4 Degrees"
+					image="assets/images/belts/4-degrees.svg"
+					value="4"
+				></app-accordion>
+			</p-accordion>
+		</p-tabpanel>
+		<p-tabpanel value="4">
+			<p-accordion value="4">
+				<app-accordion
+					[exercises]="getBeltExercises(4, 0)"
+					title="0 Degrees"
+					image="assets/images/belts/0-degrees.svg"
+					value="0"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(4, 1)"
+					title="1 Degree"
+					image="assets/images/belts/1-degree.svg"
+					value="1"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(4, 2)"
+					title="2 Degrees"
+					image="assets/images/belts/2-degrees.svg"
+					value="2"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(4, 3)"
+					title="3 Degrees"
+					image="assets/images/belts/3-degrees.svg"
+					value="3"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(4, 4)"
+					title="4 Degrees"
+					image="assets/images/belts/4-degrees.svg"
+					value="4"
+				></app-accordion>
+			</p-accordion>
+		</p-tabpanel>
+		<p-tabpanel value="5">
+			<p-accordion value="5">
+				<app-accordion
+					[exercises]="getBeltExercises(5, 0)"
+					title="0 Degrees"
+					image="assets/images/belts/0-degrees.svg"
+					value="0"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(5, 1)"
+					title="1 Degree"
+					image="assets/images/belts/1-degree.svg"
+					value="1"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(5, 2)"
+					title="2 Degrees"
+					image="assets/images/belts/2-degrees.svg"
+					value="2"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(5, 3)"
+					title="3 Degrees"
+					image="assets/images/belts/3-degrees.svg"
+					value="3"
+				></app-accordion>
+				<app-accordion
+					[exercises]="getBeltExercises(5, 4)"
+					title="4 Degrees"
+					image="assets/images/belts/4-degrees.svg"
+					value="4"
+				></app-accordion>
+			</p-accordion>
+		</p-tabpanel>
+	</p-tabpanels>
+</p-tabs>
