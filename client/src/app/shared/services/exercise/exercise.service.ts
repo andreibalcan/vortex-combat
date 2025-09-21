@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { TExercise } from '../../types/exercise';
 
 @Injectable({
 	providedIn: 'root',
@@ -20,5 +21,9 @@ export class ExerciseService {
 		}
 
 		return this.http.get<any[]>(`${this.nomisApiUrl}`, { params });
+	}
+
+	public addExercise(exercise: TExercise[]) {
+		return this.http.post<any>(`${this.nomisApiUrl}`, exercise);
 	}
 }

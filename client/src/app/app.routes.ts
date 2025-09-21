@@ -10,6 +10,7 @@ import { LayoutComponent } from './core/components/layout/layout.component';
 import { WorkoutEnrollComponent } from './features/workout-enroll/workout-enroll.component';
 import { HomepageComponent } from './core/components/homepage/homepage.component';
 import { ExerciseComponent } from './features/exercise/exercise.component';
+import { NewExerciseComponent } from './features/exercise/new-exercise/new-exercise.component';
 
 export const routes: Routes = [
 	// No layout
@@ -51,6 +52,12 @@ export const routes: Routes = [
 				title: 'Exercises',
 				component: ExerciseComponent,
 				canActivate: [authGuard, roleGuard(['PrimaryMaster', 'Student'])],
+			},
+			{
+				path: 'new-exercise',
+				title: 'New Exercise',
+				component: NewExerciseComponent,
+				canActivate: [authGuard, roleGuard(['PrimaryMaster'])],
 			},
 			{
 				path: '**',

@@ -25,11 +25,7 @@ import {
 	passwordMatchValidator,
 } from '../../shared/validators/password.validator';
 import { Subscription } from 'rxjs';
-
-interface SelectOption {
-	label: string;
-	value: number;
-}
+import { SelectOption } from '../../shared/types/select';
 
 @Component({
 	selector: 'app-register',

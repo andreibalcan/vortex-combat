@@ -1,0 +1,405 @@
+<p-panel header="New Exercise">
+	<form
+		[formGroup]="newExerciseForm"
+		(ngSubmit)="onSubmit()"
+		class="flex flex-col gap-3"
+	>
+		<div class="mt-5">
+			<label class="text-primary text-sm font-bold"
+				><i class="pi pi-pen-to-square mr-1"></i>Exercise Details</label
+			>
+			<p-divider />
+		</div>
+
+		<div class="flex flex-col md:flex-row gap-3">
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-pencil"></i>
+				</p-inputgroup-addon>
+				<input
+					pInputText
+					formControlName="name"
+					placeholder="Exercise Name"
+					required
+				/>
+			</p-inputgroup>
+
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-align-left"></i>
+				</p-inputgroup-addon>
+				<input
+					pInputText
+					formControlName="description"
+					placeholder="Description"
+					required
+				/>
+			</p-inputgroup>
+
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-tags"></i>
+				</p-inputgroup-addon>
+				<p-select
+					formControlName="category"
+					[options]="categories"
+					optionLabel="label"
+					optionValue="value"
+					[dataKey]="'value'"
+					placeholder="Category"
+					required
+				/>
+			</p-inputgroup>
+		</div>
+
+		<div class="flex flex-col md:flex-row gap-3">
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-star"></i>
+				</p-inputgroup-addon>
+				<p-select
+					formControlName="difficulty"
+					[options]="difficulties"
+					optionLabel="label"
+					optionValue="value"
+					[dataKey]="'value'"
+					placeholder="Difficulty"
+					required
+				/>
+			</p-inputgroup>
+
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-clock"></i>
+				</p-inputgroup-addon>
+				<input
+					pInputText
+					formControlName="duration"
+					placeholder="Duration (minutes)"
+					required
+				/>
+			</p-inputgroup>
+
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-users"></i>
+				</p-inputgroup-addon>
+				<p-inputnumber
+					formControlName="minYearsOfTraining"
+					placeholder="Minimum Years of Training"
+					mode="decimal"
+					min="0"
+					max="100"
+					minFractionDigits="1"
+					required
+				/>
+			</p-inputgroup>
+		</div>
+
+		<div class="mt-5">
+			<label class="text-primary text-sm font-bold"
+				><i class="pi pi-sitemap mr-1"></i>Belt Details</label
+			>
+			<p-divider />
+		</div>
+
+		<div class="flex flex-col md:flex-row gap-3" formGroupName="grade">
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-palette"></i>
+				</p-inputgroup-addon>
+
+				<p-select
+					formControlName="color"
+					[options]="belts"
+					optionLabel="label"
+					optionValue="value"
+					[dataKey]="'value'"
+					placeholder="Belt Color"
+					required
+				>
+					<!-- Custom item template -->
+					<ng-template let-belt pTemplate="item">
+						<div class="flex items-center gap-2">
+							<img
+								[src]="belt.imagePath"
+								alt="{{ belt.label }}"
+								width="40"
+								height="40"
+							/>
+							<span>{{ belt.label }}</span>
+						</div>
+					</ng-template>
+
+					<!-- Selected value template -->
+					<ng-template let-belt pTemplate="selectedItem">
+						@if (belt) {
+							<div class="flex items-center gap-2">
+								<img
+									[src]="belt.imagePath"
+									alt="{{ belt.label }}"
+									width="40"
+									height="40"
+								/>
+								<span>{{ belt.label }}</span>
+							</div>
+						}
+					</ng-template>
+				</p-select>
+			</p-inputgroup>
+
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-pause"></i>
+				</p-inputgroup-addon>
+
+				<p-select
+					formControlName="degrees"
+					[options]="degrees"
+					optionLabel="label"
+					optionValue="value"
+					[dataKey]="'value'"
+					placeholder="Degrees"
+					required
+				>
+					<!-- Custom item template -->
+					<ng-template let-degree pTemplate="item">
+						<div class="flex items-center gap-2">
+							<img
+								[src]="degree.imagePath"
+								alt="{{ degree.label }}"
+								width="40"
+								height="40"
+							/>
+							<span>{{ degree.label }}</span>
+						</div>
+					</ng-template>
+
+					<!-- Selected value template -->
+					<ng-template let-degree pTemplate="selectedItem">
+						@if (degree) {
+							<div class="flex items-center gap-2">
+								<img
+									[src]="degree.imagePath"
+									alt="{{ degree.label }}"
+									width="40"
+									height="40"
+								/>
+								<span>{{ degree.label }}</span>
+							</div>
+						}
+					</ng-template>
+				</p-select>
+			</p-inputgroup>
+		</div>
+
+		<div
+			class="flex flex-col md:flex-row gap-3"
+			formGroupName="beltLevelMin"
+		>
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-palette"></i>
+				</p-inputgroup-addon>
+
+				<p-select
+					formControlName="color"
+					[options]="belts"
+					optionLabel="label"
+					optionValue="value"
+					[dataKey]="'value'"
+					placeholder="Minimum Belt Color"
+					required
+				>
+					<!-- Custom item template -->
+					<ng-template let-belt pTemplate="item">
+						<div class="flex items-center gap-2">
+							<img
+								[src]="belt.imagePath"
+								alt="{{ belt.label }}"
+								width="40"
+								height="40"
+							/>
+							<span>{{ belt.label }}</span>
+						</div>
+					</ng-template>
+
+					<!-- Selected value template -->
+					<ng-template let-belt pTemplate="selectedItem">
+						@if (belt) {
+							<div class="flex items-center gap-2">
+								<img
+									[src]="belt.imagePath"
+									alt="{{ belt.label }}"
+									width="40"
+									height="40"
+								/>
+								<span>{{ belt.label }}</span>
+							</div>
+						}
+					</ng-template>
+				</p-select>
+			</p-inputgroup>
+
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-pause"></i>
+				</p-inputgroup-addon>
+
+				<p-select
+					formControlName="degrees"
+					[options]="degrees"
+					optionLabel="label"
+					optionValue="value"
+					[dataKey]="'value'"
+					placeholder="Minimum Belt Degrees"
+					required
+				>
+					<!-- Custom item template -->
+					<ng-template let-degree pTemplate="item">
+						<div class="flex items-center gap-2">
+							<img
+								[src]="degree.imagePath"
+								alt="{{ degree.label }}"
+								width="40"
+								height="40"
+							/>
+							<span>{{ degree.label }}</span>
+						</div>
+					</ng-template>
+
+					<!-- Selected value template -->
+					<ng-template let-degree pTemplate="selectedItem">
+						@if (degree) {
+							<div class="flex items-center gap-2">
+								<img
+									[src]="degree.imagePath"
+									alt="{{ degree.label }}"
+									width="40"
+									height="40"
+								/>
+								<span>{{ degree.label }}</span>
+							</div>
+						}
+					</ng-template>
+				</p-select>
+			</p-inputgroup>
+		</div>
+
+		<div
+			class="flex flex-col md:flex-row gap-3"
+			formGroupName="beltLevelMax"
+		>
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-palette"></i>
+				</p-inputgroup-addon>
+
+				<p-select
+					formControlName="color"
+					[options]="belts"
+					optionLabel="label"
+					optionValue="value"
+					[dataKey]="'value'"
+					placeholder="Maximum Belt Color"
+					required
+				>
+					<!-- Custom item template -->
+					<ng-template let-belt pTemplate="item">
+						<div class="flex items-center gap-2">
+							<img
+								[src]="belt.imagePath"
+								alt="{{ belt.label }}"
+								width="40"
+								height="40"
+							/>
+							<span>{{ belt.label }}</span>
+						</div>
+					</ng-template>
+
+					<!-- Selected value template -->
+					<ng-template let-belt pTemplate="selectedItem">
+						@if (belt) {
+							<div class="flex items-center gap-2">
+								<img
+									[src]="belt.imagePath"
+									alt="{{ belt.label }}"
+									width="40"
+									height="40"
+								/>
+								<span>{{ belt.label }}</span>
+							</div>
+						}
+					</ng-template>
+				</p-select>
+			</p-inputgroup>
+
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-pause"></i>
+				</p-inputgroup-addon>
+
+				<p-select
+					formControlName="degrees"
+					[options]="degrees"
+					optionLabel="label"
+					optionValue="value"
+					[dataKey]="'value'"
+					placeholder="Maximum Belt Degrees"
+					required
+				>
+					<!-- Custom item template -->
+					<ng-template let-degree pTemplate="item">
+						<div class="flex items-center gap-2">
+							<img
+								[src]="degree.imagePath"
+								alt="{{ degree.label }}"
+								width="40"
+								height="40"
+							/>
+							<span>{{ degree.label }}</span>
+						</div>
+					</ng-template>
+
+					<!-- Selected value template -->
+					<ng-template let-degree pTemplate="selectedItem">
+						@if (degree) {
+							<div class="flex items-center gap-2">
+								<img
+									[src]="degree.imagePath"
+									alt="{{ degree.label }}"
+									width="40"
+									height="40"
+								/>
+								<span>{{ degree.label }}</span>
+							</div>
+						}
+					</ng-template>
+				</p-select>
+			</p-inputgroup>
+		</div>
+
+		<div class="mt-5">
+			<label class="text-primary text-sm font-bold"
+				><i class="pi pi-user mr-1"></i>Video</label
+			>
+			<p-divider />
+		</div>
+
+		<div class="flex flex-col md:flex-row gap-3">
+			<p-inputgroup>
+				<p-inputgroup-addon>
+					<i class="pi pi-youtube"></i>
+				</p-inputgroup-addon>
+				<input
+					pInputText
+					formControlName="videoURL"
+					placeholder="YouTube Video Embedded URL"
+					required
+				/>
+			</p-inputgroup>
+		</div>
+
+		<p-button class="mt-5" type="submit" label="Create Exercise" />
+	</form>
+</p-panel>
