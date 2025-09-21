@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -12,10 +12,12 @@ import { Subscription } from 'rxjs';
 import { MasterService } from '../../shared/services/users/master.service';
 import { StudentService } from '../../shared/services/users/student.service';
 import { ToastService } from '../../core/services/toast.service';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
 	selector: 'app-attendance',
 	imports: [
+		PanelModule,
 		TableModule,
 		ButtonModule,
 		SelectModule,
@@ -26,6 +28,7 @@ import { ToastService } from '../../core/services/toast.service';
 	],
 	templateUrl: './attendance.component.html',
 	styleUrl: './attendance.component.scss',
+	encapsulation: ViewEncapsulation.None,
 })
 export class AttendanceComponent implements OnInit, OnDestroy {
 	private readonly httpClient: HttpClient = inject(HttpClient);

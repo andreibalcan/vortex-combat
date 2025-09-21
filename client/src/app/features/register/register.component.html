@@ -123,6 +123,7 @@
 					<p-inputgroup-addon>
 						<i class="pi pi-palette"></i>
 					</p-inputgroup-addon>
+
 					<p-select
 						formControlName="color"
 						[options]="belts"
@@ -131,18 +132,79 @@
 						[dataKey]="'value'"
 						placeholder="Belt Color"
 						required
-					/>
+					>
+						<!-- Custom item template -->
+						<ng-template let-belt pTemplate="item">
+							<div class="flex items-center gap-2">
+								<img
+									[src]="belt.imagePath"
+									alt="{{ belt.label }}"
+									width="40"
+									height="40"
+								/>
+								<span>{{ belt.label }}</span>
+							</div>
+						</ng-template>
+
+						<!-- Selected value template -->
+						<ng-template let-belt pTemplate="selectedItem">
+							@if (belt) {
+								<div class="flex items-center gap-2">
+									<img
+										[src]="belt.imagePath"
+										alt="{{ belt.label }}"
+										width="40"
+										height="40"
+									/>
+									<span>{{ belt.label }}</span>
+								</div>
+							}
+						</ng-template>
+					</p-select>
 				</p-inputgroup>
 
 				<p-inputgroup>
 					<p-inputgroup-addon>
 						<i class="pi pi-pause"></i>
 					</p-inputgroup-addon>
-					<p-inputnumber
+
+					<p-select
 						formControlName="degrees"
-						placeholder="Belt Degrees"
+						[options]="degrees"
+						optionLabel="label"
+						optionValue="value"
+						[dataKey]="'value'"
+						placeholder="Degrees"
 						required
-					/>
+					>
+						<!-- Custom item template -->
+						<ng-template let-degree pTemplate="item">
+							<div class="flex items-center gap-2">
+								<img
+									[src]="degree.imagePath"
+									alt="{{ degree.label }}"
+									width="40"
+									height="40"
+								/>
+								<span>{{ degree.label }}</span>
+							</div>
+						</ng-template>
+
+						<!-- Selected value template -->
+						<ng-template let-degree pTemplate="selectedItem">
+							@if (degree) {
+								<div class="flex items-center gap-2">
+									<img
+										[src]="degree.imagePath"
+										alt="{{ degree.label }}"
+										width="40"
+										height="40"
+									/>
+									<span>{{ degree.label }}</span>
+								</div>
+							}
+						</ng-template>
+					</p-select>
 				</p-inputgroup>
 			</div>
 
@@ -276,7 +338,7 @@
 			</div>
 
 			@if (
-				registerForm.errors?.["passwordsMismatch"] &&
+				registerForm.errors?.['passwordsMismatch'] &&
 				registerForm.touched
 			) {
 				<label class="p-error text-xs text-red-500"

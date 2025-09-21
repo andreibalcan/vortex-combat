@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CalendarComponent } from '@schedule-x/angular';
 import {
 	CalendarApp,
@@ -20,7 +20,7 @@ import { WorkoutEnrollModalComponent } from '../../shared/components/modals/work
 	styleUrl: './workout-enroll.component.scss',
 	providers: [DialogService],
 })
-export class WorkoutEnrollComponent {
+export class WorkoutEnrollComponent implements OnInit {
 	private eventsServicePlugin = createEventsServicePlugin();
 	private ref: DynamicDialogRef | undefined;
 	private readonly workoutService: WorkoutService = inject(WorkoutService);
@@ -32,7 +32,7 @@ export class WorkoutEnrollComponent {
 	private closeModalSubscription: Subscription = new Subscription();
 	private enrollWorkoutSubscription: Subscription = new Subscription();
 
-	constructor() {
+	ngOnInit(): void {
 		this.getWorkoutsSubscription = this.workoutService
 			.getWorkouts()
 			.subscribe(workouts => {
@@ -55,7 +55,7 @@ export class WorkoutEnrollComponent {
 		});
 	}
 
-	calendarApp: CalendarApp = createCalendar({
+	public calendarApp: CalendarApp = createCalendar({
 		views: [createViewWeek()],
 		locale: 'en-GB',
 		isDark: this.themeService.isDarkMode(),

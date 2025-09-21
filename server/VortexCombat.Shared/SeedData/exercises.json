@@ -1,884 +1,1724 @@
 [
-  {
-    "name": "Technical Stand Up",
-    "description": "Fundamental movement to safely return to standing from seated. Practice focus on balance, base and controlled posture when rising.",
-    "category": "movement",
-    "difficulty": 1,
-    "grade": {
-      "color": 0,
-      "degrees": 0
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "5min",
-    "minYearsOfTraining": 0,
-    "videoURL": "https://www.youtube.com/embed/wgu6IUv3OJg"
-  },
-  {
-    "name": "Hip Escape (Shrimping)",
-    "description": "Basic movement to create space and reposition guard. Emphasize fast hip movement and shoulder placement to recover guard under pressure.",
-    "category": "movement",
-    "difficulty": 1,
-    "grade": {
-      "color": 0,
-      "degrees": 0
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "5min",
-    "minYearsOfTraining": 0,
-    "videoURL": "https://www.youtube.com/embed/D0rTw8IfJDE"
-  },
-  {
-    "name": "Breakfall",
-    "description": "Learn to fall safely and prevent injury. Includes backward, forward and side breakfalls with proper chin tuck and arm slapping.",
-    "category": "movement",
-    "difficulty": 1,
-    "grade": {
-      "color": 0,
-      "degrees": 0
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "5min",
-    "minYearsOfTraining": 0,
-    "videoURL": "https://www.youtube.com/embed/q6FBYGpUsY8"
-  },
-  {
-    "name": "Double Leg Takedown",
-    "description": "Takedown by grabbing both legs and driving forward. Focus on level change, head position and finishing mechanics to complete the takedown safely.",
-    "category": "takedown",
-    "difficulty": 2,
-    "grade": {
-      "color": 0,
-      "degrees": 3
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 0
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.5,
-    "videoURL": "https://www.youtube.com/embed/wxNAEByjOoA"
-  },
-  {
-    "name": "Osoto Gari",
-    "description": "Judo-style takedown by sweeping the opponent's leg while controlling upper body. Train entries from collar-and-sleeve grip and posture break prior to the sweep.",
-    "category": "takedown",
-    "difficulty": 3,
-    "grade": {
-      "color": 0,
-      "degrees": 3
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 0
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.5,
-    "videoURL": "https://www.youtube.com/embed/ivz28GEBB8k"
-  },
-  {
-    "name": "Scissor Sweep",
-    "description": "Basic sweep from closed guard using shin to off-balance the opponent. Work on timing, grips and knee placement to smoothly transition to mount or top position.",
-    "category": "sweep",
-    "difficulty": 2,
-    "grade": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 1
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 0
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.25,
-    "videoURL": "https://www.youtube.com/embed/Ugx4GY8h2Y4"
-  },
-  {
-    "name": "Hip Bump Sweep",
-    "description": "Sweep from closed guard by bumping hips to sit up and clear a side. Focus on posture break, underhook and explosive hip elevation to execute the sweep.",
-    "category": "sweep",
-    "difficulty": 2,
-    "grade": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 1
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 0
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.25,
-    "videoURL": "https://www.youtube.com/embed/YvJ-PVhKiWI"
-  },
-  {
-    "name": "Tripod Sweep",
-    "description": "Sweep using hooks and opponent's weight distribution while seated. Emphasize foot placement and off-balancing to bring opponent forward and topple them.",
-    "category": "sweep",
-    "difficulty": 3,
-    "grade": {
-      "color": 0,
-      "degrees": 3
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 0
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.5,
-    "videoURL": "https://www.youtube.com/embed/GTPzfkqPo8c"
-  },
-  {
-    "name": "Armbar from Guard",
-    "description": "Submission from guard that hyperextends the opponent's elbow. Drill the set-ups, angle change and leg positioning for a tight, controlled finish.",
-    "category": "submission",
-    "difficulty": 3,
-    "grade": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 1
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 0
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.25,
-    "videoURL": "https://www.youtube.com/embed/XUrxSihViJI"
-  },
-  {
-    "name": "Triangle Choke",
-    "description": "Strangle the opponent using legs while controlling posture and arm. Work on breaking posture, angle creation and squeezing mechanics for a reliable finish.",
-    "category": "submission",
-    "difficulty": 4,
-    "grade": {
-      "color": 0,
-      "degrees": 3
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 0
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.5,
-    "videoURL": "https://www.youtube.com/embed/k54daRsX3co"
-  },
-  {
-    "name": "Guard Retention - Hip Escape and Frame",
-    "description": "Maintain guard by framing against pressure and shrimping back to recover. Combine frames with active footwork to prevent passing attempts.",
-    "category": "guard",
-    "difficulty": 2,
-    "grade": {
-      "color": 0,
-      "degrees": 1
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.25,
-    "videoURL": "https://www.youtube.com/embed/uAjBy96dVpg"
-  },
-  {
-    "name": "Elbow Escape (Mount Escape)",
-    "description": "Escape from mount by creating frames and recovering half guard or full guard. Drill bridging, hip escape and trap sequences to consistently regain guard.",
-    "category": "escape",
-    "difficulty": 2,
-    "grade": {
-      "color": 0,
-      "degrees": 1
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.25,
-    "videoURL": "https://www.youtube.com/embed/Ks2yYDhARh8"
-  },
-  {
-    "name": "Bridge and Roll Escape",
-    "description": "Escape from mount by bridging and trapping arm and leg. Emphasize timing to trap a limb and roll to recover top position or guard.",
-    "category": "escape",
-    "difficulty": 2,
-    "grade": {
-      "color": 0,
-      "degrees": 1
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.25,
-    "videoURL": "https://www.youtube.com/embed/UyxNPnR24hE"
-  },
-  {
-    "name": "Side Control Escape - Shrimp to Guard",
-    "description": "Use hip movement and frames to escape side control and recover guard. Practice re-creating frames to escape under heavy pressure and re-guard effectively.",
-    "category": "escape",
-    "difficulty": 3,
-    "grade": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 1
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.5,
-    "videoURL": "https://www.youtube.com/embed/ZzOqifoQ_TM"
-  },
-  {
-    "name": "Back Escape - Over the Shoulder",
-    "description": "Escape from back control by clearing the hooks and turning in. Drill hand-fighting, escaping hooks and getting knees to the mat for recovery.",
-    "category": "escape",
-    "difficulty": 3,
-    "grade": {
-      "color": 0,
-      "degrees": 3
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.5,
-    "videoURL": "https://www.youtube.com/embed/V_U1IHL2iGQ"
-  },
-  {
-    "name": "Closed Guard Pass - Knee in Tailbone",
-    "description": "Open the closed guard with a strong posture and controlled break. Learn the knee-in-tailbone posture break and safe pass mechanics to avoid sweeps or submissions.",
-    "category": "guard pass",
-    "difficulty": 3,
-    "grade": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 1
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.5,
-    "videoURL": "https://www.youtube.com/embed/IMeMCFSYukk"
-  },
-  {
-    "name": "Toreando Pass",
-    "description": "Standing pass using grips on knees or pants to redirect legs and pass. Practice balance, timing and footwork to smoothly offload the opponent's leg pressure.",
-    "category": "guard pass",
-    "difficulty": 4,
-    "grade": {
-      "color": 0,
-      "degrees": 3
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.5,
-    "videoURL": "https://www.youtube.com/embed/QMaW6TVhh6I"
-  },
-  {
-    "name": "Americana from Mount",
-    "description": "Submission from mount using figure-four grip on opponent's arm. Work on shoulder isolation and safe, incremental pressure to finish the lock.",
-    "category": "submission",
-    "difficulty": 2,
-    "grade": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 1
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.25,
-    "videoURL": "https://www.youtube.com/embed/GSO8-YYOm18"
-  },
-  {
-    "name": "Kimura from Guard",
-    "description": "Submission from closed guard using a double wrist grip and shoulder control. Focus on grip transitions and hip movement to secure the lock safely.",
-    "category": "submission",
-    "difficulty": 3,
-    "grade": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 1
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.25,
-    "videoURL": "https://www.youtube.com/embed/zUG4xPfq-2M"
-  },
-  {
-    "name": "Rear Naked Choke",
-    "description": "Choke from back control by locking the arm behind opponent's head. Emphasize proper hand placement and chest-to-back pressure to finish quickly and safely.",
-    "category": "submission",
-    "difficulty": 4,
-    "grade": {
-      "color": 0,
-      "degrees": 3
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 2
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 0.5,
-    "videoURL": "https://www.youtube.com/embed/0Q4pp5eF9D0"
-  },
-  {
-    "name": "Knee Shield Escape & Transition",
-    "description": "Advanced knee-shield concepts to create space and transition to sweeps or standups. Practice combining knee shield retention with timely grips and angle changes.",
-    "category": "movement",
-    "difficulty": 2,
-    "grade": {
-      "color": 0,
-      "degrees": 4
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 4
-    },
-    "beltLevelMax": {
-      "color": 0,
-      "degrees": 4
-    },
-    "duration": "8min",
-    "minYearsOfTraining": 0.75,
-    "videoURL": "https://www.youtube.com/embed/mPDafcPeF7s"
-  },
-  {
-    "name": "Standing Base & Safe Takedown Defense",
-    "description": "Defensive posture and sprawl timing to stop basic takedowns. Train safe re-shots and recoveries leading into guard or underhooks.",
-    "category": "takedown defense",
-    "difficulty": 2,
-    "grade": {
-      "color": 0,
-      "degrees": 4
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 4
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 0
-    },
-    "duration": "8min",
-    "minYearsOfTraining": 0.75,
-    "videoURL": "https://www.youtube.com/embed/NmqVOswRpW4"
-  },
-  {
-    "name": "Closed Guard to Open Guard Flow",
-    "description": "Drills to safely open closed guard, create frames and transition to open guard options. Emphasis on posture, grips and smooth guard recovery sequences.",
-    "category": "guard",
-    "difficulty": 2,
-    "grade": {
-      "color": 0,
-      "degrees": 4
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 4
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 0
-    },
-    "duration": "8min",
-    "minYearsOfTraining": 0.75,
-    "videoURL": "https://www.youtube.com/embed/cCQZ7K6r96c"
-  },
-  {
-    "name": "Basic Lapel Control - Introductions",
-    "description": "Intro to using lapel grips for control and basic sweeps. Simple lapel entries that lead to sweeps or back-takes suitable for white belts preparing for blue.",
-    "category": "control",
-    "difficulty": 2,
-    "grade": {
-      "color": 0,
-      "degrees": 4
-    },
-    "beltLevelMin": {
-      "color": 0,
-      "degrees": 4
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 0
-    },
-    "duration": "8min",
-    "minYearsOfTraining": 0.75,
-    "videoURL": "https://www.youtube.com/embed/VDH0BiZhvC4"
-  },
-  {
-    "name": "Closed Guard Sweep Series (advanced)",
-    "description": "More advanced variations of closed guard sweeps and sequencing. Combine scissor, hip bump and lapel-assisted sweeps into continuous movement.",
-    "category": "sweep",
-    "difficulty": 3,
-    "grade": {
-      "color": 1,
-      "degrees": 0
-    },
-    "beltLevelMin": {
-      "color": 1,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 4
-    },
-    "duration": "12min",
-    "minYearsOfTraining": 1,
-    "videoURL": "https://www.youtube.com/embed/d4mtrEbTl7w"
-  },
-  {
-    "name": "X-Guard Entries & Sweeps",
-    "description": "Intro to X-guard entries, posture control and basic sweeps. Focus on balance disruption and safe entries from standing or seated positions.",
-    "category": "sweep",
-    "difficulty": 4,
-    "grade": {
-      "color": 1,
-      "degrees": 1
-    },
-    "beltLevelMin": {
-      "color": 1,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 4
-    },
-    "duration": "12min",
-    "minYearsOfTraining": 1.5,
-    "videoURL": "https://www.youtube.com/embed/Kng3k1eWkyQ"
-  },
-  {
-    "name": "Knee Slice Pass (pressure pass)",
-    "description": "Pressure-based guard pass that isolates a knee and slices through. Emphasize posture, shoulder pressure and leg control to avoid sweeps.",
-    "category": "guard pass",
-    "difficulty": 4,
-    "grade": {
-      "color": 1,
-      "degrees": 1
-    },
-    "beltLevelMin": {
-      "color": 1,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 4
-    },
-    "duration": "12min",
-    "minYearsOfTraining": 1,
-    "videoURL": "https://www.youtube.com/embed/lOPh9K5kOcE"
-  },
-  {
-    "name": "Bow and Arrow Choke (collar choke)",
-    "description": "Back control finishing option using a deep collar grip. Train safe set-up, seatbelt control and smooth choke mechanics.",
-    "category": "submission",
-    "difficulty": 4,
-    "grade": {
-      "color": 1,
-      "degrees": 2
-    },
-    "beltLevelMin": {
-      "color": 1,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 4
-    },
-    "duration": "12min",
-    "minYearsOfTraining": 1.5,
-    "videoURL": "https://www.youtube.com/embed/Q7R71XB3dig"
-  },
-  {
-    "name": "Standing Guard Passing Concepts",
-    "description": "Dynamic passing from standing focusing on grips, posture and leg control. Integrate toreando and knee-cut passes into flow drills.",
-    "category": "guard pass",
-    "difficulty": 3,
-    "grade": {
-      "color": 1,
-      "degrees": 1
-    },
-    "beltLevelMin": {
-      "color": 1,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 1,
-      "degrees": 4
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 1,
-    "videoURL": "https://www.youtube.com/embed/kauFzWg6v_A"
-  },
-  {
-    "name": "De La Riva Guard Sweeps & Entries",
-    "description": "Use De La Riva hook to off-balance and sweep opponents. Drill entries, grip fighting and transitions to back-takes or leg attacks.",
-    "category": "guard",
-    "difficulty": 4,
-    "grade": {
-      "color": 2,
-      "degrees": 0
-    },
-    "beltLevelMin": {
-      "color": 2,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 2,
-      "degrees": 4
-    },
-    "duration": "12min",
-    "minYearsOfTraining": 3,
-    "videoURL": "https://www.youtube.com/embed/Ct5yCkAxuis"
-  },
-  {
-    "name": "Leg Lock Fundamentals (entry and control)",
-    "description": "Foundational straight ankle and kneebar entries from seated and open positions. Stress control, safety and progression rather than high-level finishing on beginners.",
-    "category": "submission",
-    "difficulty": 4,
-    "grade": {
-      "color": 2,
-      "degrees": 1
-    },
-    "beltLevelMin": {
-      "color": 2,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 2,
-      "degrees": 4
-    },
-    "duration": "12min",
-    "minYearsOfTraining": 3,
-    "videoURL": "https://www.youtube.com/embed/JP1e5zVnxxU"
-  },
-  {
-    "name": "Reverse De La Riva to Back Take",
-    "description": "Transitions from leg entanglement controls to safe back takes. Practice hand control, hooks and seatbelt transitions for secure back control.",
-    "category": "transition",
-    "difficulty": 4,
-    "grade": {
-      "color": 2,
-      "degrees": 2
-    },
-    "beltLevelMin": {
-      "color": 2,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 2,
-      "degrees": 4
-    },
-    "duration": "12min",
-    "minYearsOfTraining": 3.5,
-    "videoURL": "https://www.youtube.com/embed/eFUrymJAvcw"
-  },
-  {
-    "name": "North-South Escapes & Controls",
-    "description": "Escapes and control options from north-south position focusing on frames and hip movement. Include reversals and safe recovery sequences.",
-    "category": "escape",
-    "difficulty": 3,
-    "grade": {
-      "color": 2,
-      "degrees": 0
-    },
-    "beltLevelMin": {
-      "color": 2,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 2,
-      "degrees": 4
-    },
-    "duration": "10min",
-    "minYearsOfTraining": 3,
-    "videoURL": "https://www.youtube.com/embed/g0jgwcu53mA"
-  },
-  {
-    "name": "Advanced Guard Passing Chains",
-    "description": "High-level chaining of passes mixing knee slice, torreando and leg-weave to break complex guards. Emphasize pressure, timing and reaction to counters.",
-    "category": "guard pass",
-    "difficulty": 5,
-    "grade": {
-      "color": 3,
-      "degrees": 0
-    },
-    "beltLevelMin": {
-      "color": 3,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 3,
-      "degrees": 4
-    },
-    "duration": "15min",
-    "minYearsOfTraining": 5,
-    "videoURL": "https://www.youtube.com/embed/aKuk3YMgXQU"
-  },
-  {
-    "name": "Berimbolo Variations",
-    "description": "Advanced inversion and back-take entries from guard progressing to back control. Focus on timing, hip mobility and balance to safely invert.",
-    "category": "transition",
-    "difficulty": 5,
-    "grade": {
-      "color": 3,
-      "degrees": 1
-    },
-    "beltLevelMin": {
-      "color": 3,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 3,
-      "degrees": 4
-    },
-    "duration": "15min",
-    "minYearsOfTraining": 5,
-    "videoURL": "https://www.youtube.com/embed/Ceo9RM86iLI"
-  },
-  {
-    "name": "Advanced Leg Lock Chains",
-    "description": "Chains connecting ankle, knee and calf-control positions leading to submissions. Drill safe entries, positional control and step-by-step progression for finishing.",
-    "category": "submission",
-    "difficulty": 5,
-    "grade": {
-      "color": 3,
-      "degrees": 1
-    },
-    "beltLevelMin": {
-      "color": 3,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 3,
-      "degrees": 4
-    },
-    "duration": "15min",
-    "minYearsOfTraining": 5,
-    "videoURL": "https://www.youtube.com/embed/6Ezo6kH7hZc"
-  },
-  {
-    "name": "Pressure & Positional Dominance",
-    "description": "Advanced control using bodyweight and angles to neutralize opponents. Refinement of small details that maintain top pressure and energy efficiency.",
-    "category": "positional",
-    "difficulty": 5,
-    "grade": {
-      "color": 4,
-      "degrees": 0
-    },
-    "beltLevelMin": {
-      "color": 4,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 4,
-      "degrees": 4
-    },
-    "duration": "15min",
-    "minYearsOfTraining": 8,
-    "videoURL": "https://www.youtube.com/embed/zi60LYeGPdc"
-  },
-  {
-    "name": "High-Level Submission Chains",
-    "description": "Combining transitions and submissions into fluid chains for high-level control. Emphasis on finishes, counters and teaching points for advanced practitioners.",
-    "category": "submission",
-    "difficulty": 5,
-    "grade": {
-      "color": 4,
-      "degrees": 1
-    },
-    "beltLevelMin": {
-      "color": 4,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 4,
-      "degrees": 4
-    },
-    "duration": "15min",
-    "minYearsOfTraining": 8,
-    "videoURL": "https://www.youtube.com/embed/WVOXKrJlU2U"
-  },
-  {
-    "name": "Teaching Drill: Progressive Resistance",
-    "description": "How to structure drills that progressively increase resistance for learning. Focus on coaching cues, level progression and safe intensity control.",
-    "category": "teaching",
-    "difficulty": 4,
-    "grade": {
-      "color": 4,
-      "degrees": 2
-    },
-    "beltLevelMin": {
-      "color": 4,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 4,
-      "degrees": 4
-    },
-    "duration": "12min",
-    "minYearsOfTraining": 8,
-    "videoURL": "https://www.youtube.com/embed/T734GYbIH5g"
-  },
-  {
-    "name": "System Refinement & Philosophy",
-    "description": "High-level principles and refinement of personal systems and pedagogy. Focus on principles that are transferable across students and generations.",
-    "category": "philosophy",
-    "difficulty": 5,
-    "grade": {
-      "color": 5,
-      "degrees": 0
-    },
-    "beltLevelMin": {
-      "color": 5,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 5,
-      "degrees": 2
-    },
-    "duration": "20min",
-    "minYearsOfTraining": 20,
-    "videoURL": "https://www.youtube.com/embed/bQrRRWhhOlc"
-  },
-  {
-    "name": "Legacy Teaching Methods",
-    "description": "Structuring a lineage and curriculum for future instructors. Covers how to maintain quality and safety while propagating technique over decades.",
-    "category": "teaching",
-    "difficulty": 4,
-    "grade": {
-      "color": 5,
-      "degrees": 1
-    },
-    "beltLevelMin": {
-      "color": 5,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 5,
-      "degrees": 2
-    },
-    "duration": "20min",
-    "minYearsOfTraining": 20,
-    "videoURL": "https://www.youtube.com/embed/UHBQl9B62Fc"
-  },
-  {
-    "name": "Mastery Drill: Pressure, Pace & Longevity",
-    "description": "Training methods for longevity and sustainable practice across a lifetime. Includes recovery, drill pacing and adapted intensity for older athletes.",
-    "category": "conditioning",
-    "difficulty": 4,
-    "grade": {
-      "color": 5,
-      "degrees": 2
-    },
-    "beltLevelMin": {
-      "color": 5,
-      "degrees": 0
-    },
-    "beltLevelMax": {
-      "color": 5,
-      "degrees": 2
-    },
-    "duration": "20min",
-    "minYearsOfTraining": 20,
-    "videoURL": "https://www.youtube.com/embed/0nzFxAl88F8"
-  }
+	{
+		"name": "Basic Turtle Position and Defense",
+		"description": "Learn to maintain turtle position safely and defend against common attacks while looking for escape opportunities.",
+		"category": "defense",
+		"difficulty": 3,
+		"grade": {
+			"color": 3,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 3,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 4,
+			"degrees": 2
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 1.2,
+		"videoURL": "https://www.youtube.com/embed/5f0_2-4fM7Y"
+	},
+	{
+		"name": "Clock Choke (from Turtle)",
+		"description": "Effective gi choke from the turtle position. Teaches important concepts of grip fighting and pressure.",
+		"category": "submission",
+		"difficulty": 3,
+		"grade": {
+			"color": 4,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 4,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 6,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 1.5,
+		"videoURL": "https://www.youtube.com/embed/5f0_2-4fM7Y"
+	},
+	{
+		"name": "Butterfly Guard Sweeps",
+		"description": "Develop powerful sweeping options from butterfly guard using hooks, off-balancing, and grips.",
+		"category": "sweep",
+		"difficulty": 4,
+		"grade": {
+			"color": 4,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 4,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 6,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 1.5,
+		"videoURL": "https://www.youtube.com/embed/0V8zF0lqW2I"
+	},
+	{
+		"name": "Basic Rubber Guard Concepts",
+		"description": "Introduction to rubber guard positions for flexibility and control from bottom guard.",
+		"category": "guard",
+		"difficulty": 4,
+		"grade": {
+			"color": 4,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 4,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 2
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 1.6,
+		"videoURL": "https://www.youtube.com/embed/4g-d3s7fQn0"
+	},
+	{
+		"name": "Leg Drag Pass",
+		"description": "A fundamental and powerful open guard pass. Focus on controlling the legs and upper body to pass to side control.",
+		"category": "guard pass",
+		"difficulty": 4,
+		"grade": {
+			"color": 4,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 4,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 7,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 1.5,
+		"videoURL": "https://www.youtube.com/embed/0-wpU1m7y_g"
+	},
+	{
+		"name": "Ezekiel Choke from Mount",
+		"description": "Gi choke from mount using sleeve grip. Practice proper angle and pressure application.",
+		"category": "submission",
+		"difficulty": 3,
+		"grade": {
+			"color": 4,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 4,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 1.7,
+		"videoURL": "https://www.youtube.com/embed/GSO8-YYOm18"
+	},
+	{
+		"name": "X-Guard Entries and Basics",
+		"description": "Introduction to X-guard entries from seated guard and basic sweep mechanics.",
+		"category": "guard",
+		"difficulty": 4,
+		"grade": {
+			"color": 4,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 4,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 6,
+			"degrees": 2
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 1.8,
+		"videoURL": "https://www.youtube.com/embed/Kng3k1eWkyQ"
+	},
+	{
+		"name": "Basic North-South Position",
+		"description": "Learn to achieve and maintain north-south position with proper weight distribution and control.",
+		"category": "control",
+		"difficulty": 3,
+		"grade": {
+			"color": 4,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 4,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 2
+		},
+		"duration": "8min",
+		"minYearsOfTraining": 1.9,
+		"videoURL": "https://www.youtube.com/embed/g0jgwcu53mA"
+	},
+	{
+		"name": "D'Arce Choke Fundamentals",
+		"description": "Introduction to the D'Arce choke from front headlock positions, such as after a sprawl or from knee-on-belly.",
+		"category": "submission",
+		"difficulty": 4,
+		"grade": {
+			"color": 5,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 5,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 7,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 2,
+		"videoURL": "https://www.youtube.com/embed/_J6YVO_4Tv4"
+	},
+	{
+		"name": "Closed Guard Sweep Series (advanced)",
+		"description": "More advanced variations of closed guard sweeps and sequencing. Combine scissor, hip bump and lapel-assisted sweeps into continuous movement.",
+		"category": "sweep",
+		"difficulty": 3,
+		"grade": {
+			"color": 5,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 5,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 1,
+		"videoURL": "https://www.youtube.com/embed/d4mtrEbTl7w"
+	},
+	{
+		"name": "X-Guard Entries & Sweeps",
+		"description": "Intro to X-guard entries, posture control and basic sweeps. Focus on balance disruption and safe entries from standing or seated positions.",
+		"category": "sweep",
+		"difficulty": 4,
+		"grade": {
+			"color": 5,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 5,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 1.5,
+		"videoURL": "https://www.youtube.com/embed/Kng3k1eWkyQ"
+	},
+	{
+		"name": "Knee Slice Pass (pressure pass)",
+		"description": "Pressure-based guard pass that isolates a knee and slices through. Emphasize posture, shoulder pressure and leg control to avoid sweeps.",
+		"category": "guard pass",
+		"difficulty": 4,
+		"grade": {
+			"color": 5,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 5,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 1,
+		"videoURL": "https://www.youtube.com/embed/lOPh9K5kOcE"
+	},
+	{
+		"name": "Standing Guard Passing Concepts",
+		"description": "Dynamic passing from standing focusing on grips, posture and leg control. Integrate toreando and knee-cut passes into flow drills.",
+		"category": "guard pass",
+		"difficulty": 3,
+		"grade": {
+			"color": 5,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 5,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 1,
+		"videoURL": "https://www.youtube.com/embed/kauFzWg6v_A"
+	},
+	{
+		"name": "Bow and Arrow Choke (collar choke)",
+		"description": "Back control finishing option using a deep collar grip. Train safe set-up, seatbelt control and smooth choke mechanics.",
+		"category": "submission",
+		"difficulty": 4,
+		"grade": {
+			"color": 5,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 5,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 1.5,
+		"videoURL": "https://www.youtube.com/embed/Q7R71XB3dig"
+	},
+	{
+		"name": "Lasso Guard Fundamentals",
+		"description": "Introduction to lasso guard control using sleeve and foot positioning for sweeps and submissions.",
+		"category": "guard",
+		"difficulty": 4,
+		"grade": {
+			"color": 5,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 5,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 6,
+			"degrees": 2
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 2.2,
+		"videoURL": "https://www.youtube.com/embed/4g-d3s7fQn0"
+	},
+	{
+		"name": "Crucifix Control and Submissions",
+		"description": "Advanced control position trapping both arms and setting up chokes and armlocks.",
+		"category": "submission",
+		"difficulty": 4,
+		"grade": {
+			"color": 5,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 5,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 6,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 2.5,
+		"videoURL": "https://www.youtube.com/embed/0Q4pp5eF9D0"
+	},
+	{
+		"name": "Deep Half Guard System",
+		"description": "Advanced half guard variation focusing on underhooks and back attacks from deep half position.",
+		"category": "guard",
+		"difficulty": 4,
+		"grade": {
+			"color": 5,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 5,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 6,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 2.7,
+		"videoURL": "https://www.youtube.com/embed/8x8H3vR0Z_g"
+	},
+	{
+		"name": "De La Riva Guard Sweeps & Entries",
+		"description": "Use De La Riva hook to off-balance and sweep opponents. Drill entries, grip fighting and transitions to back-takes or leg attacks.",
+		"category": "guard",
+		"difficulty": 4,
+		"grade": {
+			"color": 6,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 6,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 6,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 3,
+		"videoURL": "https://www.youtube.com/embed/Ct5yCkAxuis"
+	},
+	{
+		"name": "North-South Escapes & Controls",
+		"description": "Escapes and control options from north-south position focusing on frames and hip movement. Include reversals and safe recovery sequences.",
+		"category": "escape",
+		"difficulty": 3,
+		"grade": {
+			"color": 6,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 6,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 6,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 3,
+		"videoURL": "https://www.youtube.com/embed/g0jgwcu53mA"
+	},
+	{
+		"name": "Leg Lock Fundamentals (entry and control)",
+		"description": "Foundational straight ankle and kneebar entries from seated and open positions. Stress control, safety and progression rather than high-level finishing on beginners.",
+		"category": "submission",
+		"difficulty": 4,
+		"grade": {
+			"color": 6,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 6,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 6,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 3,
+		"videoURL": "https://www.youtube.com/embed/JP1e5zVnxxU"
+	},
+	{
+		"name": "Inverted Guard Basics",
+		"description": "Introduction to inverted guard positions and basic sweeps while maintaining safety and control.",
+		"category": "guard",
+		"difficulty": 4,
+		"grade": {
+			"color": 6,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 6,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 7,
+			"degrees": 2
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 3.2,
+		"videoURL": "https://www.youtube.com/embed/Ceo9RM86iLI"
+	},
+	{
+		"name": "Reverse De La Riva to Back Take",
+		"description": "Transitions from leg entanglement controls to safe back takes. Practice hand control, hooks and seatbelt transitions for secure back control.",
+		"category": "transition",
+		"difficulty": 4,
+		"grade": {
+			"color": 6,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 6,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 6,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 3.5,
+		"videoURL": "https://www.youtube.com/embed/eFUrymJAvcw"
+	},
+	{
+		"name": "Worm Guard Introduction",
+		"description": "Basic concepts of worm guard using lapel control for advanced guard retention and attacking.",
+		"category": "guard",
+		"difficulty": 5,
+		"grade": {
+			"color": 6,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 6,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 7,
+			"degrees": 3
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 3.8,
+		"videoURL": "https://www.youtube.com/embed/VDH0BiZhvC4"
+	},
+	{
+		"name": "50/50 Guard Entries and Retention",
+		"description": "Understand the basic positions, controls, and dangers of the 50/50 leg entanglement.",
+		"category": "guard",
+		"difficulty": 5,
+		"grade": {
+			"color": 6,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 6,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 7,
+			"degrees": 3
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 4,
+		"videoURL": "https://www.youtube.com/embed/9J1WlNvQl3M"
+	},
+	{
+		"name": "K-Guard System",
+		"description": "Advanced guard system using knee shield and lapel grips for sweeps and back takes.",
+		"category": "guard",
+		"difficulty": 5,
+		"grade": {
+			"color": 6,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 6,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 7,
+			"degrees": 3
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 4.2,
+		"videoURL": "https://www.youtube.com/embed/VDH0BiZhvC4"
+	},
+	{
+		"name": "Advanced Guard Passing Chains",
+		"description": "High-level chaining of passes mixing knee slice, torreando and leg-weave to break complex guards. Emphasize pressure, timing and reaction to counters.",
+		"category": "guard pass",
+		"difficulty": 5,
+		"grade": {
+			"color": 7,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 7,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 7,
+			"degrees": 3
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 5,
+		"videoURL": "https://www.youtube.com/embed/aKuk3YMgXQU"
+	},
+	{
+		"name": "Berimbolo Variations",
+		"description": "Advanced inversion and back-take entries from guard progressing to back control. Focus on timing, hip mobility and balance to safely invert.",
+		"category": "transition",
+		"difficulty": 5,
+		"grade": {
+			"color": 7,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 7,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 7,
+			"degrees": 3
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 5,
+		"videoURL": "https://www.youtube.com/embed/Ceo9RM86iLI"
+	},
+	{
+		"name": "Advanced Leg Lock Chains",
+		"description": "Chains connecting ankle, knee and calf-control positions leading to submissions. Drill safe entries, positional control and step-by-step progression for finishing.",
+		"category": "submission",
+		"difficulty": 5,
+		"grade": {
+			"color": 7,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 7,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 7,
+			"degrees": 3
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 5,
+		"videoURL": "https://www.youtube.com/embed/6Ezo6kH7hZc"
+	},
+	{
+		"name": "Collar Tie & Russian Tie Takedowns",
+		"description": "Advanced standing grappling concepts using head and arm control to set up trips and throws.",
+		"category": "takedown",
+		"difficulty": 4,
+		"grade": {
+			"color": 7,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 7,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 8,
+			"degrees": 3
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 6,
+		"videoURL": "https://www.youtube.com/embed/u1vMpe9nZ_0"
+	},
+	{
+		"name": "Back Step Pass",
+		"description": "A versatile and dynamic passing technique to circumvent strong guard defenses.",
+		"category": "guard pass",
+		"difficulty": 5,
+		"grade": {
+			"color": 7,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 7,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 8,
+			"degrees": 3
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 6,
+		"videoURL": "https://www.youtube.com/embed/5D9oRr5wLv0"
+	},
+	{
+		"name": "Matrix System (Advanced Lapel Guards)",
+		"description": "Complex lapel guard system incorporating multiple guard positions and transitions.",
+		"category": "guard",
+		"difficulty": 5,
+		"grade": {
+			"color": 7,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 7,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 8,
+			"degrees": 2
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 6.5,
+		"videoURL": "https://www.youtube.com/embed/VDH0BiZhvC4"
+	},
+	{
+		"name": "High Level Transitions and Flow",
+		"description": "Seamless transitions between multiple positions maintaining constant pressure and control.",
+		"category": "transition",
+		"difficulty": 5,
+		"grade": {
+			"color": 7,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 7,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 8,
+			"degrees": 2
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 7,
+		"videoURL": "https://www.youtube.com/embed/aKuk3YMgXQU"
+	},
+	{
+		"name": "Pressure & Positional Dominance",
+		"description": "Advanced control using bodyweight and angles to neutralize opponents. Refinement of small details that maintain top pressure and energy efficiency.",
+		"category": "positional",
+		"difficulty": 5,
+		"grade": {
+			"color": 8,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 8,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 8,
+			"degrees": 3
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 8,
+		"videoURL": "https://www.youtube.com/embed/zi60LYeGPdc"
+	},
+	{
+		"name": "High-Level Submission Chains",
+		"description": "Combining transitions and submissions into fluid chains for high-level control. Emphasis on finishes, counters and teaching points for advanced practitioners.",
+		"category": "submission",
+		"difficulty": 5,
+		"grade": {
+			"color": 8,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 8,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 8,
+			"degrees": 3
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 8,
+		"videoURL": "https://www.youtube.com/embed/WVOXKrJlU2U"
+	},
+	{
+		"name": "Teaching Drill: Progressive Resistance",
+		"description": "How to structure drills that progressively increase resistance for learning. Focus on coaching cues, level progression and safe intensity control.",
+		"category": "teaching",
+		"difficulty": 4,
+		"grade": {
+			"color": 8,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 8,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 8,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 8,
+		"videoURL": "https://www.youtube.com/embed/T734GYbIH5g"
+	},
+	{
+		"name": "Advanced Competition Strategy",
+		"description": "Strategic thinking for high-level competition including game planning, psychological preparation and tactical adjustments.",
+		"category": "strategy",
+		"difficulty": 5,
+		"grade": {
+			"color": 8,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 8,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 9,
+			"degrees": 1
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 10,
+		"videoURL": "https://www.youtube.com/embed/zi60LYeGPdc"
+	},
+	{
+		"name": "Injury Prevention and Longevity",
+		"description": "Methods for maintaining joint health, preventing common BJJ injuries and adapting training for different life phases.",
+		"category": "conditioning",
+		"difficulty": 4,
+		"grade": {
+			"color": 8,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 8,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 9,
+			"degrees": 2
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 12,
+		"videoURL": "https://www.youtube.com/embed/0nzFxAl88F8"
+	},
+	{
+		"name": "Advanced Teaching Methodology",
+		"description": "Sophisticated teaching approaches for different learning styles and skill levels.",
+		"category": "teaching",
+		"difficulty": 5,
+		"grade": {
+			"color": 8,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 8,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 9,
+			"degrees": 2
+		},
+		"duration": "15min",
+		"minYearsOfTraining": 15,
+		"videoURL": "https://www.youtube.com/embed/T734GYbIH5g"
+	},
+	{
+		"name": "System Refinement & Philosophy",
+		"description": "High-level principles and refinement of personal systems and pedagogy. Focus on principles that are transferable across students and generations.",
+		"category": "philosophy",
+		"difficulty": 5,
+		"grade": {
+			"color": 9,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 9,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 9,
+			"degrees": 3
+		},
+		"duration": "20min",
+		"minYearsOfTraining": 20,
+		"videoURL": "https://www.youtube.com/embed/bQrRRWhhOlc"
+	},
+	{
+		"name": "Legacy Teaching Methods",
+		"description": "Structuring a lineage and curriculum for future instructors. Covers how to maintain quality and safety while propagating technique over decades.",
+		"category": "teaching",
+		"difficulty": 4,
+		"grade": {
+			"color": 9,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 9,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 9,
+			"degrees": 3
+		},
+		"duration": "20min",
+		"minYearsOfTraining": 20,
+		"videoURL": "https://www.youtube.com/embed/UHBQl9B62Fc"
+	},
+	{
+		"name": "Mastery Drill: Pressure, Pace & Longevity",
+		"description": "Training methods for longevity and sustainable practice across a lifetime. Includes recovery, drill pacing and adapted intensity for older athletes.",
+		"category": "conditioning",
+		"difficulty": 4,
+		"grade": {
+			"color": 9,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 9,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 9,
+			"degrees": 3
+		},
+		"duration": "20min",
+		"minYearsOfTraining": 20,
+		"videoURL": "https://www.youtube.com/embed/0nzFxAl88F8"
+	},
+	{
+		"name": "Grandmaster Wisdom and Leadership",
+		"description": "Developing leadership qualities in the martial arts community and passing on the philosophical aspects of BJJ to future generations.",
+		"category": "philosophy",
+		"difficulty": 5,
+		"grade": {
+			"color": 9,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 9,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 9,
+			"degrees": 3
+		},
+		"duration": "20min",
+		"minYearsOfTraining": 25,
+		"videoURL": "https://www.youtube.com/embed/bQrRRWhhOlc"
+	},
+	{
+		"name": "Technical Stand Up",
+		"description": "Fundamental movement to safely return to standing from seated. Practice focus on balance, base and controlled posture when rising.",
+		"category": "movement",
+		"difficulty": 1,
+		"grade": {
+			"color": 0,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 0,
+			"degrees": 3
+		},
+		"duration": "5min",
+		"minYearsOfTraining": 0,
+		"videoURL": "https://www.youtube.com/embed/wgu6IUv3OJg"
+	},
+	{
+		"name": "Hip Escape (Shrimping)",
+		"description": "Basic movement to create space and reposition guard. Emphasize fast hip movement and shoulder placement to recover guard under pressure.",
+		"category": "movement",
+		"difficulty": 1,
+		"grade": {
+			"color": 0,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 1,
+			"degrees": 3
+		},
+		"duration": "5min",
+		"minYearsOfTraining": 0,
+		"videoURL": "https://www.youtube.com/embed/D0rTw8IfJDE"
+	},
+	{
+		"name": "Breakfall",
+		"description": "Learn to fall safely and prevent injury. Includes backward, forward and side breakfalls with proper chin tuck and arm slapping.",
+		"category": "movement",
+		"difficulty": 1,
+		"grade": {
+			"color": 0,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 0,
+			"degrees": 3
+		},
+		"duration": "5min",
+		"minYearsOfTraining": 0,
+		"videoURL": "https://www.youtube.com/embed/q6FBYGpUsY8"
+	},
+	{
+		"name": "Bridge and Hip Movement",
+		"description": "Fundamental bridging movement for escapes and creating space. Essential for mount and side control escapes.",
+		"category": "movement",
+		"difficulty": 1,
+		"grade": {
+			"color": 0,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 0,
+			"degrees": 3
+		},
+		"duration": "5min",
+		"minYearsOfTraining": 0,
+		"videoURL": "https://www.youtube.com/embed/UyxNPnR24hE"
+	},
+	{
+		"name": "Basic Guard Position",
+		"description": "Learn to maintain closed guard position with proper posture control and basic grips.",
+		"category": "guard",
+		"difficulty": 1,
+		"grade": {
+			"color": 0,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 0,
+			"degrees": 3
+		},
+		"duration": "8min",
+		"minYearsOfTraining": 0.1,
+		"videoURL": "https://www.youtube.com/embed/Ugx4GY8h2Y4"
+	},
+	{
+		"name": "Elbow Escape (Mount Escape)",
+		"description": "Escape from mount by creating frames and recovering half guard or full guard. Drill bridging, hip escape and trap sequences to consistently regain guard.",
+		"category": "escape",
+		"difficulty": 2,
+		"grade": {
+			"color": 0,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 1,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.25,
+		"videoURL": "https://www.youtube.com/embed/Ks2yYDhARh8"
+	},
+	{
+		"name": "Bridge and Roll Escape",
+		"description": "Escape from mount by bridging and trapping arm and leg. Emphasize timing to trap a limb and roll to recover top position or guard.",
+		"category": "escape",
+		"difficulty": 2,
+		"grade": {
+			"color": 0,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 1,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.25,
+		"videoURL": "https://www.youtube.com/embed/UyxNPnR24hE"
+	},
+	{
+		"name": "Guard Retention - Hip Escape and Frame",
+		"description": "Maintain guard by framing against pressure and shrimping back to recover. Combine frames with active footwork to prevent passing attempts.",
+		"category": "guard",
+		"difficulty": 2,
+		"grade": {
+			"color": 0,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 1,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.25,
+		"videoURL": "https://www.youtube.com/embed/uAjBy96dVpg"
+	},
+	{
+		"name": "Basic Mount Control",
+		"description": "Learn to maintain and control mount position with proper weight distribution and base.",
+		"category": "control",
+		"difficulty": 2,
+		"grade": {
+			"color": 0,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 1,
+			"degrees": 0
+		},
+		"duration": "8min",
+		"minYearsOfTraining": 0.3,
+		"videoURL": "https://www.youtube.com/embed/GSO8-YYOm18"
+	},
+	{
+		"name": "Side Control Escape - Shrimp to Guard",
+		"description": "Use hip movement and frames to escape side control and recover guard. Practice re-creating frames to escape under heavy pressure and re-guard effectively.",
+		"category": "escape",
+		"difficulty": 3,
+		"grade": {
+			"color": 0,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 2,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.5,
+		"videoURL": "https://www.youtube.com/embed/ZzOqifoQ_TM"
+	},
+	{
+		"name": "Knee Shield Escape & Transition",
+		"description": "Advanced knee-shield concepts to create space and transition to sweeps or standups. Practice combining knee shield retention with timely grips and angle changes.",
+		"category": "movement",
+		"difficulty": 2,
+		"grade": {
+			"color": 0,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 3
+		},
+		"beltLevelMax": {
+			"color": 1,
+			"degrees": 0
+		},
+		"duration": "8min",
+		"minYearsOfTraining": 0.75,
+		"videoURL": "https://www.youtube.com/embed/mPDafcPeF7s"
+	},
+	{
+		"name": "Standing Base & Safe Takedown Defense",
+		"description": "Defensive posture and sprawl timing to stop basic takedowns. Train safe re-shots and recoveries leading into guard or underhooks.",
+		"category": "takedown defense",
+		"difficulty": 2,
+		"grade": {
+			"color": 0,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 3
+		},
+		"beltLevelMax": {
+			"color": 1,
+			"degrees": 0
+		},
+		"duration": "8min",
+		"minYearsOfTraining": 0.75,
+		"videoURL": "https://www.youtube.com/embed/NmqVOswRpW4"
+	},
+	{
+		"name": "Closed Guard to Open Guard Flow",
+		"description": "Drills to safely open closed guard, create frames and transition to open guard options. Emphasis on posture, grips and smooth guard recovery sequences.",
+		"category": "guard",
+		"difficulty": 2,
+		"grade": {
+			"color": 0,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 0,
+			"degrees": 3
+		},
+		"beltLevelMax": {
+			"color": 1,
+			"degrees": 0
+		},
+		"duration": "8min",
+		"minYearsOfTraining": 0.75,
+		"videoURL": "https://www.youtube.com/embed/cCQZ7K6r96c"
+	},
+	{
+		"name": "Forward Roll (Ukemi)",
+		"description": "Fundamental rolling breakfall to disperse impact and recover to standing. Essential for safe practice of throws and takedowns.",
+		"category": "movement",
+		"difficulty": 1,
+		"grade": {
+			"color": 1,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 1,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 1,
+			"degrees": 3
+		},
+		"duration": "5min",
+		"minYearsOfTraining": 0.1,
+		"videoURL": "https://www.youtube.com/embed/4zr8j6PJdQk"
+	},
+	{
+		"name": "Trap and Roll Escape (Mount)",
+		"description": "Basic but highly effective mount escape using an arm trap and a strong bridge to unbalance the opponent.",
+		"category": "escape",
+		"difficulty": 1,
+		"grade": {
+			"color": 1,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 1,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 2,
+			"degrees": 3
+		},
+		"duration": "8min",
+		"minYearsOfTraining": 0.25,
+		"videoURL": "https://www.youtube.com/embed/c6lhc4BIIq0"
+	},
+	{
+		"name": "Americana from Mount",
+		"description": "Submission from mount using figure-four grip on opponent's arm. Work on shoulder isolation and safe, incremental pressure to finish the lock.",
+		"category": "submission",
+		"difficulty": 2,
+		"grade": {
+			"color": 1,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 1,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 3,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.25,
+		"videoURL": "https://www.youtube.com/embed/GSO8-YYOm18"
+	},
+	{
+		"name": "Scissor Sweep",
+		"description": "Basic sweep from closed guard using shin to off-balance the opponent. Work on timing, grips and knee placement to smoothly transition to mount or top position.",
+		"category": "sweep",
+		"difficulty": 2,
+		"grade": {
+			"color": 1,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 1,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 0
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.25,
+		"videoURL": "https://www.youtube.com/embed/Ugx4GY8h2Y4"
+	},
+	{
+		"name": "Hip Bump Sweep",
+		"description": "Sweep from closed guard by bumping hips to sit up and clear a side. Focus on posture break, underhook and explosive hip elevation to execute the sweep.",
+		"category": "sweep",
+		"difficulty": 2,
+		"grade": {
+			"color": 1,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 1,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 0
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.25,
+		"videoURL": "https://www.youtube.com/embed/YvJ-PVhKiWI"
+	},
+	{
+		"name": "Pummeling Drill for Underhooks",
+		"description": "Develop the muscle memory for securing underhooks in the clinch, crucial for takedowns and takedown defense.",
+		"category": "takedown",
+		"difficulty": 1,
+		"grade": {
+			"color": 1,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 1,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 2,
+			"degrees": 3
+		},
+		"duration": "5min",
+		"minYearsOfTraining": 0.25,
+		"videoURL": "https://www.youtube.com/embed/nJgD_2WQnK4"
+	},
+	{
+		"name": "Armbar from Guard",
+		"description": "Submission from guard that hyperextends the opponent's elbow. Drill the set-ups, angle change and leg positioning for a tight, controlled finish.",
+		"category": "submission",
+		"difficulty": 3,
+		"grade": {
+			"color": 1,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 1,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 0
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.5,
+		"videoURL": "https://www.youtube.com/embed/XUrxSihViJI"
+	},
+	{
+		"name": "Kimura from Guard",
+		"description": "Submission from closed guard using a double wrist grip and shoulder control. Focus on grip transitions and hip movement to secure the lock safely.",
+		"category": "submission",
+		"difficulty": 3,
+		"grade": {
+			"color": 1,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 1,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 4,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.5,
+		"videoURL": "https://www.youtube.com/embed/zUG4xPfq-2M"
+	},
+	{
+		"name": "Closed Guard Pass - Knee in Tailbone",
+		"description": "Open the closed guard with a strong posture and controlled break. Learn the knee-in-tailbone posture break and safe pass mechanics to avoid sweeps or submissions.",
+		"category": "guard pass",
+		"difficulty": 3,
+		"grade": {
+			"color": 1,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 1,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 3,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.5,
+		"videoURL": "https://www.youtube.com/embed/IMeMCFSYukk"
+	},
+	{
+		"name": "Basic Side Control",
+		"description": "Learn to maintain side control with proper cross-face, underhook and weight distribution.",
+		"category": "control",
+		"difficulty": 2,
+		"grade": {
+			"color": 1,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 1,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 2,
+			"degrees": 1
+		},
+		"duration": "8min",
+		"minYearsOfTraining": 0.6,
+		"videoURL": "https://www.youtube.com/embed/ZzOqifoQ_TM"
+	},
+	{
+		"name": "Double Leg Takedown",
+		"description": "Takedown by grabbing both legs and driving forward. Focus on level change, head position and finishing mechanics to complete the takedown safely.",
+		"category": "takedown",
+		"difficulty": 2,
+		"grade": {
+			"color": 1,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 1,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 4,
+			"degrees": 0
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.5,
+		"videoURL": "https://www.youtube.com/embed/wxNAEByjOoA"
+	},
+	{
+		"name": "Collar Sleeve Guard Control",
+		"description": "Introduction to open guard. Learn to control distance and posture using a collar and sleeve grip.",
+		"category": "guard",
+		"difficulty": 2,
+		"grade": {
+			"color": 2,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 2,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 3,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.5,
+		"videoURL": "https://www.youtube.com/embed/4g-d3s7fQn0"
+	},
+	{
+		"name": "Single Leg Takedown",
+		"description": "Fundamental wrestling takedown. Drill the finish from various grips and positions.",
+		"category": "takedown",
+		"difficulty": 2,
+		"grade": {
+			"color": 2,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 2,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 4,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.5,
+		"videoURL": "https://www.youtube.com/embed/L-7Iel_1HkY"
+	},
+	{
+		"name": "Back Escape - Over the Shoulder",
+		"description": "Escape from back control by clearing the hooks and turning in. Drill hand-fighting, escaping hooks and getting knees to the mat for recovery.",
+		"category": "escape",
+		"difficulty": 3,
+		"grade": {
+			"color": 2,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 2,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 3,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.75,
+		"videoURL": "https://www.youtube.com/embed/V_U1IHL2iGQ"
+	},
+	{
+		"name": "Osoto Gari",
+		"description": "Judo-style takedown by sweeping the opponent's leg while controlling upper body. Train entries from collar-and-sleeve grip and posture break prior to the sweep.",
+		"category": "takedown",
+		"difficulty": 3,
+		"grade": {
+			"color": 2,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 2,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 4,
+			"degrees": 0
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.75,
+		"videoURL": "https://www.youtube.com/embed/ivz28GEBB8k"
+	},
+	{
+		"name": "Triangle Choke",
+		"description": "Strangle the opponent using legs while controlling posture and arm. Work on breaking posture, angle creation and squeezing mechanics for a reliable finish.",
+		"category": "submission",
+		"difficulty": 4,
+		"grade": {
+			"color": 2,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 2,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 0
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.75,
+		"videoURL": "https://www.youtube.com/embed/k54daRsX3co"
+	},
+	{
+		"name": "Omaplata from Guard",
+		"description": "Shoulder lock submission from guard using the leg. Focus on hip movement and angle creation to finish.",
+		"category": "submission",
+		"difficulty": 3,
+		"grade": {
+			"color": 2,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 2,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 4,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.75,
+		"videoURL": "https://www.youtube.com/embed/dH9hX2f2qZc"
+	},
+	{
+		"name": "Tripod Sweep",
+		"description": "Sweep using hooks and opponent's weight distribution while seated. Emphasize foot placement and off-balancing to bring opponent forward and topple them.",
+		"category": "sweep",
+		"difficulty": 3,
+		"grade": {
+			"color": 2,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 2,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 0
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.75,
+		"videoURL": "https://www.youtube.com/embed/GTPzfkqPo8c"
+	},
+	{
+		"name": "Toreando Pass",
+		"description": "Standing pass using grips on knees or pants to redirect legs and pass. Practice balance, timing and footwork to smoothly offload the opponent's leg pressure.",
+		"category": "guard pass",
+		"difficulty": 4,
+		"grade": {
+			"color": 2,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 2,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 4,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.75,
+		"videoURL": "https://www.youtube.com/embed/QMaW6TVhh6I"
+	},
+	{
+		"name": "Rear Naked Choke",
+		"description": "Choke from back control by locking the arm behind opponent's head. Emphasize proper hand placement and chest-to-back pressure to finish quickly and safely.",
+		"category": "submission",
+		"difficulty": 4,
+		"grade": {
+			"color": 2,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 2,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 0.75,
+		"videoURL": "https://www.youtube.com/embed/0Q4pp5eF9D0"
+	},
+	{
+		"name": "Knee on Belly Control",
+		"description": "Dominant position using knee pressure on opponent's torso while maintaining base and control.",
+		"category": "control",
+		"difficulty": 3,
+		"grade": {
+			"color": 2,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 2,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 3,
+			"degrees": 2
+		},
+		"duration": "8min",
+		"minYearsOfTraining": 0.9,
+		"videoURL": "https://www.youtube.com/embed/_J6YVO_4Tv4"
+	},
+	{
+		"name": "Basic Back Control",
+		"description": "Learn to maintain back control with seatbelt grip and proper hook placement.",
+		"category": "control",
+		"difficulty": 3,
+		"grade": {
+			"color": 2,
+			"degrees": 3
+		},
+		"beltLevelMin": {
+			"color": 2,
+			"degrees": 2
+		},
+		"beltLevelMax": {
+			"color": 3,
+			"degrees": 2
+		},
+		"duration": "8min",
+		"minYearsOfTraining": 0.9,
+		"videoURL": "https://www.youtube.com/embed/0Q4pp5eF9D0"
+	},
+	{
+		"name": "Spider Guard Basics",
+		"description": "Learn to use feet on biceps to control the opponent's arms and create off-balancing and sweep opportunities.",
+		"category": "guard",
+		"difficulty": 3,
+		"grade": {
+			"color": 3,
+			"degrees": 0
+		},
+		"beltLevelMin": {
+			"color": 3,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 4,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 1,
+		"videoURL": "https://www.youtube.com/embed/0D8D2E2z9K4"
+	},
+	{
+		"name": "Loop Choke from Standing",
+		"description": "Aggressive gi choke that can be hit from standing, in the clinch, or when someone is trying to pass your guard.",
+		"category": "submission",
+		"difficulty": 3,
+		"grade": {
+			"color": 3,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 3,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 1,
+		"videoURL": "https://www.youtube.com/embed/_7V0I6tqg8s"
+	},
+	{
+		"name": "Guard Recovery from Side Control",
+		"description": "Advanced techniques for recovering guard from difficult side control positions using frames and hip movement.",
+		"category": "escape",
+		"difficulty": 3,
+		"grade": {
+			"color": 3,
+			"degrees": 1
+		},
+		"beltLevelMin": {
+			"color": 3,
+			"degrees": 0
+		},
+		"beltLevelMax": {
+			"color": 4,
+			"degrees": 2
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 1,
+		"videoURL": "https://www.youtube.com/embed/ZzOqifoQ_TM"
+	},
+	{
+		"name": "Half Guard Bottom: Underhook & Sweep",
+		"description": "The fundamental half guard game. Secure the underhook, get on your side, and sweep to come on top.",
+		"category": "sweep",
+		"difficulty": 3,
+		"grade": {
+			"color": 3,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 3,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 5,
+			"degrees": 3
+		},
+		"duration": "12min",
+		"minYearsOfTraining": 1,
+		"videoURL": "https://www.youtube.com/embed/8x8H3vR0Z_g"
+	},
+	{
+		"name": "Knee Shield Half Guard",
+		"description": "Defensive half guard position using the knee as a shield to create space and prevent pressure passes.",
+		"category": "guard",
+		"difficulty": 3,
+		"grade": {
+			"color": 3,
+			"degrees": 2
+		},
+		"beltLevelMin": {
+			"color": 3,
+			"degrees": 1
+		},
+		"beltLevelMax": {
+			"color": 4,
+			"degrees": 3
+		},
+		"duration": "10min",
+		"minYearsOfTraining": 1.1,
+		"videoURL": "https://www.youtube.com/embed/mPDafcPeF7s"
+	}
 ]

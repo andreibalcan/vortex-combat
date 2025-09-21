@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CalendarComponent } from '@schedule-x/angular';
 import {
 	CalendarApp,
@@ -24,7 +24,7 @@ import { EditWorkoutModalComponent } from '../../shared/components/modals/edit-w
 	styleUrl: './schedule-workout.component.scss',
 	providers: [DialogService],
 })
-export class ScheduleWorkoutComponent implements OnDestroy {
+export class ScheduleWorkoutComponent implements OnInit, OnDestroy {
 	private eventsServicePlugin = createEventsServicePlugin();
 	private ref: DynamicDialogRef | undefined;
 	private readonly workoutService: WorkoutService = inject(WorkoutService);
@@ -34,12 +34,13 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 	private getWorkoutsSubscription: Subscription = new Subscription();
 	private updateWorkoutSubscription: Subscription = new Subscription();
 	private closeDateTimeModalSubscription: Subscription = new Subscription();
-	private closeEditWorkoutModalSubscription: Subscription = new Subscription();
+	private closeEditWorkoutModalSubscription: Subscription =
+		new Subscription();
 	private scheduleWorkoutSubscription: Subscription = new Subscription();
 	private deleteWorkoutSubscription: Subscription = new Subscription();
 	private themeSubscription: Subscription = new Subscription();
 
-	constructor() {
+	ngOnInit(): void {
 		this.getWorkoutsSubscription = this.workoutService
 			.getWorkouts()
 			.subscribe(workouts => {
@@ -60,7 +61,7 @@ export class ScheduleWorkoutComponent implements OnDestroy {
 		});
 	}
 
-	calendarApp: CalendarApp = createCalendar({
+	public calendarApp: CalendarApp = createCalendar({
 		views: [createViewWeek()],
 		locale: 'en-GB',
 		isDark: this.themeService.isDarkMode(),

@@ -1,8 +1,5 @@
-<div>
-	<h1 class="pb-5">Attendance</h1>
-
-	<div class="pb-5">
-		<h2 class="pb-2">Workout</h2>
+<p-panel header="Attendance">
+	<div class="mt-5">
 		<p-select
 			[options]="workouts"
 			[(ngModel)]="selectedWorkout"
@@ -61,8 +58,8 @@
 		</p-select>
 	</div>
 
-	<div class="pb-5">
-		<h2 class="pb-2">Masters</h2>
+	<div class="mt-15">
+		<span class="text-m font-bold">Masters</span>
 		<p-table
 			[value]="masters"
 			[(selection)]="selectedMasters"
@@ -79,11 +76,10 @@
 					<th>Belt</th>
 				</tr>
 			</ng-template>
+
 			<ng-template #body let-master>
 				<tr>
-					<td>
-						<p-tableCheckbox [value]="master" />
-					</td>
+					<td><p-tableCheckbox [value]="master" /></td>
 					<td>{{ master.name }}</td>
 					<td>
 						<p-badge
@@ -99,17 +95,23 @@
 					</td>
 					<td>{{ master.birthday | date }}</td>
 					<td>{{ master.gender }}</td>
-					<td>
-						{{ master.belt?.color }}
-						{{ master.belt?.degrees }}
+					<td>{{ master.belt?.color }} {{ master.belt?.degrees }}</td>
+				</tr>
+			</ng-template>
+
+			<!-- Add this template for empty table -->
+			<ng-template #emptymessage>
+				<tr>
+					<td colspan="6" class="text-sm text-center text-gray-500">
+						No masters available...
 					</td>
 				</tr>
 			</ng-template>
 		</p-table>
 	</div>
 
-	<div class="pb-5">
-		<h2 class="pb-2">Students</h2>
+	<div class="mt-15">
+		<span class="text-m font-bold">Students</span>
 		<p-table
 			[value]="students"
 			[(selection)]="selectedStudents"
@@ -128,11 +130,10 @@
 					<th>Belt</th>
 				</tr>
 			</ng-template>
+
 			<ng-template #body let-student>
 				<tr>
-					<td>
-						<p-tableCheckbox [value]="student" />
-					</td>
+					<td><p-tableCheckbox [value]="student" /></td>
 					<td>{{ student.name }}</td>
 					<td>{{ student.birthday | date }}</td>
 					<td>{{ student.gender }}</td>
@@ -140,18 +141,30 @@
 					<td>{{ student.height }} m</td>
 					<td>{{ student.enrollDate | date }}</td>
 					<td>
-						{{ student.belt?.color }}
-						{{ student.belt?.degrees }}
+						{{ student.belt?.color }} {{ student.belt?.degrees }}
+					</td>
+				</tr>
+			</ng-template>
+
+			<!-- Empty template -->
+			<ng-template #emptymessage>
+				<tr>
+					<td colspan="8" class="text-sm text-center text-gray-500">
+						No students available...
 					</td>
 				</tr>
 			</ng-template>
 		</p-table>
 	</div>
 
-	<p-button
-		label="Submit Attendance"
-		icon="pi pi-check"
-		iconPos="right"
-		(onClick)="submitAttendance()"
-	/>
-</div>
+	<div class="mt-15">
+		<p-button
+			label="Submit Attendance"
+			icon="pi pi-check"
+			iconPos="right"
+			(onClick)="submitAttendance()"
+		/>
+	</div>
+</p-panel>
+
+<div></div>

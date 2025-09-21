@@ -52,21 +52,21 @@ export class NewExerciseComponent {
 			value: 0,
 			imagePath: 'assets/images/belts/white.svg',
 		},
-		{ label: 'Gray', value: 1, imagePath: 'assets/images/belts/white.svg' },
+		{ label: 'Grey', value: 1, imagePath: 'assets/images/belts/grey.svg' },
 		{
 			label: 'Yellow',
 			value: 2,
-			imagePath: 'assets/images/belts/white.svg',
+			imagePath: 'assets/images/belts/yellow.svg',
 		},
 		{
 			label: 'Orange',
 			value: 3,
-			imagePath: 'assets/images/belts/white.svg',
+			imagePath: 'assets/images/belts/orange.svg',
 		},
 		{
 			label: 'Green',
 			value: 4,
-			imagePath: 'assets/images/belts/white.svg',
+			imagePath: 'assets/images/belts/green.svg',
 		},
 		{ label: 'Blue', value: 5, imagePath: 'assets/images/belts/blue.svg' },
 		{
