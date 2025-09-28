@@ -11,6 +11,7 @@ import { WorkoutEnrollComponent } from './features/workout-enroll/workout-enroll
 import { HomepageComponent } from './core/components/homepage/homepage.component';
 import { ExerciseComponent } from './features/exercise/exercise.component';
 import { NewExerciseComponent } from './features/exercise/new-exercise/new-exercise.component';
+import { ProgressComponent } from './features/progress/progress.component';
 
 export const routes: Routes = [
 	// No layout
@@ -58,6 +59,12 @@ export const routes: Routes = [
 				title: 'New Exercise',
 				component: NewExerciseComponent,
 				canActivate: [authGuard, roleGuard(['PrimaryMaster'])],
+			},
+			{
+				path: 'progress',
+				title: 'Progress',
+				component: ProgressComponent,
+				canActivate: [authGuard, roleGuard(['PrimaryMaster', 'Student'])],
 			},
 			{
 				path: '**',

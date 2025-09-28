@@ -8,6 +8,17 @@
 }
 
 .layout-main {
-	flex: 1 1 auto;
-	padding-bottom: 2rem;
+  flex: 1 1 auto;
+  max-height: calc(100vh - 112px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+    padding-bottom: 2rem;
+
+  
+  .layout-main-content-scrollable {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }

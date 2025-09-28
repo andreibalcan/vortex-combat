@@ -62,6 +62,16 @@ export class DrawerComponent implements OnInit {
 						},
 					],
 				},
+				{
+					label: 'Progress',
+					items: [
+						{
+							label: 'Student Progress',
+							icon: 'pi pi-fw pi-list',
+							routerLink: ['/progress'],
+						},
+					],
+				},
 			];
 		}
 
@@ -86,13 +96,23 @@ export class DrawerComponent implements OnInit {
 						},
 					],
 				},
-								{
+				{
 					label: 'Exercises',
 					items: [
 						{
 							label: 'Exercises List',
 							icon: 'pi pi-fw pi-list',
 							routerLink: ['/exercises'],
+						},
+					],
+				},
+				{
+					label: 'Progress',
+					items: [
+						{
+							label: 'Student Progress',
+							icon: 'pi pi-fw pi-list',
+							routerLink: ['/progress'],
 						},
 					],
 				},

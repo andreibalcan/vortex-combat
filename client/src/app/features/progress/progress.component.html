@@ -1,0 +1,381 @@
+@if (authService.hasRole('PrimaryMaster')) {
+	<div class="mb-6">
+		<p-card header="Select student">
+			<span class="text-xs text-gray-500"
+				>Pick a student to see their training progress</span
+			>
+			<p-inputgroup class="mt-3">
+				<p-inputgroup-addon>
+					<i class="pi pi-user"></i>
+				</p-inputgroup-addon>
+
+				<p-select
+					[options]="students() ?? []"
+					optionLabel="name"
+					optionValue="id"
+					[dataKey]="'id'"
+					placeholder="Select a student"
+					[(ngModel)]="selectedStudentId"
+					(onChange)="onStudentChange($event.value)"
+				>
+					<!-- Custom item template -->
+					<ng-template let-student pTemplate="item">
+						<div class="flex items-center gap-2">
+							<img
+								[src]="
+									getBeltColor(student.belt.color)?.imagePath
+								"
+								[alt]="getBeltColor(student.belt.color)?.label"
+								class="h-4 w-auto"
+							/>
+							<img
+								[src]="
+									getBeltDegrees(student.belt.degrees)
+										?.imagePath
+								"
+								[alt]="
+									getBeltDegrees(student.belt.degrees)?.label
+								"
+								class="h-4 w-4"
+							/>
+							<span>{{ student.name }}</span>
+						</div>
+					</ng-template>
+
+					<!-- Selected value template -->
+					<ng-template let-student pTemplate="selectedItem">
+						@if (student) {
+							<div class="flex items-center gap-2">
+								<img
+									[src]="
+										getBeltColor(student.belt.color)
+											?.imagePath
+									"
+									[alt]="
+										getBeltColor(student.belt.color)?.label
+									"
+									class="h-4 w-auto"
+								/>
+								<img
+									[src]="
+										getBeltDegrees(student.belt.degrees)
+											?.imagePath
+									"
+									[alt]="
+										getBeltDegrees(student.belt.degrees)
+											?.label
+									"
+									class="h-4 w-4"
+								/>
+								<span>{{ student.name }}</span>
+							</div>
+						}
+					</ng-template>
+				</p-select>
+			</p-inputgroup>
+		</p-card>
+	</div>
+}
+
+@if (selectedStudentId || this.authService.hasRole('Student')) {
+	@if (progress()) {
+		<div class="grid gap-6">
+			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+				<p-card>
+					<div
+						class="flex items-center justify-center text-center md:text-left min-h-20"
+					>
+						<!-- Icon -->
+						<span class="pi pi-user text-2xl mr-4"></span>
+
+						<!-- Info -->
+						<div class="flex flex-col items-center md:items-start">
+							<span class="text-xl">{{ progress()?.name }}</span>
+							<span class="text-xs text-gray-500">Student</span>
+						</div>
+					</div>
+				</p-card>
+
+				<p-card>
+					<div
+						class="flex items-center justify-center text-center md:text-left min-h-20"
+					>
+						<span class="pi pi-arrows-v text-2xl mr-4"></span>
+						<div class="flex flex-col items-center md:items-start">
+							<span class="text-xl"
+								>{{ progress()?.height }} cm</span
+							>
+							<span class="text-xs text-gray-500">Height</span>
+						</div>
+					</div>
+				</p-card>
+
+				<p-card>
+					<div
+						class="flex items-center justify-center text-center md:text-left min-h-20"
+					>
+						<span class="pi pi-sliders-h text-2xl mr-4"></span>
+						<div class="flex flex-col items-center md:items-start">
+							<span class="text-xl"
+								>{{ progress()?.weight }} kg</span
+							>
+							<span class="text-xs text-gray-500">Weight</span>
+						</div>
+					</div>
+				</p-card>
+
+				<p-card>
+					<div
+						class="flex items-center justify-center text-center md:text-left min-h-20"
+					>
+						<span class="pi pi-calendar text-2xl mr-4"></span>
+						<div class="flex flex-col items-center md:items-start">
+							<span class="text-xl">{{
+								progress()?.enrollDate | date
+							}}</span>
+							<span class="text-xs text-gray-500">Enrolled</span>
+						</div>
+					</div>
+				</p-card>
+			</div>
+
+			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+				<p-card header="Belt Progression">
+					<span class="text-xs text-gray-500">
+						Student journey through the belt system
+					</span>
+
+					<div
+						class="flex flex-col sm:flex-row items-center justify-center sm:space-x-12 space-y-6 sm:space-y-0 p-6"
+					>
+						<!-- Current Belt -->
+						<div class="flex flex-col items-center flex-shrink-0">
+							<img
+								[src]="
+									getBeltColor(progress().currentBelt.color)
+										?.imagePath
+								"
+								alt="Current Belt"
+								class="h-8 w-auto"
+							/>
+							<img
+								[src]="
+									getBeltDegrees(
+										progress().currentBelt.degrees
+									)?.imagePath
+								"
+								alt="Current Degree"
+								class="h-6 w-6 -mt-2"
+							/>
+							<span class="text-xs text-gray-500 mt-1"
+								>Current</span
+							>
+							<span class="text-m font-semibold mt-1">
+								{{
+									getBeltColor(progress()?.currentBelt.color)
+										?.label
+								}}
+							</span>
+							<span class="text-xs text-gray-500 mt-1">
+								{{
+									getBeltDegrees(
+										progress()?.currentBelt.degrees
+									)?.label
+								}}
+								degrees
+							</span>
+						</div>
+
+						<!-- Arrow -->
+						<div class="text-gray-500 text-2xl hidden sm:block">
+							<span class="pi pi-angle-right"></span>
+						</div>
+
+						<!-- Next Belt -->
+						<div class="flex flex-col items-center flex-shrink-0">
+							<img
+								[src]="
+									getBeltColor(progress().nextBelt.color)
+										?.imagePath
+								"
+								alt="Next Belt"
+								class="h-8 w-auto"
+							/>
+							<img
+								[src]="
+									getBeltDegrees(progress().nextBelt.degrees)
+										?.imagePath
+								"
+								alt="Next Degree"
+								class="h-6 w-6 -mt-2"
+							/>
+							<span class="text-xs text-gray-500 mt-1">Next</span>
+							<span class="text-m font-semibold mt-1">
+								{{
+									getBeltColor(progress()?.nextBelt.color)
+										?.label
+								}}
+							</span>
+							<span class="text-xs text-gray-500 mt-1">
+								{{
+									getBeltDegrees(progress()?.nextBelt.degrees)
+										?.label
+								}}
+								degrees
+							</span>
+						</div>
+					</div>
+
+					<div class="grid gap-2">
+						<span class="text-xs text-gray-500">
+							Progress to next belt
+							{{
+								progress()?.progressPercentage === 0
+									? ' - 0%'
+									: ''
+							}}
+						</span>
+						<p-progressbar
+							[showValue]="true"
+							[value]="progress()?.progressPercentage"
+						/>
+						@if (progress()?.progressPercentage === 100) {
+							<div
+								class="mt-3 p-3 bg-green-100 text-green-800 text-center text-xs rounded-xl"
+							>
+								🎉 Ready to graduate to the next belt!
+							</div>
+						}
+					</div>
+				</p-card>
+
+				<p-card header="Exercise Progress">
+					<span class="text-xs text-gray-500"
+						>Track student technique development</span
+					>
+
+					<div class="p-10">
+						<p-chart
+							type="doughnut"
+							height="auto"
+							[responsive]="true"
+							[data]="exerciseChartData"
+							[options]="exerciseChartOptions"
+						></p-chart>
+					</div>
+				</p-card>
+			</div>
+			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+				<p-card header="Completed Exercises">
+					<span class="text-xs text-gray-500"
+						>Techniques mastered</span
+					>
+
+					<div class="mt-3 max-h-[192px] overflow-y-auto space-y-2">
+						@if (progress()?.completedExercises?.length > 0) {
+							@for (
+								exercise of progress()?.completedExercises;
+								track exercise.id
+							) {
+								<a
+									[routerLink]="['/exercises']"
+									class="exercise-list-item flex items-center justify-between"
+								>
+									<span class="text-sm">{{
+										exercise.name
+									}}</span>
+									<p-badge
+										value="Complete"
+										severity="success"
+									>
+									</p-badge>
+								</a>
+							}
+						} @else {
+							<div
+								class="text-xs p-2 text-center text-gray-500 dark:text-gray-300"
+							>
+								No techniques available...
+							</div>
+						}
+					</div>
+				</p-card>
+
+				<p-card header="Remaining Exercises">
+					<span class="text-xs text-gray-500"
+						>Techniques to work on</span
+					>
+
+					<div class="mt-3 max-h-[192px] overflow-y-auto space-y-2">
+						@if (progress()?.remainingExercises?.length > 0) {
+							@for (
+								exercise of progress()?.remainingExercises;
+								track exercise.id
+							) {
+								<a
+									[routerLink]="['/exercises']"
+									class="exercise-list-item flex items-center justify-between"
+								>
+									<span class="text-sm">{{
+										exercise.name
+									}}</span>
+									<p-badge value="To do" severity="warn">
+									</p-badge>
+								</a>
+							}
+						} @else {
+							<div
+								class="text-xs p-2 text-center text-gray-500 dark:text-gray-300"
+							>
+								No techniques available...
+							</div>
+						}
+					</div>
+				</p-card>
+			</div>
+
+			<div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-6">
+				<p-card header="Workout Attendance">
+					<span class="text-xs text-gray-500">
+						Recent training sessions attended
+					</span>
+
+					<p-table
+						[value]="progress().attendedWorkouts"
+						[paginator]="true"
+						[rows]="5"
+						[rowsPerPageOptions]="[5]"
+					>
+						<ng-template #header>
+							<tr>
+								<th>Workout Description</th>
+								<th>Date</th>
+								<th>Start Time</th>
+								<th>End Time</th>
+								<th>Room</th>
+							</tr>
+						</ng-template>
+						<ng-template #body let-workout>
+							<tr>
+								<td>{{ workout.description }}</td>
+								<td>{{ workout.startDate | date }}</td>
+								<td>
+									{{ workout.startDate | date: 'shortTime' }}
+								</td>
+								<td>
+									{{ workout.endDate | date: 'shortTime' }}
+								</td>
+								<td>
+									<p-badge
+										[value]="workout.room"
+										severity="success"
+									></p-badge>
+								</td>
+							</tr>
+						</ng-template>
+					</p-table>
+				</p-card>
+			</div>
+		</div>
+	}
+}

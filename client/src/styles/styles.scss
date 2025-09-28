@@ -41,9 +41,15 @@ body {
 		border-bottom-right-radius: var(--content-border-radius);
 	}
 
+	.p-card {
+		border-radius: var(--content-border-radius);
+		box-shadow: none;
+		height: 100%;
+	}
+
 	// schedule-x styles
 	.ng-calendar-wrapper {
-		height: calc(100vh - 112px);
+		height: calc(100vh - 112px - 2rem);
 	}
 
 	.auto-height-schedule-dialog .p-dialog {

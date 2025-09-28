@@ -20,6 +20,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { ToastService } from '../../../core/services/toast.service';
+import { belts, degrees } from '../../../shared/constants/belts';
+import { categories } from '../../../shared/constants/workout-categories';
+import { difficulties } from '../../../shared/constants/difficulties';
 
 @Component({
 	selector: 'app-new-exercise',
@@ -46,95 +49,10 @@ export class NewExerciseComponent {
 	private readonly exerciseService: ExerciseService = inject(ExerciseService);
 	private readonly toastService: ToastService = inject(ToastService);
 
-	public readonly belts: SelectOption[] = [
-		{
-			label: 'White',
-			value: 0,
-			imagePath: 'assets/images/belts/white.svg',
-		},
-		{ label: 'Grey', value: 1, imagePath: 'assets/images/belts/grey.svg' },
-		{
-			label: 'Yellow',
-			value: 2,
-			imagePath: 'assets/images/belts/yellow.svg',
-		},
-		{
-			label: 'Orange',
-			value: 3,
-			imagePath: 'assets/images/belts/orange.svg',
-		},
-		{
-			label: 'Green',
-			value: 4,
-			imagePath: 'assets/images/belts/green.svg',
-		},
-		{ label: 'Blue', value: 5, imagePath: 'assets/images/belts/blue.svg' },
-		{
-			label: 'Purple',
-			value: 6,
-			imagePath: 'assets/images/belts/purple.svg',
-		},
-		{
-			label: 'Brown',
-			value: 7,
-			imagePath: 'assets/images/belts/brown.svg',
-		},
-		{
-			label: 'Black',
-			value: 8,
-			imagePath: 'assets/images/belts/black.svg',
-		},
-		{ label: 'Red', value: 9, imagePath: 'assets/images/belts/red.svg' },
-	];
-
-	public readonly degrees: SelectOption[] = [
-		{
-			label: '0',
-			value: 0,
-			imagePath: 'assets/images/belts/0-degrees.svg',
-		},
-		{ label: '1', value: 1, imagePath: 'assets/images/belts/1-degree.svg' },
-		{
-			label: '2',
-			value: 2,
-			imagePath: 'assets/images/belts/2-degrees.svg',
-		},
-		{
-			label: '3',
-			value: 3,
-			imagePath: 'assets/images/belts/3-degrees.svg',
-		},
-		{
-			label: '4',
-			value: 4,
-			imagePath: 'assets/images/belts/4-degrees.svg',
-		},
-	];
-
-	public readonly categories: SelectOption[] = [
-		{ label: 'Movement', value: 'movement' },
-		{ label: 'Takedown', value: 'takedown' },
-		{ label: 'Sweep', value: 'sweep' },
-		{ label: 'Submission', value: 'submission' },
-		{ label: 'Guard', value: 'guard' },
-		{ label: 'Escape', value: 'escape' },
-		{ label: 'Guard Pass', value: 'guard pass' },
-		{ label: 'Takedown Defense', value: 'takedown defense' },
-		{ label: 'Control', value: 'control' },
-		{ label: 'Transition', value: 'transition' },
-		{ label: 'Positional', value: 'positional' },
-		{ label: 'Teaching', value: 'teaching' },
-		{ label: 'Philosophy', value: 'philosophy' },
-		{ label: 'Conditioning', value: 'conditioning' },
-	];
-
-	public readonly difficulties: SelectOption[] = [
-		{ label: 'Very Easy', value: 1 },
-		{ label: 'Easy', value: 2 },
-		{ label: 'Hard', value: 3 },
-		{ label: 'Very Hard', value: 4 },
-		{ label: 'Expert', value: 4 },
-	];
+	public readonly belts: SelectOption[] = belts;
+	public readonly degrees: SelectOption[] = degrees;
+	public readonly categories: SelectOption[] = categories;
+	public readonly difficulties: SelectOption[] = difficulties;
 
 	public newExerciseForm: FormGroup = this.formBuilder.group({
 		name: ['', Validators.required],

@@ -1,7 +1,7 @@
 public enum EBeltColor
 {
     White,
-    Gray,
+    Grey,
     Yellow,
     Orange,
     Green,

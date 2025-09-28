@@ -28,6 +28,7 @@
     "@schedule-x/resize": "^2.31.0",
     "@schedule-x/theme-default": "^2.30.0",
     "@tailwindcss/postcss": "^4.1.7",
+    "chart.js": "^4.5.0",
     "jwt-decode": "^4.0.0",
     "postcss": "^8.5.3",
     "primeicons": "^7.0.0",
